@@ -1,0 +1,133 @@
+1. Aloqa formasi ma'lumotlarini saqlash yoki Telegramga yuborish
+Hozir form POST qiladi va flash() orqali xabar chiqaradi — bu yaxshi. Lekin ma'lumotlar saqlanmayapti.
+
+✅ Taklif:
+Formani Telegram bot orqali sizga yuborish tizimiga ulang.
+
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+⌄
+⌄
+# app.py da (contact uchun)
+import requests
+
+TELEGRAM_BOT_TOKEN = "sizning_bot_tokeningiz"
+TELEGRAM_CHAT_ID = "sizning_chat_id"
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        phone = request.form['phone']
+        message = request.form['message']
+        
+        # Telegramga yuborish
+        text = f"📝 Yangi murojaat!\n\n👤 Ism: {name}\n📞 Telefon: {phone}\n💬 Xabar: {message}"
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        requests.post(url, data={'chat_id': TELEGRAM_CHAT_ID, 'text': text})
+        
+        flash("Xabaringiz muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.", "success")
+        return redirect(url_for('contact'))
+    return render_template('contact.html')
+📌 Sizda Telegram bot bo'lishi kerak. Agar yo'q bo'lsa, @BotFather orqali yarating. 
+
+🔹 2. Portfolio sahifasiga real loyiha qo'shing
+Hozir portfolio.html mavjud, lekin unga real misollar kerak.
+
+✅ Taklif: 3 ta loyiha qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+⌄
+⌄
+⌄
+<!-- portfolio.html namuna -->
+<div class="col-lg-4 col-md-6 mb-4">
+  <div class="project-card h-100 rounded-3 shadow-sm overflow-hidden">
+    <img src="{{ url_for('static', filename='images/edu-bot.jpg') }}" class="w-100" style="height: 200px; object-fit: cover;">
+    <div class="p-3">
+      <h5>O'quv markazi uchun ariza boti</h5>
+      <p class="text-muted">Telegram orqali ota-onalar ariza qoldiradi, ma'lumotlar Excelga yoziladi.</p>
+      <span class="badge bg-primary">Telegram</span>
+      <span class="badge bg-success">Avtomatlashtirish</span>
+    </div>
+  </div>
+</div>
+🔹 3. Blog sahifasiga foydali maqolalar qo'shing
+SEO va mijozlarni jalb qilish uchun blog muhim.
+
+✅ Taklif: 3 ta mavzu
+"Telegram bot nima va nega kerak?"
+"Avtomatlashtirish orqali 50% vaqt tejash"
+"Chatbotlar o'qituvchilar uchun qanday yordam beradi?"
+🔹 4. Saytga kichik AI chatbot qo'shing
+Saytga kirgan odamga salom beruvchi, savollariga javob beruvchi kichik chatbot.
+
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+⌄
+⌄
+⌄
+⌄
+<!-- saytga kiruvchi chatbot (footer yaqinida) -->
+<div class="smartbot-chatbot">
+  <div class="chatbot-btn" onclick="toggleChat()">
+    <i class="fas fa-robot"></i>
+  </div>
+  <div class="chatbot-window" id="chatWindow">
+    <div class="chat-header">SmartBot Yordamchi</div>
+    <div class="chat-body" id="chatBody">
+      <p>Salom! Men SmartBot.uz yordamchiman. Qanday yordam bera olaman?</p>
+    </div>
+    <input type="text" placeholder="Savolingiz..." onkeydown="if(event.key==='Enter') sendMsg()">
+  </div>
+</div>
+Keyinroq JavaScript bilan salom, xizmatlar, narxlarga avtomatik javob qo'shishingiz mumkin. 

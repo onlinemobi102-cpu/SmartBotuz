@@ -2,12 +2,36 @@ import os
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import logging
 import re
+import requests
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "smartbot-uz-secret-key")
+
+# Telegram Bot Configuration
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+
+def send_telegram_message(message):
+    """Send message to Telegram bot"""
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        app.logger.warning("Telegram credentials not configured")
+        return False
+    
+    try:
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        data = {
+            'chat_id': TELEGRAM_CHAT_ID,
+            'text': message,
+            'parse_mode': 'HTML'
+        }
+        response = requests.post(url, data=data, timeout=10)
+        return response.status_code == 200
+    except Exception as e:
+        app.logger.error(f"Failed to send Telegram message: {e}")
+        return False
 
 @app.route('/')
 def index():
@@ -62,9 +86,33 @@ def contact():
             for error in errors:
                 flash(error, 'error')
         else:
-            # Simulate saving to database or sending email
-            app.logger.info(f'New contact form submission from {name} ({email})')
-            flash('Xabaringiz muvaffaqiyatli yuborildi! 24 soat ichida siz bilan bog\'lanamiz.', 'success')
+            # Create Telegram message
+            telegram_message = f"""📝 <b>Yangi murojaat - SmartBot.uz</b>
+
+👤 <b>Ism:</b> {name}
+📧 <b>Email:</b> {email}"""
+            
+            if phone:
+                telegram_message += f"\n📞 <b>Telefon:</b> {phone}"
+            if service:
+                telegram_message += f"\n🔧 <b>Xizmat:</b> {service}"
+            if budget:
+                telegram_message += f"\n💰 <b>Byudjet:</b> {budget}"
+            
+            telegram_message += f"\n💬 <b>Xabar:</b> {message}"
+            telegram_message += f"\n\n⏰ <b>Vaqt:</b> {request.environ.get('REQUEST_TIME', 'N/A')}"
+            
+            # Send to Telegram
+            telegram_sent = send_telegram_message(telegram_message)
+            
+            # Log the submission
+            app.logger.info(f'New contact form submission from {name} ({email}) - Telegram: {telegram_sent}')
+            
+            # Flash success message
+            if telegram_sent:
+                flash('Xabaringiz muvaffaqiyatli yuborildi! 24 soat ichida siz bilan bog\'lanamiz.', 'success')
+            else:
+                flash('Xabaringiz qabul qilindi! Tez orada siz bilan bog\'lanamiz.', 'success')
             
             # If it's an AJAX request, return JSON response
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':

@@ -536,3 +536,170 @@ window.addEventListener('online', function() {
 window.addEventListener('offline', function() {
     showNotification('Internet aloqasi yo\'q', 'warning');
 });
+
+// Chatbot Functionality
+let chatIsOpen = false;
+
+function toggleChat() {
+    const chatWindow = document.getElementById('chatWindow');
+    const chatBtn = document.getElementById('chatbotBtn');
+    
+    if (chatIsOpen) {
+        chatWindow.style.display = 'none';
+        chatBtn.innerHTML = '<i class="fas fa-robot"></i>';
+        chatIsOpen = false;
+    } else {
+        chatWindow.style.display = 'flex';
+        chatBtn.innerHTML = '<i class="fas fa-times"></i>';
+        chatIsOpen = true;
+        
+        // Focus on input when chat opens
+        document.getElementById('chatInput').focus();
+    }
+}
+
+function sendMsg() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Add user message to chat
+    addMessageToChat(message, 'user');
+    input.value = '';
+    
+    // Simulate bot typing
+    setTimeout(() => {
+        const botResponse = getBotResponse(message.toLowerCase());
+        addMessageToChat(botResponse, 'bot');
+    }, 500);
+}
+
+function addMessageToChat(message, sender) {
+    const chatBody = document.getElementById('chatBody');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = sender === 'bot' ? 'bot-message' : 'user-message';
+    
+    if (sender === 'bot') {
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                <i class="fas fa-robot me-2"></i>
+                ${message}
+            </div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                ${message}
+            </div>
+        `;
+    }
+    
+    chatBody.appendChild(messageDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function getBotResponse(message) {
+    // Simple rule-based chatbot responses
+    if (message.includes('salom') || message.includes('hello') || message.includes('assalom')) {
+        return 'Salom! SmartBot.uz ga xush kelibsiz! Sizga qanday yordam bera olaman?';
+    }
+    
+    if (message.includes('xizmat') || message.includes('service')) {
+        return `Bizning asosiy xizmatlarimiz:
+        
+🤖 Telegram botlar yaratish
+💬 AI chatbotlar
+🔄 Biznes jarayonlarini avtomatlashtirish  
+🌐 Web sayt yaratish
+📊 Ma'lumotlarni tahlil qilish
+
+Qaysi xizmat haqida batafsil ma'lumot olishni xohlaysiz?`;
+    }
+    
+    if (message.includes('narx') || message.includes('price') || message.includes('cost')) {
+        return `Narxlarimiz loyihaning murakkabligiga qarab belgilanadi:
+
+💰 Oddiy bot: 500,000 so'm dan
+🚀 O'rta murakkablik: 1,000,000 - 3,000,000 so'm  
+⭐ Premium loyiha: 3,000,000 so'm dan yuqori
+
+Aniq narx olish uchun biz bilan bog'laning!`;
+    }
+    
+    if (message.includes('vaqt') || message.includes('time') || message.includes('muddati')) {
+        return `Loyiha bajarilish muddatlari:
+
+⚡ Oddiy bot: 3-7 kun
+🔧 O'rta murakkablik: 1-3 hafta
+🏗️ Murakkab loyiha: 1-2 oy
+
+Aniq muddat loyiha talablariga bog'liq.`;
+    }
+    
+    if (message.includes('telegram') || message.includes('bot')) {
+        return `Telegram botlar - bu avtomatik yordamchilar:
+
+✅ 24/7 mijozlarga xizmat
+✅ Buyurtmalarni qabul qilish
+✅ Ma'lumot berish va javob qaytarish
+✅ To'lovlarni qayta ishlash
+✅ Ma'lumotlarni saqlash
+
+Sizning biznesingiz uchun qanday bot kerak?`;
+    }
+    
+    if (message.includes('aloqa') || message.includes('contact') || message.includes('bog\'lan')) {
+        return `Biz bilan bog'lanish:
+
+📞 Telefon: +998 90 123 45 67
+📧 Email: info@smartbot.uz  
+🏢 Manzil: Toshkent, O'zbekiston
+💬 Telegram: @smartbot_uz
+
+Yoki saytdan aloqa formasini to'ldiring!`;
+    }
+    
+    if (message.includes('portfolio') || message.includes('misol') || message.includes('namuna')) {
+        return `Bizning eng so'nggi loyihalarimiz:
+
+🏪 E-commerce bot - 1000+ foydalanuvchi
+🎓 Ta'lim boti - 500+ talaba  
+🍕 Restoran boti - 2000+ mijoz
+🏦 Bank chatbot - 5000+ mijoz
+
+Portfolio sahifasida batafsil ko'rishingiz mumkin!`;
+    }
+    
+    if (message.includes('rahmat') || message.includes('thanks') || message.includes('thank')) {
+        return 'Arzimaydi! Boshqa savollaringiz bo\'lsa, bemalol so\'rang. Sizga yordam berishdan mamnunmiz! 😊';
+    }
+    
+    // Default response
+    return `Savolingizni tushunmadim. Men quyidagi mavzularda yordam bera olaman:
+
+🔹 Xizmatlarimiz haqida
+🔹 Narxlar va muddat  
+🔹 Telegram botlar
+🔹 Portfolio va misollar
+🔹 Bog'lanish ma'lumotlari
+
+Yoki to'g'ridan-to'g'ri biz bilan bog'laning: +998 90 123 45 67`;
+}
+
+// Initialize chatbot
+document.addEventListener('DOMContentLoaded', function() {
+    // Add chatbot to initialization list
+    initChatbot();
+});
+
+function initChatbot() {
+    // Optional: Add welcome message after a delay
+    setTimeout(() => {
+        if (!chatIsOpen) {
+            // Pulse animation to attract attention
+            const chatBtn = document.getElementById('chatbotBtn');
+            chatBtn.style.animation = 'pulse 1s ease-in-out 3';
+        }
+    }, 3000);
+}
