@@ -35,12 +35,37 @@
     {% endif %}
   {% endwith %}
 
+  <!-- Search and Filter Controls -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-text bg-dark text-white border-secondary">
+          <i class="fas fa-search"></i>
+        </span>
+        <input type="text" id="searchInput" class="form-control bg-dark text-white border-secondary" 
+               placeholder="Ism, email yoki xabar bo'yicha qidiruv...">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <select id="statusFilter" class="form-select bg-dark text-white border-secondary">
+        <option value="">Barcha murojaatlar</option>
+        <option value="yangi">Faqat yangilar</option>
+        <option value="ko'rilgan">Ko'rilganlar</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <a href="{{ url_for('export_messages_csv') }}" class="btn btn-success w-100">
+        <i class="fas fa-download me-1"></i>CSV yuklash
+      </a>
+    </div>
+  </div>
+
   <!-- Messages List -->
   <div class="row">
     <div class="col-12">
       {% if messages %}
         {% for message in messages %}
-        <div class="card mb-3" style="background-color: rgba(52, 58, 64, 0.9); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="card mb-3 message-card" data-status="{{ message.status }}" data-name="{{ message.name|lower }}" data-email="{{ message.email|lower }}" data-message="{{ message.message|lower }}" style="background-color: rgba(52, 58, 64, 0.9); border: 1px solid rgba(255,255,255,0.1);">
           <div class="card-header d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
               <h5 class="text-white mb-0">
@@ -138,4 +163,66 @@
     </div>
   </div>
 </div>
+
+<script>
+// Qidiruv funksiyasi
+document.getElementById('searchInput').addEventListener('keyup', function() {
+  const filter = this.value.toLowerCase();
+  filterMessages();
+});
+
+// Status filter funksiyasi
+document.getElementById('statusFilter').addEventListener('change', function() {
+  filterMessages();
+});
+
+function filterMessages() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const statusFilter = document.getElementById('statusFilter').value;
+  const messageCards = document.querySelectorAll('.message-card');
+  
+  messageCards.forEach(card => {
+    const name = card.dataset.name;
+    const email = card.dataset.email;
+    const message = card.dataset.message;
+    const status = card.dataset.status;
+    
+    const matchesSearch = searchTerm === '' || 
+                         name.includes(searchTerm) || 
+                         email.includes(searchTerm) || 
+                         message.includes(searchTerm);
+    
+    const matchesStatus = statusFilter === '' || status === statusFilter;
+    
+    if (matchesSearch && matchesStatus) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Real vaqtda yangilanish (har 30 soniyada)
+function updateUnreadCount() {
+  fetch('/api/unread-count')
+    .then(response => response.json())
+    .then(data => {
+      // Dashboard'dagi badge ni yangilash
+      const badge = document.querySelector('.badge.bg-danger');
+      if (badge && data.count > 0) {
+        badge.textContent = data.count;
+        badge.style.display = 'inline';
+      } else if (badge && data.count === 0) {
+        badge.style.display = 'none';
+      }
+    })
+    .catch(error => console.log('Yangilanish xatosi:', error));
+}
+
+// Har 30 soniyada yangilanish
+setInterval(updateUnreadCount, 30000);
+
+// Sahifa yuklanganda ham tekshirish
+document.addEventListener('DOMContentLoaded', updateUnreadCount);
+</script>
 {% endblock %}

@@ -612,5 +612,64 @@ def admin_message_delete(message_id):
     
     return redirect(url_for('admin_messages'))
 
+@app.route('/admin/export/csv')
+@admin_required
+def export_messages_csv():
+    """Export messages to CSV file"""
+    import csv
+    from io import StringIO
+    from flask import Response
+    
+    messages = load_data(MESSAGES_FILE)
+    
+    def generate():
+        output = StringIO()
+        writer = csv.writer(output)
+        
+        # Header
+        writer.writerow(['ID', 'Ism', 'Email', 'Telefon', 'Xizmat', 'Byudjet', 'Xabar', 'Sana', 'Holat', 'Telegram Yuborildi'])
+        
+        # Data
+        for msg in messages:
+            writer.writerow([
+                msg.get('id', ''),
+                msg.get('name', ''),
+                msg.get('email', ''),
+                msg.get('phone', ''),
+                msg.get('service', ''),
+                msg.get('budget', ''),
+                msg.get('message', ''),
+                msg.get('date', ''),
+                msg.get('status', ''),
+                'Ha' if msg.get('telegram_sent', False) else 'Yo\'q'
+            ])
+        
+        output.seek(0)
+        return output.read()
+    
+    from datetime import datetime
+    filename = f"murojaatlar_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    
+    return Response(
+        generate(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': f'attachment;filename={filename}'}
+    )
+
+@app.route('/api/unread-count')
+@admin_required
+def api_unread_count():
+    """API endpoint for real-time unread count"""
+    messages = load_data(MESSAGES_FILE)
+    unread_count = len([m for m in messages if m.get('status') == 'yangi'])
+    return jsonify({'count': unread_count})
+
+@app.route('/api/total-messages-count')
+@admin_required
+def api_total_messages_count():
+    """API endpoint for total messages count"""
+    messages = load_data(MESSAGES_FILE)
+    return jsonify({'total': len(messages)})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

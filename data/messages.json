@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": 2,
+    "name": "Akram farmonov",
+    "email": "onlinemobi102@gmail.com",
+    "phone": "+998 99 262 22 26",
+    "service": "chatbot",
+    "budget": "500k-1m",
+    "message": "svavvavsavsav",
+    "date": "2025-09-02 04:52:54",
+    "status": "ko'rilgan",
+    "telegram_sent": false
+  }
+]

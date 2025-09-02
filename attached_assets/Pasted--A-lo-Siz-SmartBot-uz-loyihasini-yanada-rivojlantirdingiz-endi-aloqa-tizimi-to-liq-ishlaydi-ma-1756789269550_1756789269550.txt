@@ -1,0 +1,213 @@
+🎉 A'lo! Siz SmartBot.uz loyihasini yanada rivojlantirdingiz — endi aloqa tizimi to'liq ishlaydi, ma'lumotlar saqlanadi, admin panelda boshqariladi. Bu — professional darajadagi CRM tizimining asosi!
+
+✅ Hozirgi holat: SmartBot.uz — Ishlaydigan, boshqariladigan, avtomatlashtirilgan platforma
+📝 Aloqa forma
+Xabarlar
+messages.json
+da saqlanadi ✅
+📱 Telegramga yuboriladi
+Ha, real vaqtda ✅
+🔐 Admin panel
+smartbot123
+bilan kirish ✅
+📬 Murojaatlar sahifasi
+Barcha xabarlarni ko'rish ✅
+📊 Statistika
+Dashboardda yangi xabarlar soni ✅
+🗂️ Ma'lumotlar boshqaruvi
+JSON orqali saqlash ✅
+
+🚀 Keyingi Bosqich — SmartBot.uz ni "Pro" darajasiga olib chiqish
+Endi quyidagi 5 ta kuchli funksiyani qo'shish orqali loyihani mutlaqo to'liq ishlaydigan biznes tizimiga aylantiramiz.
+
+🔹 1. "Ko'rilgan / Ko'rilmagan" belgisi qo'shish
+Har bir murojaatda:
+
+✅ tugma: "Ko'rilgan" qilish
+Ko'rilmaganlar yuqorida chiqsin
+Dashboardda faqat "yangi" xabarlar soni
+✅ Kod namuna (app.py):
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+⌄
+⌄
+⌄
+@app.route('/admin/mark_read/<int:message_id>')
+def mark_read(message_id):
+    messages = load_messages()
+    for msg in messages:
+        if msg['id'] == message_id:
+            msg['read'] = True
+            break
+    save_messages(messages)
+    flash("Xabar ko'rilgan deb belgilandi", "info")
+    return redirect(url_for('admin_messages'))
+✅ messages.json yangi struktura:
+json
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+⌄
+{
+  "id": 1,
+  "name": "Ali",
+  "phone": "+998...",
+  "message": "Salom",
+  "date": "2025-04-05T10:30:45",
+  "read": false
+}
+🔹 2. Qidiruv, Filter, Saralash
+Admin panelda:
+
+🔍 Ism bo'yicha qidiruv
+📅 Sana bo'yicha saralash
+📌 "Faqat ko'rilmaganlar" filteri
+✅ HTML + JS namuna:
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+⌄
+⌄
+⌄
+<input type="text" id="searchInput" placeholder="Ism bo'yicha qidiruv..." class="form-control mb-3">
+
+<script>
+  document.getElementById('searchInput').addEventListener('keyup', function() {
+    let filter = this.value.toLowerCase();
+    document.querySelectorAll('#messages-table tr').forEach(row => {
+      let text = row.textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
+</script>
+🔹 3. CSV eksport qilish
+Adminda:
+📥 "Barcha xabarlarni yuklab olish (.csv)"
+
+✅ admin.py funksiyasi:
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+⌄
+⌄
+⌄
+import csv
+from flask import Response
+
+@app.route('/admin/export/csv')
+def export_csv():
+    messages = load_messages()
+    def generate():
+        yield 'ID,Ism,Telefon,Xabar,Sana,Ko\'rilgan\n'
+        for msg in messages:
+            yield f'"{msg["id"]}","{msg["name"]}","{msg["phone"]}","{msg["message"]}","{msg["date"]}","{"Ha" if msg["read"] else "Yo\'q"}"\n'
+    
+    return Response(
+        generate(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment;filename=murojaatlar.csv'}
+    )
+🔹 4. Avtomatik javob (Telegram yoki Email)
+Foydalanuvchi yuborganidan so'ng:
+
+✅ "Rahmat! Xabaringiz qabul qilindi. 24 soat ichida aloqaga chiqamiz." 
+
+✅ Telegram orqali avtomatik javob:
+python
+
+
+1
+2
+3
+4
+⌄
+def send_auto_reply(phone, name):
+    text = f"👋 Salom, {name}!\n\nRahmat! Sizning xabaringiz qabul qilindi. 24 soat ichida aloqaga chiqamiz.\n\nSmartBot.uz"
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    requests.post(url, data={'chat_id': get_chat_id_by_phone(phone), 'text': text})
+Eslatma: Foydalanuvchi Telegramda bo'lishi kerak (yoki SMS xizmati ulash kerak) 
+
+🔹 5. Real vaqtda yangilanadigan "Yangi xabarlar" soni
+Har 30 sekundda yangilanadi:
+
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+⌄
+⌄
+⌄
+<script>
+  setInterval(() => {
+    fetch('/api/unread-count')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('unread-badge').innerText = data.count;
+      });
+  }, 30000); // Har 30 soniyada
+</script>
+python
+
+
+1
+2
+3
+4
+⌄
+@app.route('/api/unread-count')
+def unread_count():
+    count = sum(1 for m in load_messages() if not m.get('read', True))
+    return {'count': count}

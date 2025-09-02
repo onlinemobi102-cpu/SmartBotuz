@@ -135,4 +135,44 @@
     </div>
   </div>
 </div>
+
+<script>
+// Real vaqtda yangilanish - yangi xabarlar soni
+function updateUnreadCount() {
+  fetch('/api/unread-count')
+    .then(response => response.json())
+    .then(data => {
+      // Murojaatlar kartasidagi raqamni yangilash
+      const messagesCard = document.querySelector('[style*="ffc107"]');
+      if (messagesCard) {
+        const countElement = messagesCard.querySelector('h3');
+        const badgeElement = messagesCard.querySelector('.badge');
+        
+        if (countElement) {
+          // Total messages count (bu yerda real count kerak)
+          fetch('/api/total-messages-count')
+            .then(response => response.json())
+            .then(totalData => {
+              countElement.textContent = totalData.total;
+            })
+            .catch(error => console.log('Total count xatosi:', error));
+        }
+        
+        if (badgeElement && data.count > 0) {
+          badgeElement.textContent = data.count;
+          badgeElement.style.display = 'inline';
+        } else if (badgeElement && data.count === 0) {
+          badgeElement.style.display = 'none';
+        }
+      }
+    })
+    .catch(error => console.log('Yangilanish xatosi:', error));
+}
+
+// Har 30 soniyada yangilanish
+setInterval(updateUnreadCount, 30000);
+
+// Sahifa yuklanganda ham tekshirish
+document.addEventListener('DOMContentLoaded', updateUnreadCount);
+</script>
 {% endblock %}
