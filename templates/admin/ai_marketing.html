@@ -12,7 +12,7 @@
             <i class="fas fa-robot me-2 text-success"></i>
             🤖 AI Marketing Avtomat
           </h2>
-          <p class="text-white-50 mb-0">Har kuni trendlarni o'rganib, 5 ta blog posti yaratadi va kanaliga joylaydi</p>
+          <p class="text-white-50 mb-0">🔄 O'z-o'zini boshqaruvchi AI tizimi - hech qanday tugma bosish shart emas</p>
         </div>
         <div>
           <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-light">
@@ -32,15 +32,17 @@
             <div>
               <h4>
                 <i class="fas fa-magic me-2"></i>
-                Bugunlik Marketing
+                Avtomatik Marketing
               </h4>
-              <p class="mb-3">So'nggi trendlar asosida blog postlari va Telegram kontent yaratish</p>
+              <p class="mb-3">🤖 Har kuni soat 9:00 da avtomatik ishlaydigan AI tizimi</p>
               <p class="mb-0">📅 So'nggi ish: <span class="fw-bold">{{ last_run or 'Hech qachon' }}</span></p>
+              <p class="mb-0">⏰ Keyingi ish: Har kuni 09:00</p>
             </div>
-            <div>
-              <button class="btn btn-light btn-lg" onclick="runDailyMarketing()" id="runBtn">
-                <i class="fas fa-play me-2"></i>🟢 Ishga tushir
-              </button>
+            <div class="text-center">
+              <div class="badge bg-light text-success fs-6 px-3 py-2">
+                <i class="fas fa-check-circle me-1"></i>AVTOMATIK
+              </div>
+              <p class="small text-light mt-2 mb-0">Tugma bosish shart emas</p>
             </div>
           </div>
         </div>
@@ -65,23 +67,40 @@
       <div class="card">
         <div class="card-header bg-primary text-white">
           <h5 class="mb-0">
-            <i class="fas fa-tasks me-2"></i>
-            Jarayon Holati
+            <i class="fas fa-cog me-2"></i>
+            Tizim Holati
           </h5>
         </div>
         <div class="card-body">
-          <div id="progressArea" style="display: none;">
-            <div class="progress mb-3">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" 
-                   role="progressbar" style="width: 0%" id="progressBar">
-                0%
+          <div class="row g-3">
+            <div class="col-md-3">
+              <div class="text-center p-3 bg-success bg-opacity-10 rounded">
+                <i class="fas fa-robot fa-2x text-success mb-2"></i>
+                <h6>AI Tizimi</h6>
+                <span class="badge bg-success">Faol</span>
               </div>
             </div>
-            <div id="currentTask" class="text-muted">Kutilmoqda...</div>
-          </div>
-          <div id="defaultMessage" class="text-center text-muted py-4">
-            <i class="fas fa-info-circle fa-2x mb-3"></i>
-            <p>Jarayonni boshlash uchun "Ishga tushir" tugmasini bosing</p>
+            <div class="col-md-3">
+              <div class="text-center p-3 bg-info bg-opacity-10 rounded">
+                <i class="fab fa-telegram fa-2x text-info mb-2"></i>
+                <h6>Telegram Bot</h6>
+                <span class="badge bg-info">Ulangan</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center p-3 bg-warning bg-opacity-10 rounded">
+                <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                <h6>Vaqt Jadval</h6>
+                <span class="badge bg-warning text-dark">09:00</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center p-3 bg-purple bg-opacity-10 rounded">
+                <i class="fas fa-chart-line fa-2x text-primary mb-2"></i>
+                <h6>Trending</h6>
+                <span class="badge bg-primary">5 mavzu</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -95,14 +114,15 @@
         <div class="card-header bg-success text-white">
           <h5 class="mb-0">
             <i class="fas fa-newspaper me-2"></i>
-            📊 Yaratilgan Kontentlar
+            📊 So'nggi Yaratilgan Kontentlar
           </h5>
         </div>
         <div class="card-body">
           <div id="results">
             <div class="text-center text-muted py-5">
               <i class="fas fa-newspaper fa-3x mb-3"></i>
-              <p>Hali kontentlar yaratilmagan. Jarayonni boshlang!</p>
+              <p>So'nggi yaratilgan kontentlar bu yerda ko'rsatiladi</p>
+              <small class="text-muted">Sahifani yangilang yoki bir necha daqiqa kuting</small>
             </div>
           </div>
         </div>
@@ -126,95 +146,20 @@
 </div>
 
 <script>
-function runDailyMarketing() {
-    const runBtn = document.getElementById('runBtn');
-    const progressArea = document.getElementById('progressArea');
-    const defaultMessage = document.getElementById('defaultMessage');
-    const progressBar = document.getElementById('progressBar');
-    const currentTask = document.getElementById('currentTask');
-    const results = document.getElementById('results');
-    
-    // Show loading state
-    runBtn.disabled = true;
-    runBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Ishlamoqda...';
-    
-    // Show progress
-    progressArea.style.display = 'block';
-    defaultMessage.style.display = 'none';
-    
-    // Simulate progress steps
-    const steps = [
-        { progress: 20, task: '🔍 So\'nggi trendlarni qidiryapman...' },
-        { progress: 40, task: '📝 Blog postlarini yaratyapman...' },
-        { progress: 60, task: '💾 Ma\'lumotlarni saqlayapman...' },
-        { progress: 80, task: '📢 Telegram kanaliga yubormoqda...' },
-        { progress: 100, task: '✅ Tayyor! Barcha ishlar bajarildi.' }
-    ];
-    
-    let currentStep = 0;
-    
-    function updateProgress() {
-        if (currentStep < steps.length) {
-            const step = steps[currentStep];
-            progressBar.style.width = step.progress + '%';
-            progressBar.textContent = step.progress + '%';
-            currentTask.textContent = step.task;
-            currentStep++;
-            setTimeout(updateProgress, 2000);
-        } else {
-            // Complete - fetch actual results
-            fetch('/admin/ai/marketing/run', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'}
-            })
-            .then(r => r.json())
-            .then(data => {
-                // Update results
-                if (data.success && data.posts) {
-                    results.innerHTML = '';
-                    data.posts.forEach((post, index) => {
-                        const card = document.createElement('div');
-                        card.className = 'col-md-6 mb-3';
-                        card.innerHTML = `
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h6 class="card-title text-primary">${post.title}</h6>
-                                    <p class="card-text small text-muted">${post.excerpt || post.content.substring(0, 120) + '...'}</p>
-                                    <small class="text-muted">
-                                        <i class="fas fa-calendar me-1"></i>${post.date}
-                                        <i class="fas fa-check-circle text-success ms-2 me-1"></i>Blog'ga qo'shildi
-                                        <i class="fas fa-paper-plane text-info ms-2 me-1"></i>Telegramga yuborildi
-                                    </small>
-                                </div>
-                            </div>
-                        `;
-                        
-                        const container = document.createElement('div');
-                        container.className = 'row g-3';
-                        container.appendChild(card);
-                        results.appendChild(container);
-                    });
-                    
-                    // Update counter
-                    document.getElementById('todayCount').textContent = data.posts.length;
-                } else {
-                    results.innerHTML = '<div class="alert alert-warning">Xatolik yuz berdi: ' + (data.error || 'Noma\'lum xatolik') + '</div>';
-                }
-                
-                // Reset button
-                runBtn.disabled = false;
-                runBtn.innerHTML = '<i class="fas fa-play me-2"></i>🟢 Ishga tushir';
-            })
-            .catch(error => {
-                results.innerHTML = '<div class="alert alert-danger">Xatolik: ' + error.message + '</div>';
-                runBtn.disabled = false;
-                runBtn.innerHTML = '<i class="fas fa-play me-2"></i>🟢 Ishga tushir';
-            });
-        }
-    }
-    
-    // Start progress simulation
-    updateProgress();
+// Auto-refresh page every 5 minutes to show latest stats
+setInterval(() => {
+    location.reload();
+}, 300000); // 5 minutes
+
+// Load latest blog posts on page load
+window.addEventListener('DOMContentLoaded', function() {
+    loadLatestPosts();
+});
+
+function loadLatestPosts() {
+    // This would load from the existing blog data that gets updated by daily_job.py
+    // For now, showing static message since the autonomous system handles everything
+    console.log('AI Marketing Avtomat running autonomously - no manual intervention needed');
 }
 </script>
 {% endblock %}

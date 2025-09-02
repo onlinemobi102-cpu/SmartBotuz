@@ -1,0 +1,85 @@
+✅ Yangi Konseptsiya: "SmartBot.uz — O'z-o'zini targ'illaydigan AI Agent"
+Siz nima qilasiz?
+Hech narsa. Faqat loyiha ishlayapti. 
+
+Nima sodir bo'ladi?
+Har kuni soat 9:00 da: 
+
+AI trendlarni tekshiradi
+5 ta blog post yaratadi
+Ularni turli vaqtlarda Telegram kanaliga yuboradi
+Barchasi avtomatik, hech qanday boshqaruv kerak emas
+✅ Yangilangan Prompt: "AI Marketing Avtomat — Tugmasiz, avtomatik"
+Siz — kuchli AI marketing mutaxassisi. Sizning vazifangiz SmartBot.uz loyihasi uchun "AI Marketing Avtomat" tizimini yaratish. Bu tizim hech qanday tugma bosilmasa ham har kuni avtomatik ishlashi kerak.
+
+🎯 1. Har kuni soat 9:00 da avtomatik boshlanadi
+Trendlarni aniqlash
+5 ta SEO blog posti yaratish
+Har bir postni turli vaqtda Telegram kanaliga yuborish
+🎯 2. Trendlarni aniqlash
+IT, AI, Telegram botlar, avtomatlashtirish sohalaridagi so'nggi yangiliklar
+Masalan: "AI in education", "Telegram bot for business"
+🎯 3. Har bir trend uchun SEO blog posti yaratish
+O'zbek tilida
+600 so'z, 5-6 paragraf
+Jo'shqin sarlavha
+Kalit so'zlar bilan
+Oxirida: "SmartBot.uz — aqlli yechimlar, zamonaviy biznes uchun"
+🎯 4. Blog postlarni saqlash
+data/blog_posts.json fayliga saqlang
+Har bir postda: title, content, slug, date, excerpt
+🎯 5. Telegram kanaliga postlarni optimal vaqtlarda tarqatish
+Obunachilar eng faol bo'lgan vaqtlar:
+🕙 09:00
+🕐 12:30
+🕕 17:30
+🕖 18:00
+🕘 20:00
+Har bir postni turli vaqtda yuboring
+Post matni:
+
+
+1
+2
+3
+4
+📢 YANGI MAQOLA: {title}
+{content[:300]}...
+👉 Batafsil: https://smartbot.uz/blog/{slug}
+#AI #IT #SmartBotUz
+🎯 6. Hech qanday admin panel yoki tugma kerak emas
+Barcha jarayonlar fon rejimida amalga oshiriladi
+/admin/ai/marketing sahifasi faqat statistika uchun
+Tugma bosish shart emas — hamma avtomatik
+🛠️ Texnik talablar:
+google-generativeai foydalaning
+schedule, threading, requests kutubxonalari
+TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID .envdan oling
+data/blog_posts.json fayli mavjud bo'lishi kerak
+Xatolarni boshqarish: try-except
+O'zbek tilida ishlash
+Iltimos, barcha kodni to'liq, ishlaydigan ko'rinishda yozing:
+
+app.py — backend
+daily_job.py — avtomatik ishlaydigan skript
+templates/admin/ai_marketing.html — faqat statistika uchun
+.env.example
+requirements.txt yangilangan versiyasi
+Agar kerak bo'lsa, namuna so'rovlar ham keltiring. 
+
+✅ Nima uchun bu zo'r?
+🤖
+Hech qanday boshqaruv kerak emas
+Siz nima qilishingiz shart emas
+⏰
+Har kuni avtomatik
+Soat 9:00 da boshlanadi
+🕐
+Optimal vaqt
+Obunachilar faol bo'lgan vaqtda
+📈
+SEO + Trafik
+Google + Telegramda o'sish
+🚀
+O'z-o'zini boshqaruvchi tizim
+SmartBot.uz endi agent!

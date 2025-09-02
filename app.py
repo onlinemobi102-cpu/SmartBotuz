@@ -1261,14 +1261,18 @@ def admin_portfolio_delete(project_id):
 @app.route('/admin/ai/marketing')
 @admin_required
 def admin_ai_marketing():
-    """AI Marketing Avtomat sahifasi"""
+    """AI Marketing Avtomat sahifasi - Faqat statistika"""
     # Get last run data
     last_run = get_last_marketing_run()
     today_posts = get_today_posts_count()
     
+    # Get marketing stats for display
+    marketing_stats = get_marketing_statistics()
+    
     return render_template('admin/ai_marketing.html', 
                           last_run=last_run, 
-                          today_posts=today_posts)
+                          today_posts=today_posts,
+                          marketing_stats=marketing_stats)
 
 @app.route('/admin/ai/marketing/run', methods=['POST'])
 @admin_required
@@ -1451,12 +1455,12 @@ def send_to_telegram_channel(post):
 def get_last_marketing_run():
     """So'nggi marketing run ma'lumotini olish"""
     try:
-        marketing_file = os.path.join(DATA_DIR, "marketing_runs.json")
-        if os.path.exists(marketing_file):
-            data = load_data(marketing_file)
+        marketing_stats_file = os.path.join(DATA_DIR, "marketing_stats.json")
+        if os.path.exists(marketing_stats_file):
+            data = load_data(marketing_stats_file)
             if data:
-                last_run = max(data, key=lambda x: x.get('date', ''))
-                return last_run.get('date', 'Hech qachon')
+                last_run = max(data, key=lambda x: x.get('date', '') + ' ' + x.get('time', ''))
+                return f"{last_run.get('date', '')} {last_run.get('time', '')}"
         return 'Hech qachon'
     except:
         return 'Hech qachon'
@@ -1472,22 +1476,49 @@ def get_today_posts_count():
         return 0
 
 def save_marketing_run_data(posts_count):
-    """Marketing run ma'lumotlarini saqlash"""
+    """Marketing run ma'lumotlarini saqlash (autonomous system uchun)"""
     try:
-        marketing_file = os.path.join(DATA_DIR, "marketing_runs.json")
-        runs = load_data(marketing_file) if os.path.exists(marketing_file) else []
+        marketing_stats_file = os.path.join(DATA_DIR, "marketing_stats.json")
+        stats = load_data(marketing_stats_file) if os.path.exists(marketing_stats_file) else []
         
-        new_run = {
-            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'posts_count': posts_count,
-            'status': 'success'
+        new_stats = {
+            'date': datetime.now().strftime('%Y-%m-%d'),
+            'time': datetime.now().strftime('%H:%M:%S'),
+            'posts_created': posts_count,
+            'posts_scheduled': posts_count,
+            'ai_model_used': 'gemini-1.5-flash',
+            'status': 'completed'
         }
         
-        runs.append(new_run)
-        save_data(marketing_file, runs)
+        stats.append(new_stats)
+        # Keep only last 30 days
+        stats = stats[-30:]
+        save_data(marketing_stats_file, stats)
         
     except Exception as e:
-        app.logger.error(f"Marketing run ma'lumotlarini saqlashda xatolik: {e}")
+        app.logger.error(f"Marketing stats saqlashda xatolik: {e}")
+
+def get_marketing_statistics():
+    """Marketing statistikalarini olish"""
+    try:
+        marketing_stats_file = os.path.join(DATA_DIR, "marketing_stats.json")
+        if os.path.exists(marketing_stats_file):
+            return load_data(marketing_stats_file)
+        return []
+    except:
+        return []
+
+def get_autonomous_system_status():
+    """Autonomous system holatini tekshirish"""
+    status = {
+        'ai_available': AI_MODEL is not None,
+        'telegram_configured': bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID),
+        'daily_job_file': os.path.exists('daily_job.py'),
+        'data_directory': os.path.exists(DATA_DIR),
+        'last_run': get_last_marketing_run(),
+        'today_posts': get_today_posts_count()
+    }
+    return status
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
