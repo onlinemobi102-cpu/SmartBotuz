@@ -26,7 +26,7 @@ TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
 # Admin Configuration
-ADMIN_PASSWORD = "smartbot123"
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "smartbot123")
 
 # Data storage files
 DATA_DIR = "data"
@@ -393,7 +393,7 @@ def admin_portfolio_add():
             image_filename = 'default-portfolio.jpg'
             if 'image' in request.files:
                 file = request.files['image']
-                if file.filename != '' and allowed_file(file.filename):
+                if file.filename and file.filename != '' and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     unique_filename = f"{new_id}_{filename}"
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
@@ -471,7 +471,7 @@ def admin_portfolio_edit(project_id):
         # Handle file upload
         if 'image' in request.files:
             file = request.files['image']
-            if file.filename != '' and allowed_file(file.filename):
+            if file.filename and file.filename != '' and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 unique_filename = f"{project_id}_{filename}"
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
