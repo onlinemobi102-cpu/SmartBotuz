@@ -37,7 +37,7 @@
     <div class="col-12">
       <div class="card" style="background-color: rgba(52, 58, 64, 0.9); border: 1px solid rgba(255,255,255,0.1);">
         <div class="card-body">
-          <form method="POST">
+          <form method="POST" enctype="multipart/form-data">
             <div class="row g-3">
               <div class="col-md-8">
                 <label for="title" class="form-label text-white">Loyiha nomi *</label>
@@ -70,21 +70,91 @@
                 <textarea id="description"
                           name="description" 
                           class="form-control bg-dark border-0 text-white" 
-                          rows="4" 
-                          placeholder="Loyiha haqida batafsil ma'lumot yozing..."
+                          rows="3" 
+                          placeholder="Loyiha haqida qisqa tavsif..."
                           required>{% if project %}{{ project.description }}{% endif %}</textarea>
+              </div>
+
+              <!-- Client and Project Details -->
+              <div class="col-md-6">
+                <label for="client" class="form-label text-white">Mijoz</label>
+                <input type="text" 
+                       id="client"
+                       name="client" 
+                       class="form-control bg-dark border-0 text-white" 
+                       placeholder="Mijoz nomi"
+                       value="{% if project %}{{ project.client }}{% endif %}">
+              </div>
+
+              <div class="col-md-3">
+                <label for="duration" class="form-label text-white">Davomiyligi</label>
+                <input type="text" 
+                       id="duration"
+                       name="duration" 
+                       class="form-control bg-dark border-0 text-white" 
+                       placeholder="2 hafta"
+                       value="{% if project %}{{ project.duration }}{% endif %}">
+              </div>
+
+              <div class="col-md-3">
+                <label for="price" class="form-label text-white">Narxi</label>
+                <input type="text" 
+                       id="price"
+                       name="price" 
+                       class="form-control bg-dark border-0 text-white" 
+                       placeholder="2,500,000 so'm"
+                       value="{% if project %}{{ project.price }}{% endif %}">
+              </div>
+
+              <!-- Problem and Solution -->
+              <div class="col-md-6">
+                <label for="problem" class="form-label text-white">Mijoz muammosi</label>
+                <textarea id="problem"
+                          name="problem" 
+                          class="form-control bg-dark border-0 text-white" 
+                          rows="3" 
+                          placeholder="Mijoz qanday muammoga duch kelgan...">{% if project %}{{ project.problem }}{% endif %}</textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label for="solution" class="form-label text-white">Yechim</label>
+                <textarea id="solution"
+                          name="solution" 
+                          class="form-control bg-dark border-0 text-white" 
+                          rows="3" 
+                          placeholder="Qanday yechim taklif qilindi...">{% if project %}{{ project.solution }}{% endif %}</textarea>
+              </div>
+
+              <!-- Features and Results -->
+              <div class="col-md-6">
+                <label for="features" class="form-label text-white">Xususiyatlar</label>
+                <textarea id="features"
+                          name="features" 
+                          class="form-control bg-dark border-0 text-white" 
+                          rows="4" 
+                          placeholder="Har bir qator alohida xususiyat">{% if project %}{{ project.features_str }}{% endif %}</textarea>
+                <small class="text-white-50">Har bir qatorda bitta xususiyat yozing</small>
+              </div>
+
+              <div class="col-md-6">
+                <label for="results" class="form-label text-white">Natijalar</label>
+                <textarea id="results"
+                          name="results" 
+                          class="form-control bg-dark border-0 text-white" 
+                          rows="4" 
+                          placeholder="Har bir qator alohida natija">{% if project %}{{ project.results_str }}{% endif %}</textarea>
+                <small class="text-white-50">Har bir qatorda bitta natija yozing</small>
               </div>
               
               <div class="col-md-6">
-                <label for="image" class="form-label text-white">Rasm fayl nomi</label>
-                <input type="text" 
+                <label for="image" class="form-label text-white">Rasm yuklash</label>
+                <input type="file" 
                        id="image"
                        name="image" 
                        class="form-control bg-dark border-0 text-white" 
-                       placeholder="portfolio-1.jpg"
-                       value="{% if project %}{{ project.image }}{% endif %}">
+                       accept=".jpg,.jpeg,.png,.gif,.webp">
                 <small class="text-white-50">
-                  Fayl nomini kiriting (static/images papkasida bo'lishi kerak)
+                  JPG, PNG, GIF, WEBP formatlarida yuklash mumkin
                 </small>
               </div>
               
@@ -98,6 +168,19 @@
                        value="{% if project %}{{ project.tags_str }}{% endif %}">
                 <small class="text-white-50">
                   Vergul bilan ajrating: Telegram, Python, API
+                </small>
+              </div>
+
+              <div class="col-12">
+                <label for="technologies" class="form-label text-white">Texnologiyalar</label>
+                <input type="text" 
+                       id="technologies"
+                       name="technologies" 
+                       class="form-control bg-dark border-0 text-white" 
+                       placeholder="Python, aiogram, PostgreSQL"
+                       value="{% if project %}{{ project.technologies_str }}{% endif %}">
+                <small class="text-white-50">
+                  Vergul bilan ajrating: Python, Flask, PostgreSQL
                 </small>
               </div>
               

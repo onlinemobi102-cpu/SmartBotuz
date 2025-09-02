@@ -2,25 +2,65 @@
   {
     "id": 1,
     "title": "E-commerce Bot",
+    "slug": "ecommerce-bot",
     "description": "Telegram orqali mahsulot sotish va buyurtmalarni boshqarish",
+    "short_description": "Telegram orqali mahsulot sotish va buyurtmalarni boshqarish tizimi",
     "image": "portfolio-1.jpg",
-    "tags": [
-      "Telegram",
-      "E-commerce",
-      "Bot"
+    "tags": ["Telegram", "E-commerce", "Bot"],
+    "category": "bot",
+    "client": "TechShop.uz",
+    "duration": "2 hafta",
+    "price": "2,500,000 so'm",
+    "status": "Muvaffaqiyatli yakunlandi",
+    "gradient": "primary",
+    "icon": "fab fa-telegram",
+    "problem": "Do'kon egasi har kuni onlayn buyurtmalarni qo'lda qayd qilardi. Mijozlar bilan WhatsApp orqali muloqot qilish vaqtni ko'p olardi, xatolar tez-tez ro'y berardi va sotuv jarayoni sekin edi.",
+    "solution": "Telegram bot orqali to'liq avtomatlashtirilgan e-commerce tizimi yaratildi. Mijozlar katalogni ko'rishi, mahsulot tanlashi, buyurtma berishi va to'lov qilishi mumkin bo'ldi.",
+    "features": [
+      "Mahsulotlar katalogi va kategoriyalar",
+      "Savat va buyurtma boshqaruvi", 
+      "Click/Payme to'lov integratsiyasi",
+      "Admin panel buyurtmalarni kuzatish uchun",
+      "SMS va email xabarnomalar"
     ],
-    "category": "bot"
+    "results": [
+      "Buyurtma berish vaqti 10 daqiqadan 2 daqiqaga qisqardi",
+      "Sotuv miqdori 150% oshdi",
+      "Mijozlar qulayligi 90% yaxshilandi",
+      "Operatsion xarajatlar 40% kamaydi"
+    ],
+    "technologies": ["Python", "aiogram", "Telegram Bot API", "Click API", "Payme API", "PostgreSQL", "Redis"]
   },
   {
     "id": 2,
     "title": "Ta'lim Boti",
+    "slug": "education-bot",
     "description": "O'quvchilar uchun testlar va natijalarni boshqarish tizimi",
+    "short_description": "O'quvchilar uchun testlar va natijalarni boshqarish tizimi",
     "image": "portfolio-2.jpg",
-    "tags": [
-      "Telegram",
-      "Education",
-      "Test"
+    "tags": ["Telegram", "Education", "Test"],
+    "category": "bot",
+    "client": "EduCenter Academy",
+    "duration": "3 hafta", 
+    "price": "3,500,000 so'm",
+    "status": "Muvaffaqiyatli yakunlandi",
+    "gradient": "success",
+    "icon": "fas fa-graduation-cap",
+    "problem": "Ta'lim markazi testlarni qog'ozda o'tkazardi. Natijalarni tekshirish va baholar qo'yish ko'p vaqt olardi. O'quvchilar natijalarini kechikib bilar edi.",
+    "solution": "Telegram bot orqali onlayn test tizimi yaratildi. O'quvchilar testlarni topshirishi, darhol natijani bilishi va o'qituvchilar hisobotlarni real vaqtda olishi mumkin.",
+    "features": [
+      "Ko'p tanlovli va ochiq savollar tizimi",
+      "Real vaqtda natijalarni ko'rsatish",
+      "O'qituvchilar uchun admin panel",
+      "Excel formatda hisobotlar",
+      "Darajalar va sertifikatlar tizimi"
     ],
-    "category": "bot"
+    "results": [
+      "Test topshirish vaqti 50% qisqardi",
+      "O'qituvchilar ish yukini 60% kamaytirdi", 
+      "O'quvchilar faolligi 200% oshdi",
+      "Xatolar 95% kamaydi"
+    ],
+    "technologies": ["Python", "aiogram", "SQLite", "Telegram Bot API", "Excel API", "PDF Generator"]
   }
 ]

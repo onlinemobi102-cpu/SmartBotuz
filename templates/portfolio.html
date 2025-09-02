@@ -26,17 +26,17 @@
                     <button class="btn btn-outline-primary mx-2 mb-2 filter-btn active" data-filter="all">
                         Barchasi
                     </button>
-                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="telegram">
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="bot">
                         Telegram Botlar
                     </button>
-                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="chatbot">
-                        Chatbotlar
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="web">
+                        Web Saytlar
                     </button>
                     <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="automation">
                         Avtomatlashtirish
                     </button>
-                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="website">
-                        Web Saytlar
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="ai">
+                        AI/Chatbot
                     </button>
                 </div>
             </div>
@@ -48,380 +48,95 @@
 <section class="py-5">
     <div class="container">
         <div class="row g-4" id="portfolio-grid">
-            <!-- Telegram Bot Projects -->
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="telegram">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fab fa-telegram fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">E-commerce Bot</h5>
-                        <p class="text-muted mb-3">
-                            Onlayn do'kon uchun to'liq funktsional Telegram bot. Mahsulotlar katalogi, buyurtma berish, to'lov tizimi.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-primary me-1">Telegram</span>
-                            <span class="badge bg-secondary me-1">E-commerce</span>
-                            <span class="badge bg-success">Payment</span>
+            {% if portfolio %}
+                {% for project in portfolio %}
+                <div class="col-lg-4 col-md-6 portfolio-item" data-category="{{ project.category }}">
+                    <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                        <div class="portfolio-image bg-gradient-{{ project.gradient|default('primary') }} d-flex align-items-center justify-content-center" style="height: 200px;">
+                            {% if project.image and project.image != 'default-portfolio.jpg' %}
+                                <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt="{{ project.title }}" class="img-fluid h-100 w-100 object-fit-cover">
+                            {% else %}
+                                <i class="{{ project.icon|default('fas fa-laptop-code') }} fa-4x text-white"></i>
+                            {% endif %}
                         </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>1000+ foydalanuvchi</small>
-                            <small><i class="fas fa-clock me-1"></i>2 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/ecommerce-bot" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="telegram">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-success d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-graduation-cap fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">Ta'lim Boti</h5>
-                        <p class="text-muted mb-3">
-                            Onlayn kurslar va test topshirish uchun Telegram bot. Video darslar, testlar, sertifikatlar.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-primary me-1">Telegram</span>
-                            <span class="badge bg-warning me-1">Education</span>
-                            <span class="badge bg-info">Testing</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>500+ talaba</small>
-                            <small><i class="fas fa-clock me-1"></i>3 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/education-bot" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
+                        <div class="portfolio-content p-4">
+                            <h5 class="fw-bold mb-2">{{ project.title }}</h5>
+                            <p class="text-muted mb-3">
+                                {{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}
+                            </p>
+                            {% if project.tags %}
+                            <div class="portfolio-tags mb-3">
+                                {% for tag in project.tags %}
+                                <span class="badge bg-primary me-1">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="portfolio-stats d-flex justify-content-between text-muted">
+                                <small><i class="fas fa-calendar me-1"></i>{{ project.duration|default('N/A') }}</small>
+                                <small><i class="fas fa-tag me-1"></i>{{ project.category|title }}</small>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{{ url_for('portfolio_detail', project_slug=project.slug) }}" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
+                                <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="telegram">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-warning d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-utensils fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">Restoran Boti</h5>
-                        <p class="text-muted mb-3">
-                            Ovqat buyurtma berish, menu ko'rish va yetkazib berish xizmati uchun Telegram bot.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-primary me-1">Telegram</span>
-                            <span class="badge bg-warning me-1">Restaurant</span>
-                            <span class="badge bg-danger">Delivery</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>2000+ mijoz</small>
-                            <small><i class="fas fa-clock me-1"></i>1.5 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/restaurant-bot" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-briefcase fa-4x text-muted mb-3"></i>
+                    <h4 class="text-muted">Hozircha loyihalar mavjud emas</h4>
+                    <p class="text-muted">Yangi loyihalar qo'shilganda bu yerda ko'rsatiladi</p>
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">Loyiha buyurtma qiling</a>
                 </div>
-            </div>
-            
-            <!-- Chatbot Projects -->
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="chatbot">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-info d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-comments fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">Bank Chatbot</h5>
-                        <p class="text-muted mb-3">
-                            Bank mijozlari uchun AI chatbot. Balans tekshirish, operatsiyalar tarixi, kredit maslahat.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-info me-1">AI Chatbot</span>
-                            <span class="badge bg-primary me-1">Banking</span>
-                            <span class="badge bg-success">NLP</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>5000+ mijoz</small>
-                            <small><i class="fas fa-clock me-1"></i>4 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/bank-chatbot" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="chatbot">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-danger d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-headset fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">Qo'llab-quvvatlash Boti</h5>
-                        <p class="text-muted mb-3">
-                            24/7 mijozlar xizmati uchun chatbot. FAQ, muammolarni hal qilish, operator bilan bog'lash.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-info me-1">Support Bot</span>
-                            <span class="badge bg-warning me-1">24/7</span>
-                            <span class="badge bg-secondary">FAQ</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>3000+ so'rov</small>
-                            <small><i class="fas fa-clock me-1"></i>2 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/support-bot" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Automation Projects -->
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="automation">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-dark d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-cogs fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">CRM Avtomatlashtirish</h5>
-                        <p class="text-muted mb-3">
-                            Mijozlar bilan ishlash jarayonini avtomatlashtirish tizimi. Lead boshqarish, email marketing.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-dark me-1">Automation</span>
-                            <span class="badge bg-primary me-1">CRM</span>
-                            <span class="badge bg-warning">Email</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>50+ sotuvchi</small>
-                            <small><i class="fas fa-clock me-1"></i>6 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/crm-automation" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="automation">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-chart-bar fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">Hisobot Avtomatlashtirish</h5>
-                        <p class="text-muted mb-3">
-                            Ma'lumotlar analizi va avtomatik hisobotlar tizimi. Real-time dashboardlar, email hisobotlar.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-secondary me-1">Analytics</span>
-                            <span class="badge bg-info me-1">Reports</span>
-                            <span class="badge bg-success">Dashboard</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-users me-1"></i>10+ department</small>
-                            <small><i class="fas fa-clock me-1"></i>5 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/reports-automation" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Website Projects -->
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="website">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-globe fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">Korporativ Sayt</h5>
-                        <p class="text-muted mb-3">
-                            Zamonaviy korporativ web sayt. Responsive dizayn, CMS, SEO optimizatsiya, analitika.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-primary me-1">Website</span>
-                            <span class="badge bg-success me-1">Responsive</span>
-                            <span class="badge bg-warning">SEO</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-eye me-1"></i>10K+ tashrif</small>
-                            <small><i class="fas fa-clock me-1"></i>3 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/corporate-website" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 portfolio-item" data-category="website">
-                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
-                    <div class="portfolio-image bg-gradient-success d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-shopping-cart fa-4x text-white"></i>
-                    </div>
-                    <div class="portfolio-content p-4">
-                        <h5 class="fw-bold mb-2">E-commerce Platform</h5>
-                        <p class="text-muted mb-3">
-                            To'liq funktsional onlayn do'kon. Mahsulot katalogi, savat, to'lov, admin panel.
-                        </p>
-                        <div class="portfolio-tags mb-3">
-                            <span class="badge bg-success me-1">E-commerce</span>
-                            <span class="badge bg-primary me-1">Payment</span>
-                            <span class="badge bg-info">Admin</span>
-                        </div>
-                        <div class="portfolio-stats d-flex justify-content-between text-muted">
-                            <small><i class="fas fa-shopping-bag me-1"></i>500+ buyurtma</small>
-                            <small><i class="fas fa-clock me-1"></i>8 hafta</small>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/portfolio/ecommerce-platform" class="btn btn-sm btn-outline-primary me-2">Batafsil</a>
-                            <a href="{{ url_for('contact') }}" class="btn btn-sm btn-primary">Buyurtma</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- Call to Action -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="display-5 fw-bold mb-4">Sizning loyihangiz keyingi bo'lsin!</h2>
-                <p class="lead text-muted mb-5">
-                    Bizning tajribali jamoamiz sizning g'oyalaringizni muvaffaqiyatli loyihaga aylantiradi.
+                <h2 class="fw-bold mb-3">Sizning loyihangizni amalga oshiraylik!</h2>
+                <p class="lead text-muted mb-4">
+                    Bizning tajribali jamoamiz sizning biznes ehtiyojlaringizga mos yechim yaratadi
                 </p>
-                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg px-5">
-                    <i class="fas fa-rocket me-2"></i>Loyihani boshlash
-                </a>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-paper-plane me-2"></i>Loyiha boshlash
+                    </a>
+                    <a href="{{ url_for('services') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-list me-2"></i>Xizmatlarimiz
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
-{% endblock %}
-
-{% block extra_scripts %}
-<style>
-@media (max-width: 768px) {
-    /* Mobilda header kichikroq */
-    .page-header {
-        padding: 1.5rem 0 !important;
-        margin-top: 3.5rem !important;
-    }
-    
-    .display-4 {
-        font-size: 1.8rem !important;
-    }
-    
-    /* Portfolio kartalarini mobil uchun optimizatsiya */
-    .portfolio-image {
-        height: 120px !important;
-    }
-    
-    .portfolio-content {
-        padding: 1rem !important;
-    }
-    
-    .portfolio-content h5 {
-        font-size: 1.1rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    .portfolio-content p {
-        font-size: 0.9rem !important;
-        margin-bottom: 0.75rem !important;
-        line-height: 1.4;
-    }
-    
-    .portfolio-tags {
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .portfolio-tags .badge {
-        font-size: 0.75rem !important;
-        padding: 0.25rem 0.5rem !important;
-        margin-bottom: 0.25rem;
-    }
-    
-    .portfolio-stats {
-        font-size: 0.8rem !important;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .btn-sm {
-        font-size: 0.8rem !important;
-        padding: 0.375rem 0.75rem !important;
-    }
-    
-    /* Filter tugmalarini mobilda kichikroq */
-    .portfolio-filter .btn {
-        font-size: 0.85rem !important;
-        padding: 0.5rem 1rem !important;
-        margin: 0.25rem !important;
-    }
-    
-    /* Grid spacing mobilda */
-    .row.g-4 {
-        margin: 0 -0.5rem !important;
-    }
-    
-    .row.g-4 > * {
-        padding: 0 0.5rem !important;
-        margin-bottom: 1rem !important;
-    }
-}
-
-/* Icon larni kichikroq qilish */
-@media (max-width: 576px) {
-    .portfolio-image i {
-        font-size: 2.5rem !important;
-    }
-    
-    .display-4 {
-        font-size: 1.6rem !important;
-    }
-    
-    .lead {
-        font-size: 1rem !important;
-    }
-}
-</style>
 
 <script>
-// Portfolio filter functionality
+// Portfolio filtering
 document.addEventListener('DOMContentLoaded', function() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+
             // Update active button
             filterBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
 
-            const filter = this.getAttribute('data-filter');
-
-            // Filter portfolio items
+            // Filter items
             portfolioItems.forEach(item => {
-                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                const category = item.getAttribute('data-category');
+                
+                if (filter === 'all' || category === filter) {
                     item.style.display = 'block';
-                    item.style.animation = 'fadeIn 0.5s ease-in-out';
                 } else {
                     item.style.display = 'none';
                 }
@@ -430,4 +145,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<style>
+.portfolio-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.portfolio-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-tags .badge {
+    font-size: 0.75em;
+}
+
+.filter-btn {
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: var(--bs-primary);
+}
+
+.portfolio-item {
+    transition: opacity 0.3s ease;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+</style>
 {% endblock %}

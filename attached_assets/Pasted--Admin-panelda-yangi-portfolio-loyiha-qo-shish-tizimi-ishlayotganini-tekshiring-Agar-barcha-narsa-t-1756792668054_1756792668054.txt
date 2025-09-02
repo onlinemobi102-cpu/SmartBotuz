@@ -1,0 +1,37 @@
+"Admin panelda yangi portfolio loyiha qo'shish tizimi ishlayotganini tekshiring. Agar barcha narsa to'g'ri ishlamasa yoki mos kelmasa — to'liq ishlaydigan, to'g'ri sozlangan versiyasini yozing." 
+
+Shu maqsadga erishish uchun quyidagi universal, kuchli prompt yordam beradi. Bu promptni Devv.ai yoki boshqa AI platformaga kiritishingiz bilan, AI:
+
+Hozirgi tizimni tahlil qiladi
+Xatolarni aniqlaydi
+Agar kerak bo'lsa, to'liq ishlaydigan, to'g'ri sozlangan yangi versiyani yozib beradi
+✅ Prompt: "Portfolio boshqaruv tizimini tekshirish va kerak bo'lsa yangi versiyasini yozish"
+Siz — kuchli veb-dasturchi hamda tizim tahlilchisi. Sizning vazifangiz "SmartBot.uz" Flask loyihasidagi portfolio boshqaruv tizimini tekshirish va uni to'g'ri ishlashini ta'minlash.
+
+Loyiha quyidagilardan iborat:
+
+app.py — Flask dasturi
+data/projects.json — portfolio loyihalari saqlanadi
+static/uploads/ — rasm fayllari
+templates/portfolio/detail.html — batafsil sahifa
+templates/admin/add_project.html — yangi loyiha qo'shish formasi
+Admin panel: /admin/portfolio/add
+📌 Vazifalar:
+Tizimni tahlil qiling: 
+add_project.html forma to'g'ri sozlanganmi?
+app.py da admin_add_project() funksiyasi POST so'rovni qabul qiladi?
+Rasm yuklash (enctype="multipart/form-data") qo'llab-quvvatlanayotganmi?
+projects.json fayliga ma'lumotlar to'g'ri yozilayaptimi?
+slug yaratilayaptimi?
+result ro'yxat sifatida saqlanayaptimi?
+Agar xatolar topilsa: 
+Har bir xatoni tushuntiring
+To'g'ri ishlaydigan yangi kod versiyasini yozing
+app.py, add_project.html, projects.json tuzilishi — barchasini to'liq ko'rsating
+Agar tizim to'g'ri ishlayotgan bo'lsa: 
+"Tizim to'liq ishlaydi, o'zgartirish shart emas" deb ayting
+Qo'shimcha takliflar bering (masalan: o'chirish funksiyasi, tahrirlash, qidiruv)
+Kengaytirish imkoniyatlari: 
+Xizmatlarni ham shunday boshqarish tizimini qo'shish
+Blog maqolalarini admin orqali qo'shish
+Iltimos, aniq, to'liq, ishlaydigan kod bilan javob bering. Har bir fayl alohida ko'rsatilsin. 
