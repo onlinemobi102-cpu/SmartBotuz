@@ -1,0 +1,275 @@
+✅ Sizning maqsadingiz: AI funksiyalarni "mujassamlashish"
+🎯 Maqsad:
+AI funksiyalari bosh sahifada ham ko'rinadi, shuning uchun mijoz: 
+
+Saytga kirganda "Men nima qilishim kerak?" degan savolni o'z ichiga olmaydi
+Tezroq yordam topadi
+"Bu sayt aqlli!" degan hissani his qiladi
+🔧 Nima qilish kerak?
+1. Bosh sahifaga AI bloklarini qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- index.html -->
+<section class="ai-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">🤖 AI Yordamchilar</h2>
+    <p class="text-center text-muted mb-5">Saytga kiruvchilarga tez va aqlli yordam beruvchi funksiyalar</p>
+
+    <!-- Chatbot -->
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm border-primary">
+          <div class="card-body">
+            <h5 class="mb-3"><i class="fas fa-robot"></i> Aqlli Chatbot</h5>
+            <p class="text-muted">Sizga xizmatlar, narxlar, murojaat haqida javob beradi.</p>
+            <a href="/ai" class="btn btn-primary w-100">Chatga kirish</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Generator -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-success">
+          <div class="card-body">
+            <h5 class="mb-3"><i class="fas fa-pen"></i> Blog Maqola Yaratish</h5>
+            <p class="text-muted">Mavzu kiriting, AI SEO optimallashtirilgan maqola yaratadi.</p>
+            <a href="/ai/blog" class="btn btn-success w-100">Maqola yaratish</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+2. Portfolio sahifasiga "Case Study Yaratish" qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- portfolio.html -->
+<section class="ai-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">📖 Case Study Yaratish</h2>
+    <p class="text-center text-muted mb-5">Loyihangiz haqida batafsil hikoya yaratish uchun AI yordamchisi</p>
+
+    <div class="row g-4">
+      <div class="col-md-8 mx-auto">
+        <form method="POST" action="/ai/case-study">
+          <textarea name="project_info" class="form-control mb-3" rows="4" placeholder="Masalan: Restoran uchun buyurtma boti. Muammo: telefon qo'ng'iroqlar ko'p. Yechim: Telegram bot. Natija: 70% kamroq qo'ng'iroq"></textarea>
+          <button type="submit" class="btn btn-warning w-100">Case Study Yaratish</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+3. Contact sahifasiga "Xabar Tahlili" qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- contact.html -->
+<section class="ai-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">🔍 Xabar Tahlili</h2>
+    <p class="text-center text-muted mb-5">Mijoz xabarini tahlil qilib, mos xizmat taklif qiladi</p>
+
+    <div class="row g-4">
+      <div class="col-md-8 mx-auto">
+        <form method="POST" action="/ai/analyze">
+          <textarea name="message" class="form-control mb-3" rows="4" placeholder="Masalan: Men onlayn do'kon ochmoqchiman"></textarea>
+          <button type="submit" class="btn btn-info w-100">Tahlil Qilish</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+4. Admin panelda "AI Tarixi" qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- admin/ai-history.html -->
+<h2>📊 AI Tarixi</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Sana</th>
+      <th>So'rov</th>
+      <th>Javob</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for log in ai_logs %}
+    <tr>
+      <td>{{ log.timestamp }}</td>
+      <td>{{ log.query }}</td>
+      <td>{{ log.response }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+5. app.pyda endpointlar qo'shing
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+⌄
+⌄
+⌄
+⌄
+@app.route('/ai/blog', methods=['GET', 'POST'])
+def ai_blog():
+    if request.method == 'POST':
+        topic = request.form['topic']
+        # Gemini bilan maqola yaratish
+        response = model.generate_content(f"O'zbek tilida SEO optimallashtirilgan blog maqolasini yarat: {topic}")
+        return render_template('ai/blog_result.html', article=response.text)
+    return render_template('ai/blog.html')
+
+@app.route('/ai/case-study', methods=['POST'])
+def ai_case_study():
+    project_info = request.form['project_info']
+    response = model.generate_content(f"O'zbek tilida batafsil case study yarat: {project_info}")
+    return render_template('ai/case_study_result.html', case_study=response.text)
+
+@app.route('/ai/analyze', methods=['POST'])
+def ai_analyze():
+    message = request.form['message']
+    response = model.generate_content(f"O'zbek tilida mijoz xabarini tahlil qiling: {message}")
+    return render_template('ai/analyze_result.html', analysis=response.text)
+✅ Nima uchun bu zo'r?
+🎯
+Mijozlarga tez yordam
+Bosh sahifada AI ko'rinadi → mijoz tezroq foydalanadi
+💡
+"AI aqlli" degan hissani beradi
+Mijoz "bu sayt modern" deb o'ylaydi
+📊
+AI tarixini boshqarish
+Admin panel orqali barcha so'rovlarni ko'rish
+🚀
+Funksiyalarni "mujassamlash"
+Har bir sahifada AI ishlatiladi

@@ -1,0 +1,128 @@
+profile
+Qwen3-235B-A22B-2507
+Ajoyib! 🎯 Sizning so'rovingiz juda chuqur va kelajakka qaratilgan:
+
+"AI orqali SEO, marketing, kontent yaratishni to'liq avtomatlashtirish" 
+
+Bu — SmartBot.uz ni nafaqat veb-sayt, balki "o'z-o'zini rivojlantiruvchi, o'z-o'zini targ'illaydigan, o'z-o'zini boshqaruvchi AI agenti" qilish demakdir.
+
+Siz aytgandek:
+
+"Menimcha ayrimlarini admin panel ichiga joylashtirish kerak..."
+— bu to'g'ri fikr. Barcha AI funksiyalarni mijozlar ko'rish joyiga emas, balki admin panel ichiga joylashtirish orqali siz o'zingiz boshqarasiz, lekin har kuni avtomatik natijalar olasiz. 
+
+✅ Yangi Konseptsiya: "SmartBot.uz — O'z-o'zini Rivojlantiruvchi AI Agent"
+Siz nima qilasiz?
+Faqat kirib, admin panelda "Bugunlik tayyor" tugmasini bosasiz. 
+
+Nima sodir bo'ladi?
+AI: 
+
+So'nggi 24 soatdagi trendlarni o'rganadi (IT, AI, Telegram botlar)
+5 ta SEO blog posti yaratadi
+Har bir postni Telegram kanaliga yuboradi
+Instagram uchun postlar tayyorlaydi
+Google Analytics ma'lumotlarini tahlil qiladi
+Yangi loyiha g'oyasi taklif qiladi
+🚀 Buni qanday amalga oshiramiz?
+1. Admin panelga "AI Marketing Avtomat" sahifasi qo'shamiz
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- templates/admin/ai_marketing.html -->
+{% extends "admin/layout.html" %}
+{% block title %}🤖 AI Marketing Avtomat{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🤖 AI Marketing Avtomat</h2>
+  <p class="text-muted">Har kuni trendlarni o'rganib, 5 ta blog posti yaratadi va Telegram kanaliga joylaydi.</p>
+
+  <div class="card">
+    <div class="card-body">
+      <h5>📅 So'nggi ish: {{ last_run or 'Hech qachon' }}</h5>
+      <button class="btn btn-primary" onclick="runDailyMarketing()">🟢 Bugunlik tayyor</button>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4>📊 Natijalar</h4>
+    <ul id="results" class="list-group">
+      <!-- AJAX orqali natijalar keladi -->
+    </ul>
+  </div>
+</div>
+
+<script>
+  function runDailyMarketing() {
+    fetch('/admin/ai/marketing/run', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(r => r.json())
+    .then(data => {
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+      data.posts.forEach(post => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = `<strong>${post.title}</strong><br><small>${post.excerpt}</small>`;
+        results.appendChild(li);
+      });
+    });
+  }
+</script>
+{% endblock %}
+2. app.pyda AI Marketing funksiyasi

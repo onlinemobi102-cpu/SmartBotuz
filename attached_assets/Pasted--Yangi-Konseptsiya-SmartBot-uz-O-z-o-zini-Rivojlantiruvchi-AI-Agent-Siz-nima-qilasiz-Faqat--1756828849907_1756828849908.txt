@@ -1,0 +1,259 @@
+✅ Yangi Konseptsiya: "SmartBot.uz — O'z-o'zini Rivojlantiruvchi AI Agent"
+Siz nima qilasiz?
+Faqat kirib, admin panelda "Bugunlik tayyor" tugmasini bosasiz. 
+
+Nima sodir bo'ladi?
+AI: 
+
+So'nggi 24 soatdagi trendlarni o'rganadi (IT, AI, Telegram botlar)
+5 ta SEO blog posti yaratadi
+Har bir postni Telegram kanaliga yuboradi
+Instagram uchun postlar tayyorlaydi
+Google Analytics ma'lumotlarini tahlil qiladi
+Yangi loyiha g'oyasi taklif qiladi
+🚀 Buni qanday amalga oshiramiz?
+1. Admin panelga "AI Marketing Avtomat" sahifasi qo'shamiz
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- templates/admin/ai_marketing.html -->
+{% extends "admin/layout.html" %}
+{% block title %}🤖 AI Marketing Avtomat{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🤖 AI Marketing Avtomat</h2>
+  <p class="text-muted">Har kuni trendlarni o'rganib, 5 ta blog posti yaratadi va Telegram kanaliga joylaydi.</p>
+
+  <div class="card">
+    <div class="card-body">
+      <h5>📅 So'nggi ish: {{ last_run or 'Hech qachon' }}</h5>
+      <button class="btn btn-primary" onclick="runDailyMarketing()">🟢 Bugunlik tayyor</button>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4>📊 Natijalar</h4>
+    <ul id="results" class="list-group">
+      <!-- AJAX orqali natijalar keladi -->
+    </ul>
+  </div>
+</div>
+
+<script>
+  function runDailyMarketing() {
+    fetch('/admin/ai/marketing/run', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(r => r.json())
+    .then(data => {
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+      data.posts.forEach(post => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = `<strong>${post.title}</strong><br><small>${post.excerpt}</small>`;
+        results.appendChild(li);
+      });
+    });
+  }
+</script>
+{% endblock %}
+2. app.pyda AI Marketing funksiyasi
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+⌄
+⌄
+⌄
+⌄
+import requests
+from datetime import datetime
+
+@app.route('/admin/ai/marketing/run', methods=['POST'])
+def ai_daily_marketing():
+    # 1. Trendlarni olish (Google Trends, RSS, Telegram)
+    trends = get_trends()  # Masalan: "AI in education", "Telegram bot for business"
+
+    # 2. Har bir trend uchun blog post yaratish
+    posts = []
+    for trend in trends[:5]:
+        prompt = f"""
+        O'zbek tilida SEO optimallashtirilgan blog maqolasini yarat:
+        Mavzu: {trend}
+        Uzunlik: 600 so'z
+        Sarlavha: jozibador
+        Paragraflar: 5-6 ta
+        Kalit so'zlar: {trend}, aqlli yechimlar, avtomatlashtirish
+        Oxirida: "SmartBot.uz — aqlli yechimlar, zamonaviy biznes uchun"
+        """
+        response = model.generate_content(prompt)
+        post = {
+            "title": extract_title(response.text),
+            "content": response.text,
+            "slug": trend.lower().replace(" ", "-"),
+            "date": datetime.now().strftime("%Y-%m-%d")
+        }
+        posts.append(post)
+
+        # 3. Blogga saqlash
+        save_blog_post(post)
+
+        # 4. Telegram kanaliga yuborish
+        send_to_telegram_channel(post['title'], post['content'])
+
+    # 5. Ma'lumotlarni qaytarish
+    return {'posts': posts, 'count': len(posts)}
+3. Telegram kanaliga avtomatik yuborish
+python
+
+
+1
+2
+3
+4
+⌄
+def send_to_telegram_channel(title, content):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    text = f"📢 YANGI MAQOLA: {title}\n\n{content[:300]}...\n\n👉 Batafsil: https://smartbot.uz/blog/{title.lower().replace(' ', '-')}\n\n#AI #IT #SmartBotUz"
+    requests.post(url, data={'chat_id': '@smartbotuz', 'text': text})
+4. Cron yoki Replit Job orqali har kuni avtomatik ishlatish
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+⌄
+⌄
+⌄
+# daily_job.py
+from app import ai_daily_marketing
+import atexit
+import time
+
+def run_daily():
+    while True:
+        now = datetime.now()
+        if now.hour == 9 and now.minute == 0:  # Har kuni soat 9:00
+            ai_daily_marketing()
+        time.sleep(60)  # Har daqiqada tekshirish
+
+# Replit Job sifatida ishlatish
+5. Admin panelda "Trendlarni ko'rish"
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+⌄
+<h4>📈 So'nggi trendlar</h4>
+<ul>
+  <li>AI in education</li>
+  <li>Telegram bot for business</li>
+  <li>Automation in small business</li>
