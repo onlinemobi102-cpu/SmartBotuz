@@ -12,9 +12,14 @@ import uuid
 import google.generativeai as genai
 import mimetypes
 import PyPDF2
-from datetime import datetime
+from datetime import datetime, timedelta
 import base64
 from io import BytesIO
+import threading
+import time
+import schedule
+from telegram import Bot
+from telegram.error import TelegramError
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -45,7 +50,16 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+TELEGRAM_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID")
+
+# Initialize Telegram Bot
+telegram_bot = None
+if TELEGRAM_BOT_TOKEN:
+    try:
+        telegram_bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    except Exception as e:
+        logging.error(f"Telegram bot initialization failed: {e}")
+        telegram_bot = None
 
 # Admin Configuration
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "smartbot123")
@@ -1380,12 +1394,11 @@ def extract_title_from_content(content):
 
 def send_to_telegram_channel(post):
     """Blog postini Telegram kanaliga yuborish"""
-    if not TELEGRAM_BOT_TOKEN:
+    if not telegram_bot or not TELEGRAM_CHANNEL_ID:
+        app.logger.warning("Telegram bot yoki kanal ID mavjud emas")
         return False
         
     try:
-        # Kanal username yoki chat_id ni aniqlash
-        channel_username = "@smartbotuz"  # O'zgartiring
         
         # Postni qisqartirish
         excerpt = post.get('excerpt', '')
@@ -1406,16 +1419,16 @@ def send_to_telegram_channel(post):
 
 #SmartBotUz #AI #Trend #Blog"""
         
-        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-        data = {
-            'chat_id': channel_username,
-            'text': message,
-            'parse_mode': 'HTML',
-            'disable_web_page_preview': False
-        }
+        # Telegram Bot API orqali yuborish
+        telegram_bot.send_message(
+            chat_id=TELEGRAM_CHANNEL_ID,
+            text=message,
+            parse_mode='HTML',
+            disable_web_page_preview=False
+        )
         
-        response = requests.post(url, data=data, timeout=10)
-        return response.status_code == 200
+        app.logger.info(f"Blog post sent to Telegram: {post['title']}")
+        return True
         
     except Exception as e:
         app.logger.error(f"Telegram yuborishda xatolik: {e}")
