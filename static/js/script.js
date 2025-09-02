@@ -241,13 +241,25 @@ function validateField(field) {
         }
     }
     
-    // Phone validation
-    if (type === 'tel' && value) {
+    // Phone validation (if provided)
+    if (type === 'tel' && value && value.length > 0) {
         const phoneRegex = /^\+998\s\d{2}\s\d{3}\s\d{2}\s\d{2}$/;
         if (!phoneRegex.test(value)) {
-            errorMessage = 'Telefon raqami noto\'g\'ri formatda';
+            errorMessage = 'Telefon raqami noto\'g\'ri formatda. Namuna: +998 90 123 45 67';
             isValid = false;
         }
+    }
+    
+    // Name validation
+    if (field.name === 'name' && value && value.length < 2) {
+        errorMessage = 'Ism kamida 2 harf bo\'lishi kerak';
+        isValid = false;
+    }
+    
+    // Message validation
+    if (field.name === 'message' && value && value.length < 10) {
+        errorMessage = 'Xabar kamida 10 harf bo\'lishi kerak';
+        isValid = false;
     }
     
     if (!isValid) {
@@ -448,13 +460,19 @@ document.addEventListener('DOMContentLoaded', function() {
     preloadImages();
 });
 
-// Handle form submission with AJAX (for better UX)
+// Enhanced form submission with AJAX and better UX
 function handleAjaxForm(form) {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const formData = new FormData(this);
         const action = this.action || window.location.href;
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Yuborilmoqda...';
+        submitBtn.disabled = true;
         
         fetch(action, {
             method: 'POST',
@@ -463,20 +481,46 @@ function handleAjaxForm(form) {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.headers.get('content-type')?.includes('application/json')) {
+                return response.json();
+            } else {
+                // Handle regular form submission response
+                return { success: true, message: 'Xabaringiz muvaffaqiyatli yuborildi!' };
+            }
+        })
         .then(data => {
             if (data.success) {
                 showNotification(data.message, 'success');
                 this.reset();
+                // Clear any existing errors
+                const errorElements = this.querySelectorAll('.is-invalid');
+                errorElements.forEach(el => el.classList.remove('is-invalid'));
+                const feedbacks = this.querySelectorAll('.invalid-feedback');
+                feedbacks.forEach(fb => fb.remove());
             } else {
-                showNotification(data.message, 'error');
+                showNotification(data.message || 'Xatolik yuz berdi', 'error');
             }
         })
         .catch(error => {
+            console.error('Form submission error:', error);
             showNotification('Xatolik yuz berdi. Iltimos, qaytadan urinib ko\'ring.', 'error');
+        })
+        .finally(() => {
+            // Restore button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         });
     });
 }
+
+// Initialize AJAX forms
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        handleAjaxForm(contactForm);
+    }
+});
 
 // Error Handling
 window.addEventListener('error', function(e) {
