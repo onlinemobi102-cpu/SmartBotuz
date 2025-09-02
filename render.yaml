@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: smartbot-uz
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: ADMIN_PASSWORD
+        fromDatabase:
+          name: smartbot-env
+          property: adminPassword
+      - key: TELEGRAM_BOT_TOKEN
+        fromDatabase:
+          name: smartbot-env
+          property: telegramBotToken
+      - key: TELEGRAM_CHAT_ID
+        fromDatabase:
+          name: smartbot-env
+          property: telegramChatId
+      - key: SESSION_SECRET
+        fromDatabase:
+          name: smartbot-env
+          property: sessionSecret
+    healthCheckPath: /
+    autoDeploy: false

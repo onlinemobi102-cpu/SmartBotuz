@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /services
+Allow: /portfolio
+Allow: /about
+Allow: /blog
+Allow: /contact
+
+# Static files
+Allow: /static/
+
+# Admin area - block crawlers
+Disallow: /admin
+
+# Sitemap location
+Sitemap: https://smartbot.uz/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1

@@ -54,7 +54,7 @@
                     <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
                         <div class="portfolio-image bg-gradient-{{ project.gradient|default('primary') }} d-flex align-items-center justify-content-center" style="height: 200px;">
                             {% if project.image and project.image != 'default-portfolio.jpg' %}
-                                <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt="{{ project.title }}" class="img-fluid h-100 w-100 object-fit-cover">
+                                <img src="{{ url_for('static', filename='uploads/' + project.image) }}" alt="{{ project.title }}" class="img-fluid h-100 w-100 object-fit-cover" loading="lazy">
                             {% else %}
                                 <i class="{{ project.icon|default('fas fa-laptop-code') }} fa-4x text-white"></i>
                             {% endif %}

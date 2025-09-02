@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, session
 from werkzeug.utils import secure_filename
+from werkzeug.middleware.proxy_fix import ProxyFix
+from whitenoise import WhiteNoise
 from functools import wraps
 import logging
 import re
@@ -20,6 +22,20 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "smartbot-uz-secret-key")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
+
+# SEO Configuration
+app.config['GA_MEASUREMENT_ID'] = os.environ.get("GA_MEASUREMENT_ID")
+app.config['GOOGLE_VERIFICATION'] = os.environ.get("GOOGLE_VERIFICATION")
+
+# Add WhiteNoise for static file serving with compression
+app.wsgi_app = WhiteNoise(
+    app.wsgi_app, 
+    root='static/', 
+    prefix='static/',
+    max_age=31536000  # 1 year cache
+)
+app.wsgi_app.add_files('static/', prefix='static/')
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -295,6 +311,26 @@ def contact():
 @app.route('/blog')
 def blog():
     return render_template('blog.html')
+
+# ========================
+# SEO ROUTES
+# ========================
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Generate sitemap.xml for SEO"""
+    with open('sitemap.xml', 'r', encoding='utf-8') as f:
+        sitemap_content = f.read()
+    response = app.response_class(sitemap_content, mimetype='application/xml')
+    return response
+
+@app.route('/robots.txt')
+def robots_txt():
+    """Generate robots.txt for SEO"""
+    with open('robots.txt', 'r', encoding='utf-8') as f:
+        robots_content = f.read()
+    response = app.response_class(robots_content, mimetype='text/plain')
+    return response
 
 # ========================
 # ADMIN ROUTES

@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block description %}SmartBot.uz - Telegram botlar, chatbotlar va avtomatlashtirish xizmatlari{% endblock %}">
+    <meta name="description" content="{% block description %}SmartBot.uz - Telegram botlar, chatbotlar va avtomatlashtirish xizmatlari. O'zbekistonda eng yaxshi bot yaratish va biznesni avtomatlashtirish xizmatlari{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}telegram bot, chatbot, avtomatlashtirish, o'zbekiston, bot yaratish, telegram бот, чатбот, автоматизация, узбекистан{% endblock %}">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="SmartBot.uz">
+    <meta name="language" content="uz">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}SmartBot.uz - Telegram Botlar va Avtomatlashtirish{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Biznesingizni avtomatlashtirish uchun aqlli yechimlar. Telegram botlar, chatbotlar va biznes jarayonlarini avtomatlashtirish{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='images/smartbot-preview.jpg', _external=True) }}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.url }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:site_name" content="SmartBot.uz">
+    <meta property="og:locale" content="uz_UZ">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}SmartBot.uz - Telegram Botlar va Avtomatlashtirish{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Biznesingizni avtomatlashtirish uchun aqlli yechimlar. Telegram botlar, chatbotlar va biznes jarayonlarini avtomatlashtirish{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/smartbot-preview.jpg', _external=True) }}{% endblock %}">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="google-site-verification" content="{{ config.GOOGLE_VERIFICATION or '' }}">
+    <link rel="canonical" href="{% block canonical %}{{ request.url }}{% endblock %}">
+    
     <title>{% block title %}SmartBot.uz - Telegram Botlar va Avtomatlashtirish{% endblock %}</title>
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,6 +45,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SmartBot.uz",
+      "url": "{{ url_for('index', _external=True) }}",
+      "logo": "{{ url_for('static', filename='images/logo.png', _external=True) }}",
+      "description": "Telegram botlar, chatbotlar, avtomatlashtirish xizmatlari",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Toshkent",
+        "addressCountry": "UZ"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+998-90-123-45-67",
+        "contactType": "customer service",
+        "availableLanguage": ["uz", "ru"]
+      },
+      "sameAs": [
+        "https://t.me/smartbot_uz",
+        "https://instagram.com/smartbot_uz"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "description": "Telegram bot yaratish va avtomatlashtirish xizmatlari",
+        "priceCurrency": "UZS",
+        "price": "500000",
+        "priceValidUntil": "2025-12-31"
+      }
+    }
+    </script>
+    
+    <!-- Google Analytics 4 -->
+    {% if config.GA_MEASUREMENT_ID %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.GA_MEASUREMENT_ID }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ config.GA_MEASUREMENT_ID }}');
+    </script>
+    {% endif %}
     
     {% block extra_head %}{% endblock %}
 </head>
@@ -181,9 +256,9 @@
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
