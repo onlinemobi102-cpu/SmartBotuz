@@ -112,11 +112,13 @@ h1, h2, h3, h4, h5, h6 {
     transition: var(--transition);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .navbar-brand {
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--primary-color) !important;
 }
 
 .navbar-nav .nav-link {
@@ -124,6 +126,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 0.25rem;
     transition: var(--transition);
     position: relative;
+    color: var(--dark-color) !important;
 }
 
 .navbar-nav .nav-link:hover {
@@ -719,6 +722,7 @@ footer, footer * {
 }
 
 /* Portfolio and blog cards */
+.portfolio-card .portfolio-content,
 .portfolio-card .article-content,
 .blog-card .article-content {
     color: var(--dark-color);
@@ -726,8 +730,14 @@ footer, footer * {
 
 .portfolio-card h5,
 .blog-card h5 {
-    color: var(--dark-color);
+    color: var(--dark-color) !important;
     font-weight: 600;
+}
+
+/* Ensure all portfolio and blog card titles are always visible */
+.portfolio-card .portfolio-content h5,
+.blog-card .article-content h5 {
+    color: var(--dark-color) !important;
 }
 
 /* Utility Classes */
@@ -783,18 +793,7 @@ footer, footer * {
     border-color: #f5c6cb;
 }
 
-/* Make sure navigation text is visible */
-.navbar-brand {
-    color: var(--primary-color) !important;
-}
-
-.navbar-nav .nav-link {
-    color: var(--dark-color) !important;
-}
-
-.navbar-nav .nav-link:hover {
-    color: var(--primary-color) !important;
-}
+/* Additional navbar text styles already defined above */
 
 /* Ensure button text is always visible */
 .btn-primary {
