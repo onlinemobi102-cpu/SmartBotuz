@@ -1,0 +1,395 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - SmartBot.uz{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-gradient-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Blog</h1>
+                <p class="lead">
+                    Bot va avtomatlashtirish dunyosidan yangiliklar, maslahatlar va maqolalar
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Article -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="featured-article bg-white rounded-3 shadow-sm overflow-hidden mb-5">
+                    <div class="article-image bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 300px;">
+                        <i class="fas fa-robot fa-5x text-white"></i>
+                    </div>
+                    <div class="article-content p-5">
+                        <div class="article-meta mb-3">
+                            <span class="badge bg-primary me-2">Asosiy</span>
+                            <span class="text-muted"><i class="fas fa-calendar me-1"></i>15 Dekabr, 2024</span>
+                            <span class="text-muted ms-3"><i class="fas fa-user me-1"></i>SmartBot Team</span>
+                        </div>
+                        <h2 class="fw-bold mb-3">
+                            2025 yilda Telegram botlar: Yangi imkoniyatlar va trendlar
+                        </h2>
+                        <p class="text-muted mb-4">
+                            Kelgusi yilda Telegram botlar sohasida qanday yangliklar kutilmoqda? 
+                            Sun'iy intellekt, ma'lumotlar analitikasi va yangi API imkoniyatlari haqida batafsil.
+                        </p>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-arrow-right me-2"></i>To'liq o'qish
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Categories -->
+<section class="py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="blog-categories text-center">
+                    <button class="btn btn-outline-primary mx-2 mb-2 category-btn active" data-category="all">
+                        Barchasi
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 category-btn" data-category="telegram">
+                        Telegram Botlar
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 category-btn" data-category="ai">
+                        Sun'iy Intellekt
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 category-btn" data-category="automation">
+                        Avtomatlashtirish
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 category-btn" data-category="business">
+                        Biznes
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 category-btn" data-category="tips">
+                        Maslahatlar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4" id="blog-grid">
+            <!-- Telegram Bot Articles -->
+            <div class="col-lg-4 col-md-6 blog-item" data-category="telegram">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-info d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fab fa-telegram fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-info me-2">Telegram</span>
+                            <small class="text-muted">10 Dekabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            Telegram bot orqali onlayn to'lov qabul qilish
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Botingizga to'lov tizimini integratsiya qilish va xavfsiz onlayn to'lovlarni qabul qilish usullari.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-primary btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>245</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>5 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 blog-item" data-category="telegram">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-success d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-shopping-cart fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-success me-2">E-commerce</span>
+                            <small class="text-muted">8 Dekabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            E-commerce bot yaratish: Boshlang'ich qo'llanma
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Onlayn do'kon uchun to'liq funktsional Telegram bot yaratish bo'yicha qadam-baqadam qo'llanma.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-success btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>189</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>8 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- AI Articles -->
+            <div class="col-lg-4 col-md-6 blog-item" data-category="ai">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-warning d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-brain fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-warning me-2">AI</span>
+                            <small class="text-muted">5 Dekabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            ChatGPT va Telegram bot: AI integratsiyasi
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Telegram botingizga ChatGPT API'ni ulash va aqlli chatbot yaratish bo'yicha amaliy qo'llanma.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-warning btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>567</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>12 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 blog-item" data-category="ai">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-danger d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-microphone fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-danger me-2">Voice AI</span>
+                            <small class="text-muted">3 Dekabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            Ovozli botlar: Kelajakning texnologiyasi
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Ovozni tanish va sintez qilish texnologiyalarini Telegram botlarga integratsiya qilish.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-danger btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>234</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>6 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Automation Articles -->
+            <div class="col-lg-4 col-md-6 blog-item" data-category="automation">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-dark d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-cogs fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-dark me-2">Automation</span>
+                            <small class="text-muted">1 Dekabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            Biznes jarayonlarini avtomatlashtirish: 10 ta maslahat
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Kichik biznesdan tortib korporatsiyagacha - har qanday kompaniya uchun avtomatlashtirish yo'llari.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-dark btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>423</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>10 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Business Articles -->
+            <div class="col-lg-4 col-md-6 blog-item" data-category="business">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-chart-line fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-secondary me-2">Business</span>
+                            <small class="text-muted">28 Noyabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            Bot orqali biznes ko'rsatkichlarini oshirish
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Telegram botlar yordamida mijozlar bilan munosabatni yaxshilash va sotishni oshirish usullari.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-secondary btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>345</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>7 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Tips Articles -->
+            <div class="col-lg-4 col-md-6 blog-item" data-category="tips">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-info d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-lightbulb fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-info me-2">Maslahat</span>
+                            <small class="text-muted">25 Noyabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            Bot yaratishda eng ko'p uchraydigan xatolar
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Yangi boshlovchilar bot yaratishda qilmasligi kerak bo'lgan asosiy xatolar va ularni oldini olish.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-info btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>512</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>4 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 blog-item" data-category="tips">
+                <article class="blog-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="article-image bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-tools fa-3x text-white"></i>
+                    </div>
+                    <div class="article-content p-4">
+                        <div class="article-meta mb-2">
+                            <span class="badge bg-primary me-2">Vositalar</span>
+                            <small class="text-muted">22 Noyabr, 2024</small>
+                        </div>
+                        <h5 class="fw-bold mb-3">
+                            Bot yaratish uchun eng yaxshi vositalar
+                        </h5>
+                        <p class="text-muted mb-3">
+                            Telegram bot yaratish, test qilish va deploy qilish uchun eng foydali vositalar ro'yxati.
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-primary btn-sm">O'qish</a>
+                            <div class="article-stats text-muted">
+                                <small><i class="fas fa-eye me-1"></i>678</small>
+                                <small class="ms-2"><i class="fas fa-clock me-1"></i>9 daqiqa</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        
+        <!-- Load More Button -->
+        <div class="text-center mt-5">
+            <button class="btn btn-outline-primary btn-lg" id="loadMore">
+                <i class="fas fa-plus me-2"></i>Ko'proq maqolalar yuklash
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Subscription -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Yangiliklar buyicha xabardor bo'ling</h2>
+                <p class="lead mb-5">
+                    Bot va avtomatlashtirish sohasidagi eng so'nggi yangiliklar va maslahatlarni birinchilar qatorida oling
+                </p>
+                <form class="newsletter-form row g-3 justify-content-center">
+                    <div class="col-auto">
+                        <input type="email" class="form-control form-control-lg" placeholder="Email manzilingiz" required>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-warning btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Obuna bo'lish
+                        </button>
+                    </div>
+                </form>
+                <small class="text-light mt-3 d-block">
+                    Spam yubormaymiz. Istalgan vaqtda obunani bekor qilishingiz mumkin.
+                </small>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Blog category filter
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const blogItems = document.querySelectorAll('.blog-item');
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const category = this.getAttribute('data-category');
+
+            // Filter blog items
+            blogItems.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Load more functionality (placeholder)
+    document.getElementById('loadMore').addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Yuklanmoqda...';
+        
+        // Simulate loading
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-check me-2"></i>Barcha maqolalar yuklandi';
+            this.disabled = true;
+        }, 2000);
+    });
+
+    // Newsletter form
+    document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        if (email) {
+            alert('Obuna uchun rahmat! Tez orada yangiliklar yuboramiz.');
+            this.reset();
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block title %}SmartBot.uz - Telegram Botlar va Avtomatlashtirish Xizmatlari{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Biznesingizni <span class="text-warning">Smart Botlar</span> bilan avtomatlashtiring
+                </h1>
+                <p class="lead mb-4">
+                    Telegram botlar, chatbotlar va avtomatlashtirish yechimlari orqali biznesingizni keyingi bosqichga olib chiqing.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('contact') }}" class="btn btn-warning btn-lg px-4">
+                        <i class="fas fa-rocket me-2"></i>Loyihani boshlash
+                    </a>
+                    <a href="{{ url_for('services') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-eye me-2"></i>Xizmatlarni ko'rish
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-animation">
+                    <i class="fas fa-robot display-1 text-warning mb-4 pulse-animation"></i>
+                    <div class="floating-elements">
+                        <i class="fab fa-telegram floating-1"></i>
+                        <i class="fas fa-comments floating-2"></i>
+                        <i class="fas fa-cogs floating-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Bizning ustunliklarimiz</h2>
+                <p class="lead text-muted">
+                    Zamonaviy texnologiyalar va professional yondashuv bilan sizning biznesingizni rivojlantiramiz
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 p-4 rounded-3 shadow-sm border">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
+                        <h4>Tez va Samarali</h4>
+                    </div>
+                    <p class="text-muted">
+                        Loyihalaringizni eng qisqa muddatda va yuqori sifat bilan amalga oshiramiz.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 p-4 rounded-3 shadow-sm border">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h4>Ishonchli va Xavfsiz</h4>
+                    </div>
+                    <p class="text-muted">
+                        Barcha loyihalarimiz zamonaviy xavfsizlik standartlariga mos ravishda ishlab chiqiladi.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 p-4 rounded-3 shadow-sm border">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                        <h4>24/7 Qo'llab-quvvatlash</h4>
+                    </div>
+                    <p class="text-muted">
+                        Doimiy texnik yordam va qo'llab-quvvatlash xizmatlari mavjud.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Preview -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Bizning xizmatlarimiz</h2>
+                <p class="lead text-muted">
+                    Telegram botlardan tortib to'liq avtomatlashtirish tizimlarigacha
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="service-card bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start">
+                        <div class="service-icon me-3">
+                            <i class="fab fa-telegram fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-3">Telegram Botlar</h4>
+                            <p class="text-muted mb-3">
+                                Mijozlar bilan muloqot, buyurtmalar qabul qilish, ma'lumotlar boshqarish uchun smart botlar.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>E-commerce botlar</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Qo'llab-quvvatlash botlari</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ma'lumot bazasi integratsiyasi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="service-card bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start">
+                        <div class="service-icon me-3">
+                            <i class="fas fa-comments fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-3">Chatbotlar</h4>
+                            <p class="text-muted mb-3">
+                                Veb-sayt va ilovalar uchun sun'iy intellekt asosidagi chatbotlar yaratamiz.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>AI-powered chatbotlar</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ko'p tilli qo'llab-quvvatlash</li>
+                                <li><i class="fas fa-check text-success me-2"></i>CRM integratsiyasi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="service-card bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start">
+                        <div class="service-icon me-3">
+                            <i class="fas fa-cogs fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-3">Biznes Avtomatlashtirish</h4>
+                            <p class="text-muted mb-3">
+                                Biznes jarayonlarini avtomatlashtirish va optimizatsiya qilish yechimlari.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Workflow avtomatlashtirish</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ma'lumotlar integratsiyasi</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Hisobot va analitika</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="service-card bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start">
+                        <div class="service-icon me-3">
+                            <i class="fas fa-globe fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-3">Web Saytlar</h4>
+                            <p class="text-muted mb-3">
+                                Zamonaviy, responsive va SEO optimizatsiya qilingan web saytlar yaratamiz.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Responsive dizayn</li>
+                                <li><i class="fas fa-check text-success me-2"></i>SEO optimizatsiya</li>
+                                <li><i class="fas fa-check text-success me-2"></i>CMS tizimlar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ url_for('services') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-arrow-right me-2"></i>Barcha xizmatlarni ko'rish
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h2 class="display-4 fw-bold text-warning counter" data-target="50">0</h2>
+                    <p class="lead">Muvaffaqiyatli loyihalar</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h2 class="display-4 fw-bold text-warning counter" data-target="30">0</h2>
+                    <p class="lead">Xursand mijozlar</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h2 class="display-4 fw-bold text-warning counter" data-target="100">0</h2>
+                    <p class="lead">Ishlab chiqilgan botlar</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h2 class="display-4 fw-bold text-warning counter" data-target="24">0</h2>
+                    <p class="lead">Soatlik qo'llab-quvvatlash</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Loyihangizni bugun boshlang!</h2>
+                <p class="lead text-muted mb-5">
+                    Bizning mutaxassislar jamoasi sizning g'oyalaringizni hayotga tatbiq etishga tayyor. 
+                    Bepul maslahat olish uchun bog'laning.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-phone me-2"></i>Bepul maslahat
+                    </a>
+                    <a href="{{ url_for('portfolio') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-eye me-2"></i>Ishlarimizni ko'ring
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

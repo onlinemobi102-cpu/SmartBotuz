@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% block title %}Bog'lanish - SmartBot.uz{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-gradient-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Bog'lanish</h1>
+                <p class="lead">
+                    Loyihangizni muhokama qilish uchun biz bilan bog'laning
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="contact-form-wrapper bg-white p-5 rounded-3 shadow-sm">
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold mb-3">Bepul maslahat oling</h2>
+                        <p class="text-muted">
+                            Quyidagi formani to'ldiring va biz 24 soat ichida siz bilan bog'lanamiz
+                        </p>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('contact') }}" id="contactForm">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label fw-bold">Ism va familiya *</label>
+                                <input type="text" class="form-control form-control-lg" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="email" class="form-label fw-bold">Email *</label>
+                                <input type="email" class="form-control form-control-lg" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label fw-bold">Telefon raqami</label>
+                                <input type="tel" class="form-control form-control-lg" id="phone" name="phone" placeholder="+998 90 123 45 67">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="service" class="form-label fw-bold">Qiziqtirgan xizmat</label>
+                                <select class="form-select form-select-lg" id="service" name="service">
+                                    <option value="">Tanlang</option>
+                                    <option value="telegram-bot">Telegram Bot</option>
+                                    <option value="chatbot">AI Chatbot</option>
+                                    <option value="automation">Biznes Avtomatlashtirish</option>
+                                    <option value="website">Web Sayt</option>
+                                    <option value="consultation">Maslahat</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="budget" class="form-label fw-bold">Taxminiy byudjet</label>
+                                <select class="form-select form-select-lg" id="budget" name="budget">
+                                    <option value="">Tanlang</option>
+                                    <option value="500k-1m">500,000 - 1,000,000 so'm</option>
+                                    <option value="1m-3m">1,000,000 - 3,000,000 so'm</option>
+                                    <option value="3m-5m">3,000,000 - 5,000,000 so'm</option>
+                                    <option value="5m+">5,000,000 so'mdan ko'p</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="message" class="form-label fw-bold">Loyiha haqida batafsil *</label>
+                                <textarea class="form-control" id="message" name="message" rows="6" 
+                                    placeholder="Loyihangiz haqida batafsil yozing..." required></textarea>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacy" required>
+                                    <label class="form-check-label" for="privacy">
+                                        Men <a href="#" class="text-primary">maxfiylik siyosati</a> va 
+                                        <a href="#" class="text-primary">foydalanish shartlari</a>ga roziman
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-paper-plane me-2"></i>Xabar yuborish
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Boshqa bog'lanish usullari</h2>
+                <p class="lead text-muted">
+                    Bizga qulay bo'lgan usul orqali murojaat qiling
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="contact-card bg-white p-5 rounded-3 shadow-sm text-center h-100">
+                    <div class="contact-icon bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-phone fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Telefon</h5>
+                    <p class="text-muted mb-3">Dushanba-Juma: 9:00-18:00</p>
+                    <a href="tel:+998901234567" class="btn btn-outline-primary">
+                        +998 90 123 45 67
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="contact-card bg-white p-5 rounded-3 shadow-sm text-center h-100">
+                    <div class="contact-icon bg-info text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <i class="fab fa-telegram fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Telegram</h5>
+                    <p class="text-muted mb-3">24/7 onlayn qo'llab-quvvatlash</p>
+                    <a href="https://t.me/smartbot_uz" class="btn btn-outline-info" target="_blank">
+                        @smartbot_uz
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="contact-card bg-white p-5 rounded-3 shadow-sm text-center h-100">
+                    <div class="contact-icon bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-envelope fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Email</h5>
+                    <p class="text-muted mb-3">24 soat ichida javob beramiz</p>
+                    <a href="mailto:info@smartbot.uz" class="btn btn-outline-success">
+                        info@smartbot.uz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Office Location -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-4">Bizning ofisimiz</h2>
+                <div class="office-info">
+                    <div class="d-flex align-items-start mb-4">
+                        <div class="icon-wrapper bg-primary text-white rounded p-2 me-3">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">Manzil</h5>
+                            <p class="text-muted mb-0">
+                                Toshkent shahar, Yunusobod tumani,<br>
+                                Abdulla Qodiriy ko'chasi 12-uy, 4-qavat
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start mb-4">
+                        <div class="icon-wrapper bg-success text-white rounded p-2 me-3">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">Ish vaqti</h5>
+                            <p class="text-muted mb-0">
+                                Dushanba - Juma: 9:00 - 18:00<br>
+                                Shanba: 10:00 - 15:00<br>
+                                Yakshanba: Dam olish kuni
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start">
+                        <div class="icon-wrapper bg-warning text-white rounded p-2 me-3">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">Transport</h5>
+                            <p class="text-muted mb-0">
+                                Metro: Abdulla Qodiriy (5 daqiqa piyoda)<br>
+                                Avtobus: 45, 67, 89 raqamli marshrutlar
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="#" class="btn btn-primary me-3">
+                        <i class="fas fa-route me-2"></i>Yo'l haritasi
+                    </a>
+                    <a href="tel:+998901234567" class="btn btn-outline-primary">
+                        <i class="fas fa-phone me-2"></i>Qo'ng'iroq qilish
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="office-map bg-light rounded-3 p-5 text-center">
+                    <i class="fas fa-map fa-5x text-primary mb-3"></i>
+                    <h4 class="fw-bold mb-3">Interaktiv xarita</h4>
+                    <p class="text-muted">
+                        Aniq manzil va yo'l haritasini ko'rish uchun tugmani bosing
+                    </p>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt me-2"></i>Google Maps da ochish
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Tez-tez so'raladigan savollar</h2>
+                <p class="lead text-muted">
+                    Mijozlarimiz tomonidan eng ko'p so'raladigan savollar
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Telegram bot yaratish qancha vaqt oladi?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Oddiy Telegram bot 1-2 hafta, murakkab funksiyalar bilan bot 3-4 hafta vaqt oladi. 
+                                Aniq muddat loyihaning murakkabligiga bog'liq.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Narxlar qanday hisoblanadi?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Narx loyihaning murakkabligi, funksiyalar soni va rivojlanish vaqtiga bog'liq. 
+                                Bepul maslahat chog'ida aniq narxni aytamiz.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Loyiha tugaganidan keyin qo'llab-quvvatlash bormi?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Ha, barcha loyihalar uchun 3 oy bepul texnik qo'llab-quvvatlash taqdim etamiz. 
+                                Keyin oylik qo'llab-quvvatlash xizmati mavjud.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                To'lov usullari qanday?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Bank kartasi, bank o'tkazmasi, Payme, Click va naqd to'lov usullarini qabul qilamiz. 
+                                To'lov bosqichma-bosqich amalga oshiriladi.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Form validation and submission
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic validation
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const privacy = document.getElementById('privacy').checked;
+        
+        if (!name || !email || !message || !privacy) {
+            alert('Iltimos, barcha majburiy maydonlarni to\'ldiring va maxfiylik siyosatiga rozilik bering.');
+            return;
+        }
+        
+        // Submit form
+        this.submit();
+    });
+    
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function() {
+        let value = this.value.replace(/\D/g, '');
+        if (value.startsWith('998')) {
+            value = '+998 ' + value.slice(3, 5) + ' ' + value.slice(5, 8) + ' ' + value.slice(8, 10) + ' ' + value.slice(10, 12);
+        }
+        this.value = value;
+    });
+});
+</script>
+{% endblock %}

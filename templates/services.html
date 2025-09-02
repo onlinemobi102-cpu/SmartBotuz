@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Xizmatlar - SmartBot.uz{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-gradient-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Bizning xizmatlarimiz</h1>
+                <p class="lead">
+                    Telegram botlardan tortib to'liq avtomatlashtirish tizimlarigacha - barcha raqamli ehtiyojlaringiz uchun
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Telegram Bots -->
+            <div class="col-lg-6">
+                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
+                    <div class="service-header mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fab fa-telegram fa-4x text-primary"></i>
+                        </div>
+                        <h3 class="fw-bold">Telegram Botlar</h3>
+                        <p class="text-muted">Biznesingiz uchun professional Telegram botlar yaratamiz</p>
+                    </div>
+                    
+                    <div class="service-features mb-4">
+                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>E-commerce va savdo botlari</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mijozlar bilan bog'lanish botlari</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ma'lumotlar boshqaruvi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>To'lov tizimlari integratsiyasi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Avtomatik javoblar</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Analitika va hisobotlar</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing mb-4">
+                        <h5 class="fw-bold">Narxlash:</h5>
+                        <p class="text-muted">500,000 so'mdan boshlanadi</p>
+                    </div>
+                    
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Chatbots -->
+            <div class="col-lg-6">
+                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
+                    <div class="service-header mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-comments fa-4x text-primary"></i>
+                        </div>
+                        <h3 class="fw-bold">AI Chatbotlar</h3>
+                        <p class="text-muted">Sun'iy intellekt asosidagi chatbotlar</p>
+                    </div>
+                    
+                    <div class="service-features mb-4">
+                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Tabiiy til bilan muloqot</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ko'p tilli qo'llab-quvvatlash</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Machine Learning integratsiyasi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>CRM tizimlar bilan integratsiya</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>24/7 mijozlar xizmati</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ovozli yordamchilar</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing mb-4">
+                        <h5 class="fw-bold">Narxlash:</h5>
+                        <p class="text-muted">1,000,000 so'mdan boshlanadi</p>
+                    </div>
+                    
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Business Automation -->
+            <div class="col-lg-6">
+                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
+                    <div class="service-header mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-cogs fa-4x text-primary"></i>
+                        </div>
+                        <h3 class="fw-bold">Biznes Avtomatlashtirish</h3>
+                        <p class="text-muted">Biznes jarayonlarini optimizatsiya qilish</p>
+                    </div>
+                    
+                    <div class="service-features mb-4">
+                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Workflow avtomatlashtirish</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ma'lumotlar integratsiyasi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Avtomatik hisobotlar</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>API integratsiyalar</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Cloud yechimlar</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Real-time monitoring</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing mb-4">
+                        <h5 class="fw-bold">Narxlash:</h5>
+                        <p class="text-muted">2,000,000 so'mdan boshlanadi</p>
+                    </div>
+                    
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Web Development -->
+            <div class="col-lg-6">
+                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
+                    <div class="service-header mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-globe fa-4x text-primary"></i>
+                        </div>
+                        <h3 class="fw-bold">Web Saytlar</h3>
+                        <p class="text-muted">Zamonaviy va responsive web saytlar</p>
+                    </div>
+                    
+                    <div class="service-features mb-4">
+                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Responsive dizayn</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>SEO optimizatsiya</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>CMS tizimlar</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>E-commerce platformalar</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Performance optimizatsiya</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Xavfsizlik</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing mb-4">
+                        <h5 class="fw-bold">Narxlash:</h5>
+                        <p class="text-muted">1,500,000 so'mdan boshlanadi</p>
+                    </div>
+                    
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Ish jarayonimiz</h2>
+                <p class="lead text-muted">
+                    Har bir loyihani professional yondashuv bilan amalga oshiramiz
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <span class="fw-bold">1</span>
+                    </div>
+                    <h5 class="fw-bold">Maslahat</h5>
+                    <p class="text-muted">Sizning ehtiyojlaringizni o'rganamiz va eng yaxshi yechimni taklif qilamiz</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <span class="fw-bold">2</span>
+                    </div>
+                    <h5 class="fw-bold">Rejalashtirish</h5>
+                    <p class="text-muted">Loyiha arxitekturasini ishlab chiqamiz va development rejasini tuzamiz</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <span class="fw-bold">3</span>
+                    </div>
+                    <h5 class="fw-bold">Ishlab chiqish</h5>
+                    <p class="text-muted">Professional yondashuv bilan loyihani hayotga tatbiq etamiz</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step text-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                        <span class="fw-bold">4</span>
+                    </div>
+                    <h5 class="fw-bold">Qo'llab-quvvatlash</h5>
+                    <p class="text-muted">Doimiy texnik yordam va yangilashlar bilan qo'llab-quvvatlaymiz</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Loyihangizni muhokama qilaylik!</h2>
+                <p class="lead text-muted mb-5">
+                    Bepul maslahat olish va loyihangiz uchun eng yaxshi yechimni topish uchun bog'laning.
+                </p>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg px-5">
+                    <i class="fas fa-phone me-2"></i>Bepul maslahat olish
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

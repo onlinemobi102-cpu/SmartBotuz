@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio - SmartBot.uz{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-gradient-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Bizning ishlarimiz</h1>
+                <p class="lead">
+                    Muvaffaqiyatli amalga oshirilgan loyihalarimiz bilan tanishing
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Filter -->
+<section class="py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="portfolio-filter text-center">
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn active" data-filter="all">
+                        Barchasi
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="telegram">
+                        Telegram Botlar
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="chatbot">
+                        Chatbotlar
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="automation">
+                        Avtomatlashtirish
+                    </button>
+                    <button class="btn btn-outline-primary mx-2 mb-2 filter-btn" data-filter="website">
+                        Web Saytlar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4" id="portfolio-grid">
+            <!-- Telegram Bot Projects -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="telegram">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fab fa-telegram fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">E-commerce Bot</h5>
+                        <p class="text-muted mb-3">
+                            Onlayn do'kon uchun to'liq funktsional Telegram bot. Mahsulotlar katalogi, buyurtma berish, to'lov tizimi.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-primary me-1">Telegram</span>
+                            <span class="badge bg-secondary me-1">E-commerce</span>
+                            <span class="badge bg-success">Payment</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>1000+ foydalanuvchi</small>
+                            <small><i class="fas fa-clock me-1"></i>2 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="telegram">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-success d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-graduation-cap fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">Ta'lim Boti</h5>
+                        <p class="text-muted mb-3">
+                            Onlayn kurslar va test topshirish uchun Telegram bot. Video darslar, testlar, sertifikatlar.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-primary me-1">Telegram</span>
+                            <span class="badge bg-warning me-1">Education</span>
+                            <span class="badge bg-info">Testing</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>500+ talaba</small>
+                            <small><i class="fas fa-clock me-1"></i>3 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="telegram">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-warning d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-utensils fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">Restoran Boti</h5>
+                        <p class="text-muted mb-3">
+                            Ovqat buyurtma berish, menu ko'rish va yetkazib berish xizmati uchun Telegram bot.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-primary me-1">Telegram</span>
+                            <span class="badge bg-warning me-1">Restaurant</span>
+                            <span class="badge bg-danger">Delivery</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>2000+ mijoz</small>
+                            <small><i class="fas fa-clock me-1"></i>1.5 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chatbot Projects -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="chatbot">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-info d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-comments fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">Bank Chatbot</h5>
+                        <p class="text-muted mb-3">
+                            Bank mijozlari uchun AI chatbot. Balans tekshirish, operatsiyalar tarixi, kredit maslahat.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-info me-1">AI Chatbot</span>
+                            <span class="badge bg-primary me-1">Banking</span>
+                            <span class="badge bg-success">NLP</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>5000+ mijoz</small>
+                            <small><i class="fas fa-clock me-1"></i>4 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="chatbot">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-danger d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-headset fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">Qo'llab-quvvatlash Boti</h5>
+                        <p class="text-muted mb-3">
+                            24/7 mijozlar xizmati uchun chatbot. FAQ, muammolarni hal qilish, operator bilan bog'lash.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-info me-1">Support Bot</span>
+                            <span class="badge bg-warning me-1">24/7</span>
+                            <span class="badge bg-secondary">FAQ</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>3000+ so'rov</small>
+                            <small><i class="fas fa-clock me-1"></i>2 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Automation Projects -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="automation">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-dark d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-cogs fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">CRM Avtomatlashtirish</h5>
+                        <p class="text-muted mb-3">
+                            Mijozlar bilan ishlash jarayonini avtomatlashtirish tizimi. Lead boshqarish, email marketing.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-dark me-1">Automation</span>
+                            <span class="badge bg-primary me-1">CRM</span>
+                            <span class="badge bg-warning">Email</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>50+ sotuvchi</small>
+                            <small><i class="fas fa-clock me-1"></i>6 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="automation">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-chart-bar fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">Hisobot Avtomatlashtirish</h5>
+                        <p class="text-muted mb-3">
+                            Ma'lumotlar analizi va avtomatik hisobotlar tizimi. Real-time dashboardlar, email hisobotlar.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-secondary me-1">Analytics</span>
+                            <span class="badge bg-info me-1">Reports</span>
+                            <span class="badge bg-success">Dashboard</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-users me-1"></i>10+ department</small>
+                            <small><i class="fas fa-clock me-1"></i>5 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Website Projects -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="website">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-globe fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">Korporativ Sayt</h5>
+                        <p class="text-muted mb-3">
+                            Zamonaviy korporativ web sayt. Responsive dizayn, CMS, SEO optimizatsiya, analitika.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-primary me-1">Website</span>
+                            <span class="badge bg-success me-1">Responsive</span>
+                            <span class="badge bg-warning">SEO</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-eye me-1"></i>10K+ tashrif</small>
+                            <small><i class="fas fa-clock me-1"></i>3 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="website">
+                <div class="portfolio-card bg-white rounded-3 shadow-sm overflow-hidden h-100">
+                    <div class="portfolio-image bg-gradient-success d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-shopping-cart fa-4x text-white"></i>
+                    </div>
+                    <div class="portfolio-content p-4">
+                        <h5 class="fw-bold mb-2">E-commerce Platform</h5>
+                        <p class="text-muted mb-3">
+                            To'liq funktsional onlayn do'kon. Mahsulot katalogi, savat, to'lov, admin panel.
+                        </p>
+                        <div class="portfolio-tags mb-3">
+                            <span class="badge bg-success me-1">E-commerce</span>
+                            <span class="badge bg-primary me-1">Payment</span>
+                            <span class="badge bg-info">Admin</span>
+                        </div>
+                        <div class="portfolio-stats d-flex justify-content-between text-muted">
+                            <small><i class="fas fa-shopping-bag me-1"></i>500+ buyurtma</small>
+                            <small><i class="fas fa-clock me-1"></i>8 hafta</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Sizning loyihangiz keyingi bo'lsin!</h2>
+                <p class="lead text-muted mb-5">
+                    Bizning tajribali jamoamiz sizning g'oyalaringizni muvaffaqiyatli loyihaga aylantiradi.
+                </p>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg px-5">
+                    <i class="fas fa-rocket me-2"></i>Loyihani boshlash
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Portfolio filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter');
+
+            // Filter portfolio items
+            portfolioItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}
