@@ -487,7 +487,27 @@ def contact():
 
 @app.route('/blog')
 def blog():
-    return render_template('blog.html')
+    """Blog sahifasi - real ma'lumotlar bilan"""
+    blogs = load_data(BLOG_FILE)
+    return render_template('blog.html', blogs=blogs)
+
+@app.route('/blog/<slug>')
+def blog_detail(slug):
+    """Blog post batafsil sahifasi"""
+    blogs = load_data(BLOG_FILE)
+    
+    # Find blog post by slug or id
+    blog_post = None
+    for blog in blogs:
+        if blog.get('slug') == slug or str(blog.get('id')) == slug:
+            blog_post = blog
+            break
+    
+    if not blog_post:
+        flash("Blog post topilmadi!", "error")
+        return redirect(url_for('blog'))
+    
+    return render_template('blog/detail.html', blog=blog_post, all_blogs=blogs[:3])
 
 # ========================
 # SEO ROUTES
