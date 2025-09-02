@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% block title %}🤖 AI Marketing Avtomat - SmartBot.uz{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 class="text-white mb-1">
+            <i class="fas fa-robot me-2 text-success"></i>
+            🤖 AI Marketing Avtomat
+          </h2>
+          <p class="text-white-50 mb-0">Har kuni trendlarni o'rganib, 5 ta blog posti yaratadi va kanaliga joylaydi</p>
+        </div>
+        <div>
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-light">
+            <i class="fas fa-arrow-left me-1"></i>Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Control Panel -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-8">
+      <div class="card" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); border: none;">
+        <div class="card-body text-white">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h4>
+                <i class="fas fa-magic me-2"></i>
+                Bugunlik Marketing
+              </h4>
+              <p class="mb-3">So'nggi trendlar asosida blog postlari va Telegram kontent yaratish</p>
+              <p class="mb-0">📅 So'nggi ish: <span class="fw-bold">{{ last_run or 'Hech qachon' }}</span></p>
+            </div>
+            <div>
+              <button class="btn btn-light btn-lg" onclick="runDailyMarketing()" id="runBtn">
+                <i class="fas fa-play me-2"></i>🟢 Ishga tushir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card h-100" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); border: none;">
+        <div class="card-body text-white text-center">
+          <i class="fas fa-chart-line fa-3x mb-3"></i>
+          <h5>Bugungi Natija</h5>
+          <h2 id="todayCount">{{ today_posts or 0 }}</h2>
+          <p class="mb-0">Blog posti yaratildi</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Section -->
+  <div class="row g-4 mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-tasks me-2"></i>
+            Jarayon Holati
+          </h5>
+        </div>
+        <div class="card-body">
+          <div id="progressArea" style="display: none;">
+            <div class="progress mb-3">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                   role="progressbar" style="width: 0%" id="progressBar">
+                0%
+              </div>
+            </div>
+            <div id="currentTask" class="text-muted">Kutilmoqda...</div>
+          </div>
+          <div id="defaultMessage" class="text-center text-muted py-4">
+            <i class="fas fa-info-circle fa-2x mb-3"></i>
+            <p>Jarayonni boshlash uchun "Ishga tushir" tugmasini bosing</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Section -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-newspaper me-2"></i>
+            📊 Yaratilgan Kontentlar
+          </h5>
+        </div>
+        <div class="card-body">
+          <div id="results">
+            <div class="text-center text-muted py-5">
+              <i class="fas fa-newspaper fa-3x mb-3"></i>
+              <p>Hali kontentlar yaratilmagan. Jarayonni boshlang!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <div class="spinner-border text-success mb-3" role="status">
+                    <span class="visually-hidden">Ishlamoqda...</span>
+                </div>
+                <p class="mb-0">AI marketing ishlamoqda...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function runDailyMarketing() {
+    const runBtn = document.getElementById('runBtn');
+    const progressArea = document.getElementById('progressArea');
+    const defaultMessage = document.getElementById('defaultMessage');
+    const progressBar = document.getElementById('progressBar');
+    const currentTask = document.getElementById('currentTask');
+    const results = document.getElementById('results');
+    
+    // Show loading state
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Ishlamoqda...';
+    
+    // Show progress
+    progressArea.style.display = 'block';
+    defaultMessage.style.display = 'none';
+    
+    // Simulate progress steps
+    const steps = [
+        { progress: 20, task: '🔍 So\'nggi trendlarni qidiryapman...' },
+        { progress: 40, task: '📝 Blog postlarini yaratyapman...' },
+        { progress: 60, task: '💾 Ma\'lumotlarni saqlayapman...' },
+        { progress: 80, task: '📢 Telegram kanaliga yubormoqda...' },
+        { progress: 100, task: '✅ Tayyor! Barcha ishlar bajarildi.' }
+    ];
+    
+    let currentStep = 0;
+    
+    function updateProgress() {
+        if (currentStep < steps.length) {
+            const step = steps[currentStep];
+            progressBar.style.width = step.progress + '%';
+            progressBar.textContent = step.progress + '%';
+            currentTask.textContent = step.task;
+            currentStep++;
+            setTimeout(updateProgress, 2000);
+        } else {
+            // Complete - fetch actual results
+            fetch('/admin/ai/marketing/run', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(r => r.json())
+            .then(data => {
+                // Update results
+                if (data.success && data.posts) {
+                    results.innerHTML = '';
+                    data.posts.forEach((post, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'col-md-6 mb-3';
+                        card.innerHTML = `
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">${post.title}</h6>
+                                    <p class="card-text small text-muted">${post.excerpt || post.content.substring(0, 120) + '...'}</p>
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>${post.date}
+                                        <i class="fas fa-check-circle text-success ms-2 me-1"></i>Blog'ga qo'shildi
+                                        <i class="fas fa-paper-plane text-info ms-2 me-1"></i>Telegramga yuborildi
+                                    </small>
+                                </div>
+                            </div>
+                        `;
+                        
+                        const container = document.createElement('div');
+                        container.className = 'row g-3';
+                        container.appendChild(card);
+                        results.appendChild(container);
+                    });
+                    
+                    // Update counter
+                    document.getElementById('todayCount').textContent = data.posts.length;
+                } else {
+                    results.innerHTML = '<div class="alert alert-warning">Xatolik yuz berdi: ' + (data.error || 'Noma\'lum xatolik') + '</div>';
+                }
+                
+                // Reset button
+                runBtn.disabled = false;
+                runBtn.innerHTML = '<i class="fas fa-play me-2"></i>🟢 Ishga tushir';
+            })
+            .catch(error => {
+                results.innerHTML = '<div class="alert alert-danger">Xatolik: ' + error.message + '</div>';
+                runBtn.disabled = false;
+                runBtn.innerHTML = '<i class="fas fa-play me-2"></i>🟢 Ishga tushir';
+            });
+        }
+    }
+    
+    // Start progress simulation
+    updateProgress();
+}
+</script>
+{% endblock %}

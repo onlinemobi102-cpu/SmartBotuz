@@ -792,12 +792,16 @@ def admin_dashboard():
     messages = load_data(MESSAGES_FILE)
     new_messages_count = len([m for m in messages if m.get('status') == 'yangi'])
     
+    # Count AI generated posts today
+    ai_posts_count = get_today_posts_count()
+    
     stats = {
         'services': services_count,
         'portfolio': portfolio_count,
         'blog': blog_count,
         'messages': messages_count,
-        'new_messages': new_messages_count
+        'new_messages': new_messages_count,
+        'ai_posts': ai_posts_count
     }
     return render_template('admin/dashboard.html', stats=stats)
 
@@ -974,6 +978,242 @@ def admin_portfolio_delete(project_id):
         flash("Xatolik yuz berdi!", "error")
     
     return redirect(url_for('admin_portfolio'))
+
+# ========================
+# AI MARKETING AUTOMATION
+# ========================
+
+@app.route('/admin/ai/marketing')
+@admin_required
+def admin_ai_marketing():
+    """AI Marketing Avtomat sahifasi"""
+    # Get last run data
+    last_run = get_last_marketing_run()
+    today_posts = get_today_posts_count()
+    
+    return render_template('admin/ai_marketing.html', 
+                          last_run=last_run, 
+                          today_posts=today_posts)
+
+@app.route('/admin/ai/marketing/run', methods=['POST'])
+@admin_required
+def ai_daily_marketing():
+    """Kundalik AI marketing jarayoni"""
+    if not AI_MODEL:
+        return jsonify({'success': False, 'error': 'AI xizmati mavjud emas'}), 503
+    
+    try:
+        # 1. Trendlarni olish
+        trends = get_latest_trends()
+        
+        # 2. Blog postlari yaratish
+        posts = []
+        for i, trend in enumerate(trends[:5]):
+            try:
+                # AI orqali blog post yaratish
+                post_content = create_trending_blog_post(trend)
+                
+                if post_content:
+                    # Sarlavhani chiqarish
+                    title = extract_title_from_content(post_content)
+                    
+                    # Blog ma'lumotlarini saqlash
+                    blogs = load_data(BLOG_FILE)
+                    new_id = max([b.get('id', 0) for b in blogs], default=0) + 1
+                    
+                    new_post = {
+                        'id': new_id,
+                        'title': title,
+                        'content': post_content,
+                        'excerpt': f"{trend} haqida batafsil ma'lumot va tahlil",
+                        'category': 'AI Trend',
+                        'date': datetime.now().strftime('%Y-%m-%d'),
+                        'slug': create_slug(title),
+                        'ai_generated': True,
+                        'trend_topic': trend
+                    }
+                    
+                    blogs.append(new_post)
+                    save_data(BLOG_FILE, blogs)
+                    posts.append(new_post)
+                    
+                    # Telegram kanaliga yuborish
+                    send_to_telegram_channel(new_post)
+                    
+                    app.logger.info(f"AI blog post created: {title}")
+                    
+            except Exception as e:
+                app.logger.error(f"Error creating blog post for trend '{trend}': {e}")
+                continue
+        
+        # 3. Marketing run ma'lumotlarini saqlash
+        save_marketing_run_data(len(posts))
+        
+        return jsonify({
+            'success': True,
+            'posts': posts,
+            'count': len(posts),
+            'message': f'{len(posts)} ta yangi blog posti yaratildi va Telegram kanaliga yuborildi!'
+        })
+        
+    except Exception as e:
+        app.logger.error(f"AI marketing error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+def get_latest_trends():
+    """So'nggi trendlarni olish"""
+    # Asosiy IT/AI trendlar ro'yxati
+    base_trends = [
+        "Telegram bot biznes uchun afzalliklari",
+        "AI chatbot sayt uchun",
+        "2025 yilda avtomatlashtirish tendensiyalari", 
+        "SmartBot texnologiyalari yangiliklari",
+        "O'zbekistonda digital transformatsiya",
+        "Telegram mini-app rivojlanishi",
+        "AI marketing vositalari",
+        "Biznes jarayonlarini optimallashtirish",
+        "Chatbot integratsiya usullari",
+        "Digital biznes yechimlar"
+    ]
+    
+    # Tasodifiy 5 ta trendni qaytarish
+    import random
+    return random.sample(base_trends, 5)
+
+def create_trending_blog_post(trend_topic):
+    """Trend mavzusi bo'yicha blog post yaratish"""
+    prompt = f"""
+    O'zbek tilida professional SEO optimallashtirilgan blog maqolasi yozing:
+    
+    Mavzu: {trend_topic}
+    
+    Talablar:
+    1. Sarlavha: Jozibador va SEO uchun optimallashtirilgan (50-70 belgi)
+    2. Kirish: 2-3 paragraf, muammoni aniqlash
+    3. Asosiy qism: 4-5 ta bo'lim, har biri 150-250 so'z
+    4. Misollar: Real hayot misollari va statistikalar
+    5. Xulosa: Amaliy tavsiyalar va chaqiruv
+    6. Kalit so'zlar: {trend_topic}, SmartBot.uz, avtomatlashtirish, AI
+    
+    Uslub:
+    - Professional lekin tushunarli
+    - O'zbek biznes auditoriyasi uchun
+    - SmartBot.uz xizmatlariga tabiiy ishoralar
+    - Paragraflar orasida bo'sh qator
+    
+    HTML formatda yozing, faqat <h2>, <h3>, <p>, <strong>, <ul>, <li> teglaridan foydalaning.
+    """
+    
+    return get_ai_response(prompt, 2500)
+
+def extract_title_from_content(content):
+    """Kontent ichidan sarlavhani chiqarish"""
+    try:
+        import re
+        # HTML h2 tagidan sarlavhani topish
+        title_match = re.search(r'<h2>(.*?)</h2>', content, re.IGNORECASE)
+        if title_match:
+            return title_match.group(1).strip()
+        
+        # Agar h2 yo'q bo'lsa, birinchi paragrafdan olish
+        para_match = re.search(r'<p><strong>(.*?)</strong></p>', content, re.IGNORECASE)
+        if para_match:
+            return para_match.group(1).strip()
+            
+        # Agar boshqa formatda bo'lsa
+        lines = content.split('\n')
+        for line in lines[:5]:  # Birinchi 5 qatordan qidirish
+            clean_line = re.sub(r'<[^>]+>', '', line).strip()
+            if clean_line and len(clean_line) > 10:
+                return clean_line[:100]  # Maksimal 100 belgi
+                
+        return "AI Blog Posti"
+    except:
+        return "AI Blog Posti"
+
+def send_to_telegram_channel(post):
+    """Blog postini Telegram kanaliga yuborish"""
+    if not TELEGRAM_BOT_TOKEN:
+        return False
+        
+    try:
+        # Kanal username yoki chat_id ni aniqlash
+        channel_username = "@smartbotuz"  # O'zgartiring
+        
+        # Postni qisqartirish
+        excerpt = post.get('excerpt', '')
+        if not excerpt:
+            # Content dan qisqa matn yaratish
+            import re
+            clean_content = re.sub(r'<[^>]+>', '', post['content'])
+            excerpt = clean_content[:200] + '...' if len(clean_content) > 200 else clean_content
+        
+        # Telegram xabari
+        message = f"""📢 YANGI MAQOLA
+
+🎯 {post['title']}
+
+{excerpt}
+
+📖 To'liq maqolani o'qing: https://smartbot.uz/blog/{post['slug']}
+
+#SmartBotUz #AI #Trend #Blog"""
+        
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        data = {
+            'chat_id': channel_username,
+            'text': message,
+            'parse_mode': 'HTML',
+            'disable_web_page_preview': False
+        }
+        
+        response = requests.post(url, data=data, timeout=10)
+        return response.status_code == 200
+        
+    except Exception as e:
+        app.logger.error(f"Telegram yuborishda xatolik: {e}")
+        return False
+
+def get_last_marketing_run():
+    """So'nggi marketing run ma'lumotini olish"""
+    try:
+        marketing_file = os.path.join(DATA_DIR, "marketing_runs.json")
+        if os.path.exists(marketing_file):
+            data = load_data(marketing_file)
+            if data:
+                last_run = max(data, key=lambda x: x.get('date', ''))
+                return last_run.get('date', 'Hech qachon')
+        return 'Hech qachon'
+    except:
+        return 'Hech qachon'
+
+def get_today_posts_count():
+    """Bugungi postlar sonini olish"""
+    try:
+        today = datetime.now().strftime('%Y-%m-%d')
+        blogs = load_data(BLOG_FILE)
+        today_posts = [b for b in blogs if b.get('date') == today and b.get('ai_generated')]
+        return len(today_posts)
+    except:
+        return 0
+
+def save_marketing_run_data(posts_count):
+    """Marketing run ma'lumotlarini saqlash"""
+    try:
+        marketing_file = os.path.join(DATA_DIR, "marketing_runs.json")
+        runs = load_data(marketing_file) if os.path.exists(marketing_file) else []
+        
+        new_run = {
+            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'posts_count': posts_count,
+            'status': 'success'
+        }
+        
+        runs.append(new_run)
+        save_data(marketing_file, runs)
+        
+    except Exception as e:
+        app.logger.error(f"Marketing run ma'lumotlarini saqlashda xatolik: {e}")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

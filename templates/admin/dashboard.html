@@ -86,6 +86,47 @@
     </div>
   </div>
 
+  <!-- AI Marketing Section -->
+  <div class="row g-4 mb-5">
+    <div class="col-12">
+      <h4 class="text-white mb-3">
+        <i class="fas fa-robot me-2 text-success"></i>
+        🤖 AI Marketing Avtomat
+      </h4>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card h-100" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none;">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-4">
+              <i class="fas fa-magic fa-4x text-white opacity-75"></i>
+            </div>
+            <div class="flex-grow-1">
+              <h5 class="text-white mb-2">O'z-o'zini Rivojlantiruvchi AI Agent</h5>
+              <p class="text-white-50 mb-3">Har kuni trendlarni o'rganib, 5 ta SEO blog posti yaratadi va Telegram kanaliga yuboradi. Faqat "Bugunlik tayyor" tugmasini bosing!</p>
+              <a href="{{ url_for('admin_ai_marketing') }}" class="btn btn-light btn-lg">
+                <i class="fas fa-rocket me-2"></i>AI Marketing Paneli
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card h-100" style="background: linear-gradient(135deg, #6f42c1 0%, #5a3a9a 100%); border: none;">
+        <div class="card-body text-center text-white">
+          <i class="fas fa-brain fa-3x mb-3"></i>
+          <h5>Bugungi Natija</h5>
+          <h2>{{ stats.ai_posts or 0 }}</h2>
+          <p class="mb-0">AI blog posti</p>
+          <small class="opacity-75">So'nggi 24 soatda</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Quick Actions -->
   <div class="row g-4">
     <div class="col-12">
