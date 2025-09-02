@@ -25,6 +25,26 @@ body {
     line-height: 1.6;
     color: var(--dark-color);
     padding-top: 76px; /* Account for fixed navbar */
+    background-color: #ffffff;
+}
+
+/* Ensure text visibility */
+.text-white {
+    color: #ffffff !important;
+}
+
+.text-dark {
+    color: var(--dark-color) !important;
+}
+
+.text-light {
+    color: #f8f9fa !important;
+}
+
+/* Better contrast for muted text */
+.text-muted {
+    color: #6c757d !important;
+    opacity: 1;
 }
 
 /* Typography */
@@ -37,33 +57,54 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Gradient Backgrounds */
+/* Gradient Backgrounds with better text visibility */
 .bg-gradient-primary {
     background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: #ffffff;
 }
 
 .bg-gradient-success {
     background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+    color: #ffffff;
 }
 
 .bg-gradient-warning {
     background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #212529;
 }
 
 .bg-gradient-info {
     background: linear-gradient(135deg, #17a2b8 0%, #117a8b 100%);
+    color: #ffffff;
 }
 
 .bg-gradient-danger {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #ffffff;
 }
 
 .bg-gradient-dark {
     background: linear-gradient(135deg, #343a40 0%, #23272b 100%);
+    color: #ffffff;
 }
 
 .bg-gradient-secondary {
     background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+    color: #ffffff;
+}
+
+/* Ensure text is readable on gradient backgrounds */
+.bg-gradient-primary *,
+.bg-gradient-success *,
+.bg-gradient-info *,
+.bg-gradient-danger *,
+.bg-gradient-dark *,
+.bg-gradient-secondary * {
+    color: inherit;
+}
+
+.bg-gradient-warning * {
+    color: #212529;
 }
 
 /* Navigation */
@@ -105,11 +146,12 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
-/* Hero Section */
+/* Hero Section with better text visibility */
 .hero-section {
     min-height: 100vh;
     position: relative;
     overflow: hidden;
+    color: #ffffff;
 }
 
 .hero-section::before {
@@ -122,6 +164,19 @@ h1, h2, h3, h4, h5, h6 {
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 1000,0 0,0 0,20"/></svg>');
     background-size: cover;
     background-position: bottom;
+    z-index: 0;
+}
+
+.hero-section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section h1,
+.hero-section .lead,
+.hero-section p {
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .hero-animation {
@@ -150,8 +205,10 @@ h1, h2, h3, h4, h5, h6 {
 .floating-1, .floating-2, .floating-3 {
     position: absolute;
     font-size: 2rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     animation: float 3s ease-in-out infinite;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 .floating-1 {
@@ -261,10 +318,34 @@ h1, h2, h3, h4, h5, h6 {
     height: 80px;
 }
 
-/* Page Headers */
+/* Page Headers with better visibility */
 .page-header {
     padding-top: 120px;
     padding-bottom: 80px;
+    color: #ffffff;
+}
+
+.page-header h1,
+.page-header .display-4,
+.page-header .lead,
+.page-header p {
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Ensure page header content is visible on all gradient backgrounds */
+.page-header.bg-gradient-primary *,
+.page-header.bg-gradient-success *,
+.page-header.bg-gradient-info *,
+.page-header.bg-gradient-danger *,
+.page-header.bg-gradient-dark *,
+.page-header.bg-gradient-secondary * {
+    color: #ffffff !important;
+}
+
+.page-header.bg-gradient-warning * {
+    color: #212529 !important;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
 }
 
 /* Service Detail Cards */
@@ -331,9 +412,24 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-/* Newsletter Form */
+/* Newsletter Form with better visibility */
 .newsletter-form .form-control {
     min-width: 300px;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    color: #212529;
+}
+
+.newsletter-form .form-control::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.newsletter-form .form-control:focus {
+    background-color: #ffffff;
+    border-color: var(--warning-color);
+    color: #212529;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
 }
 
 /* FAQ Accordion */
@@ -538,12 +634,35 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Dark Mode Support */
+/* Dark Mode Support - Fixed for better visibility */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --dark-color: #ffffff;
-        --light-color: #2d3748;
-        --white: #1a202c;
+    body {
+        background-color: #1a202c;
+        color: #ffffff;
+    }
+    
+    .bg-white {
+        background-color: #2d3748 !important;
+        color: #ffffff;
+    }
+    
+    .text-muted {
+        color: #a0aec0 !important;
+    }
+    
+    .bg-light {
+        background-color: #2d3748 !important;
+    }
+    
+    .navbar {
+        background-color: #2d3748 !important;
+        border-bottom: 1px solid #4a5568;
+    }
+    
+    .card, .feature-card, .service-card, .portfolio-card, .blog-card {
+        background-color: #2d3748 !important;
+        color: #ffffff;
+        border-color: #4a5568;
     }
 }
 
@@ -556,12 +675,77 @@ h1, h2, h3, h4, h5, h6 {
     outline-offset: 2px;
 }
 
+/* Better visibility for all text elements */
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    color: inherit;
+    font-weight: 700;
+}
+
+.lead {
+    color: inherit;
+    opacity: 1;
+}
+
+/* Statistics section visibility */
+.counter {
+    color: inherit;
+    font-weight: 700;
+}
+
+/* Better contrast for badges and tags */
+.badge {
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.badge.bg-secondary {
+    color: #ffffff;
+    background-color: #6c757d !important;
+}
+
+.badge.bg-info {
+    color: #ffffff;
+    background-color: #17a2b8 !important;
+}
+
+/* Footer visibility */
+footer, footer * {
+    color: #ffffff;
+}
+
+/* Card content visibility */
+.card-body, .card-text {
+    color: inherit;
+}
+
+/* Portfolio and blog cards */
+.portfolio-card .article-content,
+.blog-card .article-content {
+    color: var(--dark-color);
+}
+
+.portfolio-card h5,
+.blog-card h5 {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
 /* Utility Classes */
 .text-gradient-primary {
     background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    /* Fallback for browsers that don't support background-clip */
+    color: #007bff;
+}
+
+/* Ensure text is always visible */
+@supports not (background-clip: text) {
+    .text-gradient-primary {
+        -webkit-text-fill-color: inherit;
+        color: #007bff;
+    }
 }
 
 .border-gradient {
@@ -579,4 +763,81 @@ h1, h2, h3, h4, h5, h6 {
 
 .hover-scale:hover {
     transform: scale(1.05);
+}
+
+/* Additional visibility fixes */
+/* Ensure all important text is visible */
+.alert {
+    color: inherit;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Make sure navigation text is visible */
+.navbar-brand {
+    color: var(--primary-color) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--dark-color) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Ensure button text is always visible */
+.btn-primary {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Social links visibility */
+.social-links a {
+    color: inherit;
+    opacity: 0.8;
+}
+
+.social-links a:hover {
+    opacity: 1;
+    color: inherit;
+}
+
+/* Make sure all headings are visible */
+h1, h2, h3, h4, h5, h6 {
+    color: inherit;
+}
+
+/* FAQ accordion visibility */
+.accordion-button {
+    color: var(--dark-color);
+    background-color: #ffffff;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #ffffff;
+    background-color: var(--primary-color);
 }
