@@ -43,8 +43,8 @@ body {
 
 /* Better contrast for muted text */
 .text-muted {
-    color: #6c757d !important;
-    opacity: 1;
+    color: #ffffff !important;
+    opacity: 0.8;
 }
 
 /* Typography */
@@ -242,6 +242,8 @@ h1, h2, h3, h4, h5, h6 {
 .feature-card, .service-card, .portfolio-card, .blog-card {
     transition: var(--transition);
     border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(52, 58, 64, 0.9) !important;
+    color: #ffffff !important;
 }
 
 .feature-card:hover, .service-card:hover, .portfolio-card:hover, .blog-card:hover {
@@ -722,22 +724,28 @@ footer, footer * {
 }
 
 /* Portfolio and blog cards */
+.portfolio-card,
+.blog-card {
+    background-color: rgba(52, 58, 64, 0.9) !important;
+    color: #ffffff !important;
+}
+
 .portfolio-card .portfolio-content,
 .portfolio-card .article-content,
 .blog-card .article-content {
-    color: var(--dark-color);
+    color: #ffffff;
 }
 
 .portfolio-card h5,
 .blog-card h5 {
-    color: var(--dark-color) !important;
+    color: #ffffff !important;
     font-weight: 600;
 }
 
 /* Ensure all portfolio and blog card titles are always visible */
 .portfolio-card .portfolio-content h5,
 .blog-card .article-content h5 {
-    color: var(--dark-color) !important;
+    color: #ffffff !important;
 }
 
 /* Utility Classes */
