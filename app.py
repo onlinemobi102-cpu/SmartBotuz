@@ -24,6 +24,7 @@ DATA_DIR = "data"
 SERVICES_FILE = os.path.join(DATA_DIR, "services.json")
 PORTFOLIO_FILE = os.path.join(DATA_DIR, "portfolio.json")
 BLOG_FILE = os.path.join(DATA_DIR, "blog.json")
+MESSAGES_FILE = os.path.join(DATA_DIR, "messages.json")
 
 # Create data directory if it doesn't exist
 if not os.path.exists(DATA_DIR):
@@ -84,6 +85,10 @@ def initialize_data_files():
             }
         ]
         save_data(BLOG_FILE, default_blog)
+    
+    # Initialize messages file
+    if not os.path.exists(MESSAGES_FILE):
+        save_data(MESSAGES_FILE, [])
 
 def load_data(filename):
     try:
@@ -100,6 +105,29 @@ def save_data(filename, data):
     except Exception as e:
         app.logger.error(f"Failed to save data to {filename}: {e}")
         return False
+
+def save_message(name, email, phone, service, budget, message):
+    """Save contact message to JSON file"""
+    from datetime import datetime
+    
+    messages = load_data(MESSAGES_FILE)
+    new_id = max([m.get('id', 0) for m in messages], default=0) + 1
+    
+    new_message = {
+        'id': new_id,
+        'name': name,
+        'email': email,
+        'phone': phone if phone else '',
+        'service': service if service else '',
+        'budget': budget if budget else '',
+        'message': message,
+        'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'status': 'yangi',  # yangi, ko'rilgan, javob_berilgan
+        'telegram_sent': False
+    }
+    
+    messages.append(new_message)
+    return save_data(MESSAGES_FILE, messages)
 
 # Initialize data files on startup
 initialize_data_files()
@@ -201,11 +229,21 @@ def contact():
             telegram_message += f"\n💬 <b>Xabar:</b> {message}"
             telegram_message += f"\n\n⏰ <b>Vaqt:</b> {request.environ.get('REQUEST_TIME', 'N/A')}"
             
+            # Save message to JSON file
+            message_saved = save_message(name, email, phone, service, budget, message)
+            
             # Send to Telegram
             telegram_sent = send_telegram_message(telegram_message)
             
+            # Update message with telegram status if saved
+            if message_saved and telegram_sent:
+                messages = load_data(MESSAGES_FILE)
+                if messages:
+                    messages[-1]['telegram_sent'] = True
+                    save_data(MESSAGES_FILE, messages)
+            
             # Log the submission
-            app.logger.info(f'New contact form submission from {name} ({email}) - Telegram: {telegram_sent}')
+            app.logger.info(f'New contact form submission from {name} ({email}) - Saved: {message_saved}, Telegram: {telegram_sent}')
             
             # Flash success message
             if telegram_sent:
@@ -261,11 +299,18 @@ def admin_dashboard():
     services_count = len(load_data(SERVICES_FILE))
     portfolio_count = len(load_data(PORTFOLIO_FILE))
     blog_count = len(load_data(BLOG_FILE))
+    messages_count = len(load_data(MESSAGES_FILE))
+    
+    # Count new messages
+    messages = load_data(MESSAGES_FILE)
+    new_messages_count = len([m for m in messages if m.get('status') == 'yangi'])
     
     stats = {
         'services': services_count,
         'portfolio': portfolio_count,
-        'blog': blog_count
+        'blog': blog_count,
+        'messages': messages_count,
+        'new_messages': new_messages_count
     }
     return render_template('admin/dashboard.html', stats=stats)
 
@@ -525,6 +570,47 @@ def admin_blog_delete(post_id):
         flash("Xatolik yuz berdi!", "error")
     
     return redirect(url_for('admin_blog'))
+
+# ========================
+# MESSAGES MANAGEMENT
+# ========================
+
+@app.route('/admin/messages')
+@admin_required
+def admin_messages():
+    messages = load_data(MESSAGES_FILE)
+    # Sort by date, newest first
+    messages.sort(key=lambda x: x.get('date', ''), reverse=True)
+    return render_template('admin/messages.html', messages=messages)
+
+@app.route('/admin/messages/mark_read/<int:message_id>')
+@admin_required
+def admin_message_mark_read(message_id):
+    messages = load_data(MESSAGES_FILE)
+    for message in messages:
+        if message.get('id') == message_id:
+            message['status'] = 'ko\'rilgan'
+            break
+    
+    if save_data(MESSAGES_FILE, messages):
+        flash("Xabar ko'rilgan deb belgilandi!", "success")
+    else:
+        flash("Xatolik yuz berdi!", "error")
+    
+    return redirect(url_for('admin_messages'))
+
+@app.route('/admin/messages/delete/<int:message_id>')
+@admin_required
+def admin_message_delete(message_id):
+    messages = load_data(MESSAGES_FILE)
+    messages = [m for m in messages if m.get('id') != message_id]
+    
+    if save_data(MESSAGES_FILE, messages):
+        flash("Xabar o'chirildi!", "success")
+    else:
+        flash("Xatolik yuz berdi!", "error")
+    
+    return redirect(url_for('admin_messages'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

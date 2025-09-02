@@ -28,7 +28,7 @@
 
   <!-- Statistics Cards -->
   <div class="row g-4 mb-5">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card text-center h-100" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); border: none;">
         <div class="card-body">
           <i class="fas fa-cogs fa-3x text-white mb-3"></i>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card text-center h-100" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); border: none;">
         <div class="card-body">
           <i class="fas fa-briefcase fa-3x text-white mb-3"></i>
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card text-center h-100" style="background: linear-gradient(135deg, #17a2b8 0%, #117a8b 100%); border: none;">
         <div class="card-body">
           <i class="fas fa-blog fa-3x text-white mb-3"></i>
@@ -62,6 +62,24 @@
           <p class="text-white-50 mb-3">Blog maqolalari</p>
           <a href="{{ url_for('admin_blog') }}" class="btn btn-light">
             <i class="fas fa-edit me-1"></i>Boshqarish
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card text-center h-100" style="background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%); border: none;">
+        <div class="card-body">
+          <i class="fas fa-envelope fa-3x text-white mb-3"></i>
+          <div class="d-flex justify-content-center align-items-center">
+            <h3 class="text-white me-2">{{ stats.messages }}</h3>
+            {% if stats.new_messages > 0 %}
+              <span class="badge bg-danger">{{ stats.new_messages }}</span>
+            {% endif %}
+          </div>
+          <p class="text-white-50 mb-3">Murojaatlar</p>
+          <a href="{{ url_for('admin_messages') }}" class="btn btn-light">
+            <i class="fas fa-eye me-1"></i>Ko'rish
           </a>
         </div>
       </div>
