@@ -994,6 +994,19 @@ def admin_message_mark_read(message_id):
     
     return redirect(url_for('admin_messages'))
 
+@app.route('/admin/messages/delete/<int:message_id>')
+@admin_required
+def admin_message_delete(message_id):
+    messages = load_data(MESSAGES_FILE)
+    messages = [m for m in messages if m.get('id') != message_id]
+    
+    if save_data(MESSAGES_FILE, messages):
+        flash("Xabar o'chirildi!", "success")
+    else:
+        flash("Xatolik yuz berdi!", "error")
+    
+    return redirect(url_for('admin_messages'))
+
 @app.route('/admin/messages/export-csv')
 @admin_required
 def export_messages_csv():
