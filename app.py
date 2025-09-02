@@ -994,6 +994,51 @@ def admin_message_mark_read(message_id):
     
     return redirect(url_for('admin_messages'))
 
+@app.route('/admin/messages/export-csv')
+@admin_required
+def export_messages_csv():
+    """Export messages to CSV"""
+    import csv
+    from io import StringIO
+    from flask import make_response
+    
+    messages = load_data(MESSAGES_FILE)
+    
+    output = StringIO()
+    writer = csv.writer(output)
+    
+    # Header
+    writer.writerow(['ID', 'Ism', 'Email', 'Telefon', 'Xizmat', 'Byudjet', 'Xabar', 'Sana', 'Status'])
+    
+    # Data
+    for msg in messages:
+        writer.writerow([
+            msg.get('id', ''),
+            msg.get('name', ''),
+            msg.get('email', ''),
+            msg.get('phone', ''),
+            msg.get('service', ''),
+            msg.get('budget', ''),
+            msg.get('message', ''),
+            msg.get('date', ''),
+            msg.get('status', '')
+        ])
+    
+    output.seek(0)
+    
+    response = make_response(output.getvalue())
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = f'attachment; filename=messages_{datetime.now().strftime("%Y%m%d")}.csv'
+    
+    return response
+
+@app.route('/api/unread-count')
+def api_unread_count():
+    """API endpoint for unread messages count"""
+    messages = load_data(MESSAGES_FILE)
+    unread_count = len([m for m in messages if m.get('status') == 'yangi'])
+    return jsonify({'count': unread_count})
+
 # ========================
 # PORTFOLIO MANAGEMENT
 # ========================
