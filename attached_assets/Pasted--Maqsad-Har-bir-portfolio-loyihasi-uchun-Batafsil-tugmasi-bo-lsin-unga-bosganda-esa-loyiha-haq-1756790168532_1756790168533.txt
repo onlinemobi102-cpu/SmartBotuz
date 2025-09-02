@@ -1,0 +1,297 @@
+✅ Maqsad:
+Har bir portfolio loyihasi uchun "Batafsil" tugmasi bo'lsin, unga bosganda esa loyiha haqida to'liq ma'lumot — mijoz muammosi, yechim, natija, ishlatilgan texnologiyalar — chiqsin. 
+
+Bu "Case Study" (loyiha hikoyasi) uslubida bo'ladi.
+
+🚀 "Batafsil" tugmasi + Batafsil sahifa tizimi
+1. Portfolio sahifasida "Batafsil" tugmasi qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+⌄
+⌄
+⌄
+⌄
+<!-- portfolio.html -->
+<div class="col-lg-4 col-md-6 mb-4">
+  <div class="project-card h-100 rounded-3 shadow-sm overflow-hidden">
+    <img src="{{ url_for('static', filename='images/edu-bot.jpg') }}" class="w-100" style="height: 200px; object-fit: cover;">
+    <div class="p-3">
+      <h5>O'quv markazi uchun ariza boti</h5>
+      <p class="text-muted">Telegram orqali ota-onalar ariza qoldiradi, ma'lumotlar Excelga yoziladi.</p>
+      <span class="badge bg-primary">Telegram</span>
+      <span class="badge bg-success">Avtomatlashtirish</span>
+      <div class="mt-3">
+        <a href="/portfolio/edu-bot" class="btn btn-sm btn-outline-primary">Batafsil</a>
+      </div>
+    </div>
+  </div>
+</div>
+2. Batafsil sahifa: /portfolio/edu-bot
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+<!-- templates/portfolio/detail.html -->
+{% extends "base.html" %}
+{% block title %}Loyiha: O'quv markazi uchun ariza boti{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <img src="{{ url_for('static', filename='images/edu-bot-full.jpg') }}" class="img-fluid rounded-3 mb-4" alt="Loyiha">
+        <h2>O'quv markazi uchun ariza boti</h2>
+        <p class="lead">Telegram orqali ota-onalar ariza qoldiradi, ma'lumotlar avtomatik Excelga yoziladi.</p>
+
+        <h4 class="mt-5">🎯 Muammo</h4>
+        <p>O'quv markazi har kuni 50+ ta ariza qabul qilardi. Barchasi telefon orqali yoki shaxsan keldi. Ma'lumotlar noto'g'ri yozilardi, qo'lda qayd etish vaqtni olardi.</p>
+
+        <h4 class="mt-4">💡 Yechim</h4>
+        <p>Telegram bot yaratildi. Ota-onalar quyidagilarni kiritadi:</p>
+        <ul>
+          <li>Bola ismi, yoshi</li>
+          <li>Telefon raqami</li>
+          <li>Qiziqish sohasi (matematika, ingliz tili, dasturlash)</li>
+        </ul>
+        <p>Ma'lumotlar avtomatik ravishda Google Sheets yoki Excelga yoziladi. Admin panel orqali barcha arizalarni ko'rish, saralash, eksport qilish mumkin.</p>
+
+        <h4 class="mt-4">✅ Natija</h4>
+        <ul>
+          <li>Arizalarni qayd qilish vaqti 5 daqiqagacha qisqardi</li>
+          <li>Xatolar 90% kamaydi</li>
+          <li>Mutaxassislarga arizalar tezroq yetib boradi</li>
+          <li>Mijozlar 24/7 ariza qoldirish imkoniyatiga ega bo'ldi</li>
+        </ul>
+
+        <h4 class="mt-4">🛠️ Foydalanilgan texnologiyalar</h4>
+        <p>
+          <span class="badge bg-dark">Python</span>
+          <span class="badge bg-info">aiogram</span>
+          <span class="badge bg-success">Google Sheets API</span>
+          <span class="badge bg-primary">Flask</span>
+          <span class="badge bg-secondary">Replit</span>
+        </p>
+
+        <div class="mt-5">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg">
+            <i class="fas fa-rocket me-2"></i>Siz ham shunday qiling!
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card sticky-top" style="top: 100px;">
+          <div class="card-body">
+            <h5>Loyiha tafsilotlari</h5>
+            <ul class="list-unstyled">
+              <li><strong>Mijoz:</strong> EduMarkaz</li>
+              <li><strong>Muddat:</strong> 2 hafta</li>
+              <li><strong>Narx:</strong> 2 500 000 so'm</li>
+              <li><strong>Turi:</strong> Telegram bot</li>
+              <li><strong>Status:</strong> <span class="text-success">Tugatildi ✅</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+3. Flaskda route qo'shing (app.py)
+python
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+@app.route('/portfolio/<project_id>')
+def portfolio_detail(project_id):
+    projects = {
+        'edu-bot': {
+            'title': "O'quv markazi uchun ariza boti",
+            'image': 'edu-bot-full.jpg',
+            'client': 'EduMarkaz',
+            'duration': '2 hafta',
+            'price': '2 500 000 so\'m',
+            'status': 'Tugatildi',
+            'problem': 'Arizalarni qo\'lda qayd qilish vaqtni olardi, xatolar ko\'p edi.',
+            'solution': 'Telegram bot orqali ariza qabul qilish tizimi yaratildi.',
+            'result': [
+                'Arizalarni qayd qilish vaqti 5 daqiqagacha qisqardi',
+                'Xatolar 90% kamaydi',
+                'Mijozlar 24/7 ariza qoldirish imkoniyatiga ega bo\'ldi'
+            ],
+            'tech': ['Python', 'aiogram', 'Google Sheets API', 'Flask']
+        },
+        'clinic-bot': {
+            'title': "Klinika uchun qabul boti",
+            'image': 'clinic-bot.jpg',
+            'client': 'MedLife Clinic',
+            'duration': '3 hafta',
+            'price': '3 500 000 so\'m',
+            'status': 'Tugatildi',
+            'problem': 'Qabulga yozilish uchun telefon qilish kerak edi.',
+            'solution': 'Telegram bot orqali onlayn yozilish tizimi yaratildi.',
+            'result': [
+                'Qabulga yozilish 1 daqiqaga tushdi',
+                'Xodimlar 30% ish yukini kamaytirdi',
+                'Mijozlar qulaylik his qildi'
+            ],
+            'tech': ['Python', 'aiogram', 'Firebase', 'Telegram']
+        }
+    }
+    project = projects.get(project_id)
+    if not project:
+        return "Loyiha topilmadi", 404
+    return render_template('portfolio/detail.html', project=project)
+✅ Nima uchun bu zo'r?
+🎯
+Case Study uslubi
+Mijoz muammosi → yechim → natija — ishonchni oshiradi
+🔍
+Batafsil ma'lumot
+Texnologiyalar, muddat, narx — barcha savollarga javob
+💡
+"Siz ham shunday qiling!"
+CTA tugmasi — mijozni harakatga undaydi
+📱
+Mobilga mos
+Responsive dizayn, o'ng tomonda ma'lumot

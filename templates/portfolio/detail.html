@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - SmartBot.uz{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-gradient-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb bg-transparent p-0 mb-0">
+                        <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-white-50">Bosh sahifa</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url_for('portfolio') }}" class="text-white-50">Portfolio</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="display-4 fw-bold mb-3">{{ project.title }}</h1>
+                <p class="lead">{{ project.short_description }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Detail -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Project Image -->
+                <div class="project-image mb-5">
+                    <div class="bg-gradient-{{ project.gradient }} d-flex align-items-center justify-content-center rounded-3" style="height: 400px;">
+                        <i class="{{ project.icon }} fa-6x text-white"></i>
+                    </div>
+                </div>
+
+                <!-- Problem Section -->
+                <div class="content-section mb-5">
+                    <h3 class="fw-bold mb-4 text-primary">
+                        <i class="fas fa-bullseye me-2"></i>🎯 Mijoz muammosi
+                    </h3>
+                    <p class="lead text-muted">{{ project.problem }}</p>
+                </div>
+
+                <!-- Solution Section -->
+                <div class="content-section mb-5">
+                    <h3 class="fw-bold mb-4 text-success">
+                        <i class="fas fa-lightbulb me-2"></i>💡 Bizning yechimim
+                    </h3>
+                    <p class="mb-4">{{ project.solution }}</p>
+                    
+                    {% if project.features %}
+                    <h5 class="fw-bold mb-3">Asosiy funksiyalar:</h5>
+                    <ul class="list-unstyled">
+                        {% for feature in project.features %}
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>{{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Results Section -->
+                <div class="content-section mb-5">
+                    <h3 class="fw-bold mb-4 text-warning">
+                        <i class="fas fa-trophy me-2"></i>✅ Erishilgan natijalar
+                    </h3>
+                    <div class="row g-3">
+                        {% for result in project.results %}
+                        <div class="col-md-6">
+                            <div class="result-card bg-light p-3 rounded-3 h-100">
+                                <i class="fas fa-chart-line text-success me-2"></i>
+                                <span>{{ result }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Technologies Section -->
+                <div class="content-section mb-5">
+                    <h3 class="fw-bold mb-4 text-info">
+                        <i class="fas fa-cogs me-2"></i>🛠️ Foydalanilgan texnologiyalar
+                    </h3>
+                    <div class="tech-badges">
+                        {% for tech in project.technologies %}
+                        <span class="badge bg-dark me-2 mb-2 p-2">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="cta-section bg-gradient-primary text-white p-4 rounded-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="fw-bold mb-2">Siz ham shunday loyihaga ega bo'ling!</h4>
+                            <p class="mb-0">Bizning tajribali jamoamiz sizning g'oyangizni muvaffaqiyatli loyihaga aylantiradi.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg">
+                                <i class="fas fa-rocket me-2"></i>Boshlash
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Info Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-4">
+                                <i class="fas fa-info-circle text-primary me-2"></i>Loyiha tafsilotlari
+                            </h5>
+                            
+                            <div class="project-info">
+                                <div class="info-item mb-3">
+                                    <strong class="text-muted">Mijoz:</strong>
+                                    <div class="mt-1">{{ project.client }}</div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <strong class="text-muted">Loyiha turi:</strong>
+                                    <div class="mt-1">{{ project.category }}</div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <strong class="text-muted">Ishlab chiqish muddati:</strong>
+                                    <div class="mt-1">{{ project.duration }}</div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <strong class="text-muted">Investitsiya:</strong>
+                                    <div class="mt-1 text-success fw-bold">{{ project.price }}</div>
+                                </div>
+                                
+                                <div class="info-item mb-4">
+                                    <strong class="text-muted">Status:</strong>
+                                    <div class="mt-1">
+                                        <span class="badge bg-success">{{ project.status }} ✅</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane me-2"></i>Taklifnoma so'rash
+                                    </a>
+                                    <a href="{{ url_for('portfolio') }}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-arrow-left me-2"></i>Portfolio'ga qaytish
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Projects -->
+                    <div class="card border-0 shadow-sm mt-4">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold mb-3">
+                                <i class="fas fa-project-diagram text-primary me-2"></i>Shunga o'xshash loyihalar
+                            </h6>
+                            <div class="small">
+                                <a href="{{ url_for('portfolio') }}" class="text-decoration-none">
+                                    Portfolio sahifasida boshqa loyihalarni ko'ring
+                                    <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<style>
+.content-section {
+    scroll-margin-top: 100px;
+}
+
+.result-card {
+    border-left: 4px solid #28a745;
+    transition: transform 0.2s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
+}
+
+.tech-badges .badge {
+    font-size: 0.9rem;
+}
+
+.project-info .info-item {
+    border-bottom: 1px solid #f1f3f4;
+    padding-bottom: 0.75rem;
+}
+
+.project-info .info-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .project-image {
+        height: 250px !important;
+    }
+    
+    .display-4 {
+        font-size: 2rem !important;
+    }
+}
+</style>
+{% endblock %}

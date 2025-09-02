@@ -172,6 +172,264 @@ def services():
 def portfolio():
     return render_template('portfolio.html')
 
+@app.route('/portfolio/<project_id>')
+def portfolio_detail(project_id):
+    """Portfolio detail pages with case study format"""
+    
+    # Detailed project data
+    projects = {
+        'ecommerce-bot': {
+            'title': "E-commerce Bot",
+            'short_description': "Telegram orqali mahsulot sotish va buyurtmalarni boshqarish tizimi",
+            'client': "TechShop.uz",
+            'duration': "2 hafta",
+            'price': "2,500,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Telegram Bot",
+            'gradient': "primary",
+            'icon': "fab fa-telegram",
+            'problem': "Do'kon egasi har kuni onlayn buyurtmalarni qo'lda qayd qilardi. Mijozlar bilan WhatsApp orqali muloqot qilish vaqtni ko'p olardi, xatolar tez-tez ro'y berardi va sotuv jarayoni sekin edi.",
+            'solution': "Telegram bot orqali to'liq avtomatlashtirilgan e-commerce tizimi yaratildi. Mijozlar katalogni ko'rishi, mahsulot tanlashi, buyurtma berishi va to'lov qilishi mumkin bo'ldi.",
+            'features': [
+                "Mahsulotlar katalogi va kategoriyalar",
+                "Savat va buyurtma boshqaruvi", 
+                "Click/Payme to'lov integratsiyasi",
+                "Admin panel buyurtmalarni kuzatish uchun",
+                "SMS va email xabarnomalar"
+            ],
+            'results': [
+                "Buyurtma berish vaqti 10 daqiqadan 2 daqiqaga qisqardi",
+                "Sotuv miqdori 150% oshdi",
+                "Mijozlar qulayligi 90% yaxshilandi",
+                "Operatsion xarajatlar 40% kamaydi"
+            ],
+            'technologies': ["Python", "aiogram", "Telegram Bot API", "Click API", "Payme API", "PostgreSQL", "Redis"]
+        },
+        'education-bot': {
+            'title': "Ta'lim Boti",
+            'short_description': "O'quvchilar uchun testlar va natijalarni boshqarish tizimi",
+            'client': "EduCenter Academy",
+            'duration': "3 hafta", 
+            'price': "3,500,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Telegram Bot",
+            'gradient': "success",
+            'icon': "fas fa-graduation-cap",
+            'problem': "Ta'lim markazi testlarni qog'ozda o'tkazardi. Natijalarni tekshirish va baholar qo'yish ko'p vaqt olardi. O'quvchilar natijalarini kechikib bilar edi.",
+            'solution': "Telegram bot orqali onlayn test tizimi yaratildi. O'quvchilar testlarni topshirishi, darhol natijani bilishi va o'qituvchilar hisobotlarni real vaqtda olishi mumkin.",
+            'features': [
+                "Ko'p tanlovli va ochiq savollar tizimi",
+                "Real vaqtda natijalarni ko'rsatish",
+                "O'qituvchilar uchun admin panel",
+                "Excel formatda hisobotlar",
+                "Darajalar va sertifikatlar tizimi"
+            ],
+            'results': [
+                "Test topshirish vaqti 50% qisqardi",
+                "O'qituvchilar ish yukini 60% kamaytirdi", 
+                "O'quvchilar faolligi 200% oshdi",
+                "Xatolar 95% kamaydi"
+            ],
+            'technologies': ["Python", "aiogram", "SQLite", "Telegram Bot API", "Excel API", "PDF Generator"]
+        },
+        'restaurant-bot': {
+            'title': "Restoran Boti",
+            'short_description': "Ovqat buyurtma berish va yetkazib berish xizmati",
+            'client': "Osh Markazi",
+            'duration': "1.5 hafta",
+            'price': "2,000,000 so'm", 
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Telegram Bot",
+            'gradient': "warning",
+            'icon': "fas fa-utensils",
+            'problem': "Restoran telefon orqali buyurtma qabul qilardi. Qo'ng'iroqlar ko'p bo'lganda operatorlar yetmay qolardi va mijozlar kutishga majbur bo'lardi.",
+            'solution': "Telegram bot orqali 24/7 avtomatik buyurtma qabul qilish tizimi ishlab chiqildi. Mijozlar menuni ko'rishi, buyurtma berishi va yetkazib berish vaqtini bilishi mumkin.",
+            'features': [
+                "To'liq menu va narxlar",
+                "Geolokatsiya va yetkazib berish zonalari",
+                "Buyurtma holati kuzatuvi",
+                "Fikr-mulohazalar tizimi",
+                "Aksiya va chegirmalar"
+            ],
+            'results': [
+                "Buyurtmalar soni 180% oshdi",
+                "Mijozlar kutish vaqti 0ga tushdi",
+                "Operator xarajatlari 70% kamaydi",
+                "Mijozlar qoniqish darajasi 95% bo'ldi"
+            ],
+            'technologies': ["Python", "aiogram", "Google Maps API", "Firebase", "Telegram Bot API"]
+        },
+        'bank-chatbot': {
+            'title': "Bank Chatbot", 
+            'short_description': "24/7 mijozlar xizmati va bank operatsiyalari",
+            'client': "InnoBank",
+            'duration': "4 hafta",
+            'price': "8,500,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi", 
+            'category': "AI Chatbot",
+            'gradient': "info",
+            'icon': "fas fa-comments",
+            'problem': "Bank mijozlari balansini tekshirish, o'tkazmalar tarixi va kredit ma'lumotlari uchun filialga borish yoki qo'ng'iroq qilishga majbur edi. Call markazda navbat uzoq edi.",
+            'solution': "AI chatbot orqali mijozlar 24/7 bank xizmatlaridan foydalanishi, balansini tekshirishi, o'tkazmalar qilishi va kredit haqida ma'lumot olishi mumkin bo'ldi.",
+            'features': [
+                "Balans va kartalar ma'lumoti",
+                "O'tkazmalar tarixi", 
+                "Kredit kalkulyatori",
+                "Valyuta kurslari",
+                "FAQ va qo'llab-quvvatlash"
+            ],
+            'results': [
+                "Call markaz yukini 60% kamaytirdi",
+                "Mijozlar qoniqish darajasi 85% oshdi",
+                "Operatsion xarajatlar 45% kamaydi",
+                "Xizmat sifati 24/7 ga uzaydi"
+            ],
+            'technologies': ["Python", "OpenAI API", "Bank API", "NLP", "Flask", "PostgreSQL"]
+        },
+        'support-bot': {
+            'title': "Qo'llab-quvvatlash Boti",
+            'short_description': "24/7 mijozlar xizmati va muammolarni hal qilish",
+            'client': "TechSupport Pro",
+            'duration': "2 hafta",
+            'price': "3,000,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Support Bot", 
+            'gradient': "danger",
+            'icon': "fas fa-headset",
+            'problem': "Kompaniya mijozlarning savollariga javob berish uchun 5 nafar operatorni ish haqi to'lashi kerak edi. Tunda va dam olish kunlarida xizmat yo'q edi.",
+            'solution': "AI chatbot orqali avtomatik javoblar tizimi yaratildi. Bot umumiy savollarni hal qiladi, murakkab holatlarda operatorga yo'naltiradi.",
+            'features': [
+                "FAQ avtomatik javoblar",
+                "Muammolarni kategoriyalash",
+                "Operator bilan bog'lash tizimi",
+                "Hisobotlar va statistika",
+                "Ko'p tilda qo'llab-quvvatlash"
+            ],
+            'results': [
+                "Support so'rovlarini 80% avtomatlashtirdi",
+                "Operatorlar ish yukini 70% kamaytirdi",
+                "Mijozlar 24/7 yordam oladi",
+                "Javob berish vaqti 5 daqiqaga tushdi"
+            ],
+            'technologies': ["Python", "aiogram", "NLP", "Machine Learning", "Flask", "SQLite"]
+        },
+        'crm-automation': {
+            'title': "CRM Avtomatlashtirish",
+            'short_description': "Mijozlar bilan ishlash jarayonini avtomatlashtirish",
+            'client': "SalesForce Uzbekistan", 
+            'duration': "6 hafta",
+            'price': "12,000,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Business Automation",
+            'gradient': "dark",
+            'icon': "fas fa-cogs",
+            'problem': "Sotuvchilar mijozlar ma'lumotlarini Excel'da saqlardi. Lead'lar bilan ishlash jarayoni tartibsiz edi va ko'p imkoniyatlar yo'qotilardi.",
+            'solution': "To'liq avtomatlashtirilgan CRM tizimi yaratildi. Lead'larni boshqarish, avtomatik email yuborish va sotuvchilar faoliyatini kuzatish mumkin.",
+            'features': [
+                "Lead'lar boshqaruvi va pipeline",
+                "Avtomatik email marketing",
+                "Hisobotlar va analytics",
+                "Telegram integratsiyasi",
+                "Mobil ilova"
+            ],
+            'results': [
+                "Sotuv samaradorligi 120% oshdi",
+                "Lead'larni yo'qotish 60% kamaydi",
+                "Hisobotlar vaqti 90% qisqardi",
+                "Jamoaviy ish sifati 80% yaxshilandi"
+            ],
+            'technologies': ["Python", "Django", "PostgreSQL", "Redis", "Celery", "Email API", "Telegram API"]
+        },
+        'reports-automation': {
+            'title': "Hisobot Avtomatlashtirish",
+            'short_description': "Ma'lumotlar analizi va avtomatik hisobotlar tizimi",
+            'client': "DataFlow Analytics",
+            'duration': "5 hafta", 
+            'price': "9,500,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Data Analytics",
+            'gradient': "secondary", 
+            'icon': "fas fa-chart-bar",
+            'problem': "Kompaniya har oyning oxirida hisobotlarni qo'lda tayyorlashi kerak edi. Bu jarayon 3-4 kun vaqt olardi va xatolar ko'p ro'y berardi.",
+            'solution': "Avtomatik hisobot tizimi yaratildi. Ma'lumotlar real vaqtda tahlil qilinadi va hisobotlar avtomatik ravishda yaratiladi va email orqali yuboriladi.",
+            'features': [
+                "Real-time dashboard",
+                "Avtomatik hisobot yaratish",
+                "Email/Telegram xabarnomalar",
+                "Excel/PDF export",
+                "Custom analytics"
+            ],
+            'results': [
+                "Hisobot tayyorlash vaqti 95% qisqardi",
+                "Xatolar 90% kamaydi",
+                "Ma'lumotlarning aniqligi 99% bo'ldi",
+                "Qaror qabul qilish tezlashdi"
+            ],
+            'technologies': ["Python", "Pandas", "Plotly", "Flask", "PostgreSQL", "Celery", "Email API"]
+        },
+        'corporate-website': {
+            'title': "Korporativ Sayt",
+            'short_description': "Zamonaviy korporativ web sayt CMS bilan",
+            'client': "TechCorp Solutions",
+            'duration': "3 hafta",
+            'price': "5,500,000 so'm",
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "Web Development",
+            'gradient': "primary",
+            'icon': "fas fa-globe",
+            'problem': "Kompaniya eski va noqulay web saytga ega edi. Mijozlar saytdan kerakli ma'lumotni topa olmaydi va kompaniya professional ko'rinmaydi.",
+            'solution': "Zamonaviy, responsive va SEO optimizatsiya qilingan korporativ web sayt yaratildi. Admin panel orqali kontent boshqarish mumkin.",
+            'features': [
+                "Responsive dizayn",
+                "CMS admin panel", 
+                "SEO optimizatsiya",
+                "Google Analytics",
+                "Contact formalar"
+            ],
+            'results': [
+                "Sayt trafigi 300% oshdi",
+                "Konversiya 150% yaxshilandi",
+                "Google'da reytingi oshdi",
+                "Mijozlardan murojaatlar ko'paydi"
+            ],
+            'technologies': ["HTML5", "CSS3", "JavaScript", "Python", "Flask", "PostgreSQL", "Bootstrap"]
+        },
+        'ecommerce-platform': {
+            'title': "E-commerce Platform",
+            'short_description': "To'liq funktsional onlayn do'kon platformasi",
+            'client': "MegaShop Online",
+            'duration': "8 hafta",
+            'price': "18,500,000 so'm", 
+            'status': "Muvaffaqiyatli yakunlandi",
+            'category': "E-commerce",
+            'gradient': "success",
+            'icon': "fas fa-shopping-cart",
+            'problem': "Kompaniya mahsulotlarini faqat offline sotardi. Onlayn bozorga kirish va ko'proq mijozlarga yetish kerak edi.",
+            'solution': "To'liq funktsional e-commerce platforma yaratildi. Mahsulotlar katalogi, buyurtma tizimi, to'lov va yetkazib berish integratsiyasi.",
+            'features': [
+                "Mahsulotlar katalogi va qidiruv",
+                "Savat va buyurtma tizimi",
+                "To'lov tizimi (Click/Payme)",
+                "Admin panel",
+                "Hisobotlar va analytics"
+            ],
+            'results': [
+                "Onlayn sotuv 0'dan boshlanib 50M so'mga yetdi",
+                "Mijozlar bazasi 1000+ ga oshdi", 
+                "Offline sotuv ham 30% oshdi",
+                "ROI 6 oyda 400% bo'ldi"
+            ],
+            'technologies': ["Python", "Django", "PostgreSQL", "Redis", "Payment APIs", "AWS", "Bootstrap"]
+        }
+    }
+    
+    project = projects.get(project_id)
+    if not project:
+        flash("Loyiha topilmadi!", "error")
+        return redirect(url_for('portfolio'))
+    
+    return render_template('portfolio/detail.html', project=project)
+
 @app.route('/about')
 def about():
     return render_template('about.html')
