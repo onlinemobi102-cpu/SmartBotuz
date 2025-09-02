@@ -1,0 +1,113 @@
+✅ Prompt: "SmartBot.uz loyihasini Render.com da deploy qilish uchun to'liq SEO va tez ishlashni ta'minlash"
+Siz — kuchli veb-optimallashtirish mutaxassisi. Sizning vazifangiz "SmartBot.uz" Flask asosidagi veb-saytni Render.com platformasida deploy qilish uchun tayyorlab, to'liq SEO va tez ishlashni ta'minlash.
+
+Loyiha Flask + Gunicorn + Whitenoise + Bootstrap 5 asosida yaratilgan. Hozir Render.comda ishlatish uchun sozlanmoqda.
+
+🎯 MAQSAD:
+Saytni Google PageSpeed Insights, Lighthouse, SEO bo'yicha 90+ ball olishga tayyorlang. Render.comda barqaror, tez, xavfsiz ishlashini ta'minlang.
+
+🔧 1. Render.com uchun konfiguratsiya
+render.yaml yoki Dockerfile yarating (Renderda qaysi biri afzal bo'lsa)
+Web service: gunicorn --bind 0.0.0.0:$PORT app:app
+Static fayllar (static/) Render tomonidan to'g'ri xizmat ko'rsatilsin
+whitenoise orqali CSS, JS, rasm fayllari tez yuklansin
+.env fayl o'rniga Render dashboard orqali environment variables sozlang:
+ADMIN_PASSWORD
+TELEGRAM_BOT_TOKEN
+TELEGRAM_CHAT_ID
+⚡ 2. Tez ishlash (Performance)
+Har bir sahifaning boshlanish vaqti 1 sekunddan kam bo'lsin
+static/dagi barcha rasmlar avtomatik sifat (quality) 70% ga kamaytirilsin
+CSS va JS fayllari minify qilingan bo'lsin
+async yoki defer bilan JavaScript yuklang
+Lazy loading qo'shing: <img loading="lazy">
+Gzip kompressiya whitenoise orqali yoqilgan bo'lsin
+🔍 3. SEO Optimallashtirish
+Har bir sahifada quyidagilar bo'lsin:
+
+<title> — 50-60 belgi, kalit so'z o'z ichiga olsin
+<meta name="description"> — 150-160 belgi, jozibador tavsif
+<meta name="keywords"> — O'zbek va rus tilida kalit so'zlar
+<meta name="robots"> — index, follow
+Open Graph (OG) teglari (Facebook, Telegram ulash uchun):
+html
+
+
+1
+2
+3
+4
+<meta property="og:title" content="SmartBot.uz - Telegram botlar yaratamiz">
+<meta property="og:description" content="Biznesingizni avtomatlashtirish uchun aqlli yechimlar">
+<meta property="og:image" content="https://smartbot.uz/static/images/smartbot-preview.jpg">
+<meta property="og:url" content="https://smartbot.uz">
+Twitter Card teglari ham qo'shilsin
+Har bir rasmda alt atributi bo'lsin
+Schema.org ma'lumotlari: Organization, Service, LocalBusiness
+🗂️ 4. Struktura va Dizayn
+Barcha sahifalar mobilga mos (responsive) bo'lsin
+<h1> bittadan ko'p bo'lmasin
+Sitemap.xml yarating (/sitemap.xml)
+robots.txt yarating (User-agent: *, Allow: /)
+SEO do'stona URL (masalan: /portfolio/restoran-uchun-bot)
+📊 5. Monitoring va Analytics
+Google Analytics 4 ulash kodi (gtag.js) qo'shing
+Google Search Console uchun verification tegi (<meta name="google-site-verification" content="...">)
+Schema.org ma'lumotlari namunasi:
+json
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+⌄
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SmartBot.uz",
+  "url": "https://smartbot.uz",
+  "logo": "https://smartbot.uz/static/images/logo.png",
+  "description": "Telegram botlar, chatbotlar, avtomatlashtirish xizmatlari"
+}
+</script>
+📦 6. Fayl tuzilishi (Render uchun)
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+smartbot-uz/
+├── app.py
+├── requirements.txt
+├── render.yaml  # yoki Dockerfile
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── templates/
+├── data/         # messages.json, projects.json
+└── .env.example
+📄 7. Namunalar kerak:
+render.yaml yoki Dockerfile
+base.html — SEO teglar bilan
+sitemap.xml
+robots.txt
+requirements.txt (gunicorn, whitenoise, python-telegram-bot)
+Procfile emas, Renderda kerak emas
+Iltimos, barcha fayllarni to'liq, ishlaydigan ko'rinishda yozing. 
