@@ -808,7 +808,7 @@ requires-dist = [
     { name = "pypdf2", specifier = ">=3.0.1" },
     { name = "python-magic", specifier = ">=0.4.27" },
     { name = "python-slugify", specifier = ">=8.0.4" },
-    { name = "python-telegram-bot", specifier = ">=22.3" },
+    { name = "python-telegram-bot", specifier = ">=21.0.1" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "schedule", specifier = ">=1.2.2" },
     { name = "slugify", specifier = ">=0.0.1" },

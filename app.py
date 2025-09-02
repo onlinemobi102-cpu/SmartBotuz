@@ -9,7 +9,10 @@ import re
 import requests
 import json
 import uuid
-import google.generativeai as genai
+try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
 import mimetypes
 import PyPDF2
 from datetime import datetime, timedelta
@@ -18,8 +21,12 @@ from io import BytesIO
 import threading
 import time
 import schedule
-from telegram import Bot
-from telegram.error import TelegramError
+try:
+    from telegram import Bot
+    from telegram.error import TelegramError
+except ImportError:
+    Bot = None
+    TelegramError = None
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -51,10 +58,11 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", TELEGRAM_CHANNEL_ID)
 
 # Initialize Telegram Bot
 telegram_bot = None
-if TELEGRAM_BOT_TOKEN:
+if TELEGRAM_BOT_TOKEN and Bot:
     try:
         telegram_bot = Bot(token=TELEGRAM_BOT_TOKEN)
     except Exception as e:
@@ -66,9 +74,13 @@ ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "smartbot123")
 
 # AI Configuration
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-    AI_MODEL = genai.GenerativeModel('gemini-1.5-flash')
+if GEMINI_API_KEY and genai:
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+        AI_MODEL = genai.GenerativeModel('gemini-1.5-flash')
+    except Exception as e:
+        logging.error(f"Gemini AI initialization failed: {e}")
+        AI_MODEL = None
 else:
     AI_MODEL = None
 
@@ -190,13 +202,16 @@ def get_ai_response(prompt, max_tokens=1000):
         return None
     
     try:
-        response = AI_MODEL.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
-                max_output_tokens=max_tokens,
-                temperature=0.7,
+        if genai:
+            response = AI_MODEL.generate_content(
+                prompt,
+                generation_config=genai.types.GenerationConfig(
+                    max_output_tokens=max_tokens,
+                    temperature=0.7,
+                )
             )
-        )
+        else:
+            response = AI_MODEL.generate_content(prompt)
         return response.text
     except Exception as e:
         app.logger.error(f"AI response error: {e}")
@@ -442,18 +457,17 @@ def contact():
                         'web_development': 'Web Sayt Yaratish',
                         'ai_integration': 'AI Texnologiyalar'
                     }
-                    ai_recommendation = service_map.get(analysis.strip().lower(), 'Umumiy Konsultatsiya')
+                    ai_recommendation = service_map.get(analysis.strip().lower() if analysis else '', 'Umumiy Konsultatsiya')
                 except Exception as e:
                     app.logger.error(f"AI analysis error in contact form: {e}")
             
-            # Update message with AI recommendation
+            # Update message with AI recommendation (get the new message ID)
             if message_saved and ai_recommendation:
                 messages = load_data(MESSAGES_FILE)
-                for msg in messages:
-                    if msg['id'] == new_id:
-                        msg['ai_recommendation'] = ai_recommendation
-                        break
-                save_data(MESSAGES_FILE, messages)
+                latest_message = messages[-1] if messages else None
+                if latest_message:
+                    latest_message['ai_recommendation'] = ai_recommendation
+                    save_data(MESSAGES_FILE, messages)
             
             # Send to Telegram
             telegram_sent = send_telegram_message(telegram_message)
@@ -651,7 +665,7 @@ def ai_analyze_contact():
             }
         }
         
-        recommended_service = service_map.get(analysis.strip().lower(), {
+        recommended_service = service_map.get(analysis.strip().lower() if analysis else '', {
             'service': 'Umumiy Konsultatsiya',
             'description': 'Ehtiyojlaringizni batafsil muhokama qilish',
             'url': '/contact'
@@ -714,7 +728,7 @@ def ai_analyze_document():
             return jsonify({'error': 'Fayl tanlanmagan'}), 400
         
         # Check file type
-        file_type = mimetypes.guess_type(file.filename)[0]
+        file_type = mimetypes.guess_type(file.filename)[0] if file.filename else None
         
         if file_type and file_type.startswith('application/pdf'):
             # Save temporarily and extract text
