@@ -806,6 +806,195 @@ def admin_dashboard():
     return render_template('admin/dashboard.html', stats=stats)
 
 # ========================
+# SERVICES MANAGEMENT
+# ========================
+
+@app.route('/admin/services')
+@admin_required
+def admin_services():
+    services = load_data(SERVICES_FILE)
+    return render_template('admin/services.html', services=services)
+
+@app.route('/admin/services/add', methods=['GET', 'POST'])
+@admin_required
+def admin_services_add():
+    if request.method == 'POST':
+        title = request.form.get('title', '').strip()
+        description = request.form.get('description', '').strip()
+        icon = request.form.get('icon', '').strip()
+        price = request.form.get('price', '').strip()
+        
+        if not all([title, description, icon, price]):
+            flash("Barcha maydonlarni to'ldiring!", "error")
+        else:
+            services = load_data(SERVICES_FILE)
+            new_id = max([s.get('id', 0) for s in services], default=0) + 1
+            
+            new_service = {
+                'id': new_id,
+                'title': title,
+                'description': description,
+                'icon': icon,
+                'price': price
+            }
+            
+            services.append(new_service)
+            if save_data(SERVICES_FILE, services):
+                flash("Yangi xizmat qo'shildi!", "success")
+                return redirect(url_for('admin_services'))
+            else:
+                flash("Xatolik yuz berdi!", "error")
+    
+    return render_template('admin/services_form.html')
+
+@app.route('/admin/services/edit/<int:service_id>', methods=['GET', 'POST'])
+@admin_required
+def admin_services_edit(service_id):
+    services = load_data(SERVICES_FILE)
+    service = next((s for s in services if s.get('id') == service_id), None)
+    
+    if not service:
+        flash("Xizmat topilmadi!", "error")
+        return redirect(url_for('admin_services'))
+    
+    if request.method == 'POST':
+        service['title'] = request.form.get('title', '').strip()
+        service['description'] = request.form.get('description', '').strip()
+        service['icon'] = request.form.get('icon', '').strip()
+        service['price'] = request.form.get('price', '').strip()
+        
+        if save_data(SERVICES_FILE, services):
+            flash("Xizmat yangilandi!", "success")
+            return redirect(url_for('admin_services'))
+        else:
+            flash("Xatolik yuz berdi!", "error")
+    
+    return render_template('admin/services_form.html', service=service)
+
+@app.route('/admin/services/delete/<int:service_id>')
+@admin_required
+def admin_services_delete(service_id):
+    services = load_data(SERVICES_FILE)
+    services = [s for s in services if s.get('id') != service_id]
+    
+    if save_data(SERVICES_FILE, services):
+        flash("Xizmat o'chirildi!", "success")
+    else:
+        flash("Xatolik yuz berdi!", "error")
+    
+    return redirect(url_for('admin_services'))
+
+# ========================
+# BLOG MANAGEMENT
+# ========================
+
+@app.route('/admin/blog')
+@admin_required
+def admin_blog():
+    blogs = load_data(BLOG_FILE)
+    return render_template('admin/blog.html', blogs=blogs)
+
+@app.route('/admin/blog/add', methods=['GET', 'POST'])
+@admin_required
+def admin_blog_add():
+    if request.method == 'POST':
+        title = request.form.get('title', '').strip()
+        content = request.form.get('content', '').strip()
+        excerpt = request.form.get('excerpt', '').strip()
+        category = request.form.get('category', '').strip()
+        
+        if not all([title, content, excerpt, category]):
+            flash("Barcha maydonlarni to'ldiring!", "error")
+        else:
+            blogs = load_data(BLOG_FILE)
+            new_id = max([b.get('id', 0) for b in blogs], default=0) + 1
+            
+            new_blog = {
+                'id': new_id,
+                'title': title,
+                'content': content,
+                'excerpt': excerpt,
+                'category': category,
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'slug': create_slug(title)
+            }
+            
+            blogs.append(new_blog)
+            if save_data(BLOG_FILE, blogs):
+                flash("Yangi maqola qo'shildi!", "success")
+                return redirect(url_for('admin_blog'))
+            else:
+                flash("Xatolik yuz berdi!", "error")
+    
+    return render_template('admin/blog_form.html')
+
+@app.route('/admin/blog/edit/<int:blog_id>', methods=['GET', 'POST'])
+@admin_required
+def admin_blog_edit(blog_id):
+    blogs = load_data(BLOG_FILE)
+    blog = next((b for b in blogs if b.get('id') == blog_id), None)
+    
+    if not blog:
+        flash("Maqola topilmadi!", "error")
+        return redirect(url_for('admin_blog'))
+    
+    if request.method == 'POST':
+        blog['title'] = request.form.get('title', '').strip()
+        blog['content'] = request.form.get('content', '').strip()
+        blog['excerpt'] = request.form.get('excerpt', '').strip()
+        blog['category'] = request.form.get('category', '').strip()
+        blog['slug'] = create_slug(blog['title'])
+        
+        if save_data(BLOG_FILE, blogs):
+            flash("Maqola yangilandi!", "success")
+            return redirect(url_for('admin_blog'))
+        else:
+            flash("Xatolik yuz berdi!", "error")
+    
+    return render_template('admin/blog_form.html', blog=blog)
+
+@app.route('/admin/blog/delete/<int:blog_id>')
+@admin_required
+def admin_blog_delete(blog_id):
+    blogs = load_data(BLOG_FILE)
+    blogs = [b for b in blogs if b.get('id') != blog_id]
+    
+    if save_data(BLOG_FILE, blogs):
+        flash("Maqola o'chirildi!", "success")
+    else:
+        flash("Xatolik yuz berdi!", "error")
+    
+    return redirect(url_for('admin_blog'))
+
+# ========================
+# MESSAGES MANAGEMENT
+# ========================
+
+@app.route('/admin/messages')
+@admin_required
+def admin_messages():
+    messages = load_data(MESSAGES_FILE)
+    # Reverse order - yangi messages birinchi
+    messages = sorted(messages, key=lambda x: x.get('date', ''), reverse=True)
+    return render_template('admin/messages.html', messages=messages)
+
+@app.route('/admin/messages/mark-read/<int:message_id>')
+@admin_required
+def admin_message_mark_read(message_id):
+    messages = load_data(MESSAGES_FILE)
+    for message in messages:
+        if message.get('id') == message_id:
+            message['status'] = 'ko\'rilgan'
+            break
+    
+    if save_data(MESSAGES_FILE, messages):
+        flash("Xabar o'qilgan deb belgilandi!", "success")
+    else:
+        flash("Xatolik yuz berdi!", "error")
+    
+    return redirect(url_for('admin_messages'))
+
+# ========================
 # PORTFOLIO MANAGEMENT
 # ========================
 
