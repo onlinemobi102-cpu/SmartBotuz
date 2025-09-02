@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Telegram Bot Yaratish",
+    "description": "Telegram botlarni noldan yaratamiz - mijozlar bilan aloqa, buyurtma qabul qilish, avtomatlashtirish",
+    "icon": "fas fa-robot",
+    "price": "500,000 so'mdan"
+  },
+  {
+    "id": 2,
+    "title": "Chatbot Integratsiya",
+    "description": "Saytingizga AI chatbot qo'shamiz - 24/7 mijozlar bilan suhbat, savolga javob berish",
+    "icon": "fas fa-comments",
+    "price": "300,000 so'mdan"
+  }
+]

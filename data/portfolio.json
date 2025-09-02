@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "E-commerce Bot",
+    "description": "Telegram orqali mahsulot sotish va buyurtmalarni boshqarish",
+    "image": "portfolio-1.jpg",
+    "tags": [
+      "Telegram",
+      "E-commerce",
+      "Bot"
+    ],
+    "category": "bot"
+  },
+  {
+    "id": 2,
+    "title": "Ta'lim Boti",
+    "description": "O'quvchilar uchun testlar va natijalarni boshqarish tizimi",
+    "image": "portfolio-2.jpg",
+    "tags": [
+      "Telegram",
+      "Education",
+      "Test"
+    ],
+    "category": "bot"
+  }
+]

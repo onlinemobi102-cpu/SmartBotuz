@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Admin Kirish - SmartBot.uz{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 400px;">
+  <div class="card shadow" style="background-color: rgba(52, 58, 64, 0.95); border: none;">
+    <div class="card-body p-5">
+      <div class="text-center mb-4">
+        <i class="fas fa-lock fa-3x text-primary mb-3"></i>
+        <h3 class="text-white">Admin Panel</h3>
+        <p class="text-white-50">SmartBot.uz boshqaruv paneli</p>
+      </div>
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, msg in messages %}
+            <div class="alert alert-{{ 'danger' if category=='error' else 'success' }} alert-dismissible fade show" role="alert">
+              {{ msg }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      
+      <form method="POST">
+        <div class="mb-4">
+          <label for="password" class="form-label text-white">Parol</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-0">
+              <i class="fas fa-key text-white"></i>
+            </span>
+            <input type="password" 
+                   id="password"
+                   name="password" 
+                   class="form-control bg-dark border-0 text-white" 
+                   placeholder="Admin parolini kiriting"
+                   required
+                   style="box-shadow: none;">
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+          <i class="fas fa-sign-in-alt me-2"></i>Kirish
+        </button>
+      </form>
+      
+      <hr class="my-4" style="border-color: #495057;">
+      
+      <div class="text-center">
+        <a href="{{ url_for('index') }}" class="text-white-50 text-decoration-none">
+          <i class="fas fa-arrow-left me-1"></i>Bosh sahifaga qaytish
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.form-control:focus {
+  background-color: #495057 !important;
+  border-color: #007bff !important;
+  color: white !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.input-group-text {
+  color: #adb5bd !important;
+}
+</style>
+{% endblock %}

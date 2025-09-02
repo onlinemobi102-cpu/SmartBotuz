@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}{% if post %}Maqolani Tahrirlash{% else %}Yangi Maqola{% endif %} - SmartBot.uz{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 900px;">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 class="text-white mb-1">
+            <i class="fas fa-{% if post %}edit{% else %}plus{% endif %} me-2 text-primary"></i>
+            {% if post %}Maqolani Tahrirlash{% else %}Yangi Maqola Yozish{% endif %}
+          </h2>
+        </div>
+        <a href="{{ url_for('admin_blog') }}" class="btn btn-outline-light">
+          <i class="fas fa-arrow-left me-1"></i>Orqaga
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ 'danger' if category=='error' else 'success' }} alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Form -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card" style="background-color: rgba(52, 58, 64, 0.9); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="card-body">
+          <form method="POST">
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label for="title" class="form-label text-white">Maqola sarlavhasi *</label>
+                <input type="text" 
+                       id="title"
+                       name="title" 
+                       class="form-control bg-dark border-0 text-white" 
+                       placeholder="Maqola sarlavhasini yozing..."
+                       value="{% if post %}{{ post.title }}{% endif %}"
+                       required>
+              </div>
+              
+              <div class="col-md-4">
+                <label for="category" class="form-label text-white">Kategoriya *</label>
+                <select id="category"
+                        name="category" 
+                        class="form-select bg-dark border-0 text-white" 
+                        required>
+                  <option value="">Kategoriyani tanlang</option>
+                  <option value="Qo'llanma" {% if post and post.category == 'Qo\'llanma' %}selected{% endif %}>Qo'llanma</option>
+                  <option value="Yangiliklar" {% if post and post.category == 'Yangiliklar' %}selected{% endif %}>Yangiliklar</option>
+                  <option value="Tutorial" {% if post and post.category == 'Tutorial' %}selected{% endif %}>Tutorial</option>
+                  <option value="Maslahatlar" {% if post and post.category == 'Maslahatlar' %}selected{% endif %}>Maslahatlar</option>
+                  <option value="Case Study" {% if post and post.category == 'Case Study' %}selected{% endif %}>Case Study</option>
+                  <option value="Texnologiya" {% if post and post.category == 'Texnologiya' %}selected{% endif %}>Texnologiya</option>
+                </select>
+              </div>
+              
+              <div class="col-12">
+                <label for="excerpt" class="form-label text-white">Qisqacha mazmuni</label>
+                <textarea id="excerpt"
+                          name="excerpt" 
+                          class="form-control bg-dark border-0 text-white" 
+                          rows="2" 
+                          placeholder="Maqolaning qisqacha tavsifi (ixtiyoriy - avtomatik yaratiladi)">{% if post %}{{ post.excerpt }}{% endif %}</textarea>
+                <small class="text-white-50">
+                  Bo'sh qoldirsangiz, matnning birinchi 200 belgisi ishlatiladi
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <label for="content" class="form-label text-white">Maqola matni *</label>
+                <textarea id="content"
+                          name="content" 
+                          class="form-control bg-dark border-0 text-white" 
+                          rows="12" 
+                          placeholder="Maqola matnini shu yerga yozing. HTML teglarini ishlatishingiz mumkin..."
+                          required>{% if post %}{{ post.content }}{% endif %}</textarea>
+              </div>
+              
+              <div class="col-12">
+                <label for="image" class="form-label text-white">Rasm fayl nomi</label>
+                <input type="text" 
+                       id="image"
+                       name="image" 
+                       class="form-control bg-dark border-0 text-white" 
+                       placeholder="blog-1.jpg"
+                       value="{% if post %}{{ post.image }}{% endif %}">
+                <small class="text-white-50">
+                  Fayl nomini kiriting (static/images papkasida bo'lishi kerak)
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <hr class="my-4" style="border-color: #495057;">
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save me-1"></i>
+                    {% if post %}Yangilash{% else %}Nashr qilish{% endif %}
+                  </button>
+                  <a href="{{ url_for('admin_blog') }}" class="btn btn-secondary">
+                    <i class="fas fa-times me-1"></i>Bekor qilish
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.form-control:focus, .form-select:focus {
+  background-color: #495057 !important;
+  border-color: #007bff !important;
+  color: white !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.form-control::placeholder {
+  color: #adb5bd !important;
+}
+
+.form-select option {
+  background-color: #343a40;
+  color: white;
+}
+</style>
+{% endblock %}

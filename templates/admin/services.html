@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Xizmatlar Boshqaruvi - SmartBot.uz{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 class="text-white mb-1">
+            <i class="fas fa-cogs me-2 text-primary"></i>
+            Xizmatlar Boshqaruvi
+          </h2>
+          <p class="text-white-50 mb-0">Barcha xizmatlarni ko'ring va boshqaring</p>
+        </div>
+        <div>
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-light me-2">
+            <i class="fas fa-arrow-left me-1"></i>Dashboard
+          </a>
+          <a href="{{ url_for('admin_services_add') }}" class="btn btn-success">
+            <i class="fas fa-plus me-1"></i>Yangi xizmat
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ 'danger' if category=='error' else 'success' }} alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Services Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card" style="background-color: rgba(52, 58, 64, 0.9); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="card-body">
+          {% if services %}
+            <div class="table-responsive">
+              <table class="table table-dark table-hover">
+                <thead>
+                  <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Xizmat nomi</th>
+                    <th>Tavsif</th>
+                    <th>Narx</th>
+                    <th class="text-end">Amallar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for service in services %}
+                  <tr>
+                    <td>{{ service.id }}</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <i class="{{ service.icon }} text-primary me-2"></i>
+                        <strong>{{ service.title }}</strong>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="text-white-50">
+                        {{ service.description[:100] }}{% if service.description|length > 100 %}...{% endif %}
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge bg-success">{{ service.price }}</span>
+                    </td>
+                    <td class="text-end">
+                      <a href="{{ url_for('admin_services_edit', service_id=service.id) }}" 
+                         class="btn btn-sm btn-warning me-1">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <a href="{{ url_for('admin_services_delete', service_id=service.id) }}" 
+                         class="btn btn-sm btn-danger"
+                         onclick="return confirm('Bu xizmatni o\'chirishga ishonchingiz komilmi?')">
+                        <i class="fas fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="text-center py-5">
+              <i class="fas fa-inbox fa-3x text-white-50 mb-3"></i>
+              <h5 class="text-white">Xizmatlar mavjud emas</h5>
+              <p class="text-white-50">Birinchi xizmat qo'shish uchun tugmani bosing</p>
+              <a href="{{ url_for('admin_services_add') }}" class="btn btn-success">
+                <i class="fas fa-plus me-1"></i>Yangi xizmat qo'shish
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

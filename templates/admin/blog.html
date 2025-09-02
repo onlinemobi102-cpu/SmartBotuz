@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Blog Boshqaruvi - SmartBot.uz{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 class="text-white mb-1">
+            <i class="fas fa-blog me-2 text-primary"></i>
+            Blog Boshqaruvi
+          </h2>
+          <p class="text-white-50 mb-0">Maqolalarni ko'ring va boshqaring</p>
+        </div>
+        <div>
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-light me-2">
+            <i class="fas fa-arrow-left me-1"></i>Dashboard
+          </a>
+          <a href="{{ url_for('admin_blog_add') }}" class="btn btn-success">
+            <i class="fas fa-plus me-1"></i>Yangi maqola
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ 'danger' if category=='error' else 'success' }} alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Blog Posts -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card" style="background-color: rgba(52, 58, 64, 0.9); border: 1px solid rgba(255,255,255,0.1);">
+        <div class="card-body">
+          {% if blog_posts %}
+            <div class="table-responsive">
+              <table class="table table-dark table-hover">
+                <thead>
+                  <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Sarlavha</th>
+                    <th>Kategoriya</th>
+                    <th>Sana</th>
+                    <th class="text-end">Amallar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for post in blog_posts %}
+                  <tr>
+                    <td>{{ post.id }}</td>
+                    <td>
+                      <div>
+                        <strong class="text-white">{{ post.title }}</strong>
+                        <br>
+                        <small class="text-white-50">
+                          {{ post.excerpt[:100] }}{% if post.excerpt and post.excerpt|length > 100 %}...{% endif %}
+                        </small>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-info">{{ post.category }}</span>
+                    </td>
+                    <td>
+                      <small class="text-white-50">{{ post.date }}</small>
+                    </td>
+                    <td class="text-end">
+                      <a href="{{ url_for('admin_blog_edit', post_id=post.id) }}" 
+                         class="btn btn-sm btn-warning me-1">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <a href="{{ url_for('admin_blog_delete', post_id=post.id) }}" 
+                         class="btn btn-sm btn-danger"
+                         onclick="return confirm('Bu maqolani o\'chirishga ishonchingiz komilmi?')">
+                        <i class="fas fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="text-center py-5">
+              <i class="fas fa-blog fa-3x text-white-50 mb-3"></i>
+              <h5 class="text-white">Blog maqolalari mavjud emas</h5>
+              <p class="text-white-50">Birinchi maqola yozish uchun tugmani bosing</p>
+              <a href="{{ url_for('admin_blog_add') }}" class="btn btn-success">
+                <i class="fas fa-plus me-1"></i>Yangi maqola yozish
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
