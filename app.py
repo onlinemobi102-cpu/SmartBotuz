@@ -28,8 +28,11 @@ except ImportError:
     Bot = None
     TelegramError = None
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
+# Configure logging based on environment
+if os.environ.get('FLASK_ENV') == 'production':
+    logging.basicConfig(level=logging.INFO)
+else:
+    logging.basicConfig(level=logging.DEBUG)
 
 # File upload configuration
 UPLOAD_FOLDER = 'static/uploads'
@@ -40,6 +43,12 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "smartbot-uz-secret-key")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
+
+# Production security configurations
+if os.environ.get('FLASK_ENV') == 'production':
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 # SEO Configuration
 app.config['GA_MEASUREMENT_ID'] = os.environ.get("GA_MEASUREMENT_ID")

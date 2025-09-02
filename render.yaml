@@ -2,8 +2,8 @@ services:
   - type: web
     name: smartbot-uz
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    buildCommand: pip install . && python setup.py
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 4 --timeout 120 main:app
     envVars:
       - key: FLASK_ENV
         value: production
@@ -19,9 +19,25 @@ services:
         fromDatabase:
           name: smartbot-env
           property: telegramChatId
+      - key: TELEGRAM_CHANNEL_ID
+        fromDatabase:
+          name: smartbot-env
+          property: telegramChannelId
       - key: SESSION_SECRET
         fromDatabase:
           name: smartbot-env
           property: sessionSecret
+      - key: GEMINI_API_KEY
+        fromDatabase:
+          name: smartbot-env
+          property: geminiApiKey
+      - key: GA_MEASUREMENT_ID
+        fromDatabase:
+          name: smartbot-env
+          property: gaMeasurementId
+      - key: GOOGLE_VERIFICATION
+        fromDatabase:
+          name: smartbot-env
+          property: googleVerification
     healthCheckPath: /
     autoDeploy: false
