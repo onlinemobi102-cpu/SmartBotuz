@@ -30,6 +30,17 @@
     
     <title>{% block title %}SmartBot.uz - Telegram Botlar va Avtomatlashtirish{% endblock %}</title>
     
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <meta name="msapplication-TileImage" content="{{ url_for('static', filename='images/favicon.png') }}">
+    <meta name="msapplication-TileColor" content="#007bff">
+    <meta name="theme-color" content="#007bff">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    
     <!-- Preconnect to external domains for performance -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -53,7 +64,7 @@
       "@type": "Organization",
       "name": "SmartBot.uz",
       "url": "{{ url_for('index', _external=True) }}",
-      "logo": "{{ url_for('static', filename='images/logo.png', _external=True) }}",
+      "logo": "{{ url_for('static', filename='images/smartbot-logo.png', _external=True) }}",
       "description": "Telegram botlar, chatbotlar, avtomatlashtirish xizmatlari",
       "address": {
         "@type": "PostalAddress",
@@ -97,8 +108,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="{{ url_for('index') }}">
-                <i class="fas fa-robot me-2"></i>SmartBot.uz
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/smartbot-logo.png') }}" alt="SmartBot.uz" height="40" class="me-2">
+                SmartBot.uz
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -157,8 +169,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">
-                        <i class="fas fa-robot me-2"></i>SmartBot.uz
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <img src="{{ url_for('static', filename='images/favicon.png') }}" alt="SmartBot.uz" height="24" class="me-2">
+                        SmartBot.uz
                     </h5>
                     <p class="text-light mb-3">
                         Telegram botlar, chatbotlar va avtomatlashtirish xizmatlarida O'zbekistondagi yetakchi kompaniya.

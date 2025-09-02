@@ -119,6 +119,14 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
 
+.navbar-brand img {
+    transition: var(--transition);
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.1);
+}
+
 .navbar-nav .nav-link {
     font-weight: 500;
     margin: 0 0.25rem;
