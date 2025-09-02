@@ -531,6 +531,30 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
         margin-bottom: 0.5rem;
     }
+    
+    /* Ensure all text is white on mobile */
+    h1, h2, h3, h4, h5, h6,
+    .display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
+    .lead, p, span, div, li, a {
+        color: #ffffff !important;
+    }
+    
+    .hero-section h1,
+    .hero-section .lead,
+    .hero-section p,
+    .page-header h1,
+    .page-header .display-4,
+    .page-header .lead,
+    .page-header p {
+        color: #ffffff !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Ensure card content is white on mobile */
+    .feature-card *, .service-card *, .portfolio-card *, .blog-card *,
+    .card-body *, .card-text *, .portfolio-content *, .article-content * {
+        color: #ffffff !important;
+    }
 }
 
 @media (max-width: 576px) {
@@ -588,6 +612,24 @@ h1, h2, h3, h4, h5, h6 {
     
     .office-info .icon-wrapper {
         margin: 0 auto 1rem;
+    }
+    
+    /* Extra small mobile text color reinforcement */
+    h1, h2, h3, h4, h5, h6,
+    .display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
+    .lead, p, span, div, li, a {
+        color: #ffffff !important;
+    }
+    
+    /* All navigation items should be white on small mobile */
+    .navbar-nav .nav-link {
+        color: #ffffff !important;
+    }
+    
+    /* All card content white on small mobile */
+    .card *, .feature-card *, .service-card *, .portfolio-card *, .blog-card *,
+    .team-card *, .why-choose-card *, .contact-card * {
+        color: #ffffff !important;
     }
 }
 
