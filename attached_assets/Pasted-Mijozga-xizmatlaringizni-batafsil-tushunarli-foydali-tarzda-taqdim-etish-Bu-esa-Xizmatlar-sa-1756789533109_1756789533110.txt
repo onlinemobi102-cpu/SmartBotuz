@@ -1,0 +1,265 @@
+Mijozga xizmatlaringizni batafsil, tushunarli, foydali tarzda taqdim etish 
+
+Bu esa "Xizmatlar" sahifasini kuchaytirish va "Korporativ Sayt", "E-commerce Platform", "Hisobot Avtomatlashtirish" kabi loyiha namunalarini o'zgartirish orqali amalga oshiriladi.
+
+🔍 Mijoz nima xohlamoqda?
+Xizmatlarni aniq tushunmoq
+Har bir xizmat uchun
+"Nima?
+,
+Nega?
+,
+Qanday foyda?
+**
+Real natijalarga ishonch
+Real loyiha namunalari
+bilan taqdim etish
+O'zining biznesini rivojlantirish
+Xizmatlaringiz
+uning muammosiga mos
+kelishi kerak
+
+✅ Keyingi Bosqich: "Xizmatlar" sahifasini mijozga qulay qilish
+🧩 1. Har bir xizmat uchun "3-savol" strukturasini qo'shing
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+⌄
+<div class="service-card">
+  <div class="icon">📊</div>
+  <h3>Hisobot Avtomatlashtirish</h3>
+  <p><strong>Nima?</strong> Ma'lumotlarni avtomatik to'plash, hisobotlar tuzish, real-time dashboard.</p>
+  <p><strong>Nega kerak?</strong> Vaqt tejash, xato kamaytirish, murojaatlar sonini oshirish.</p>
+  <p><strong>Qanday foyda?</strong> Biznesingizning har bir jarayonini tekshirishingiz mumkin bo'ladi.</p>
+</div>
+Bu struktura har doim tushunarli, ijtimoiy tarmoqlarda ham sharh qilinadigan bo'ladi. 
+
+🧩 2. Xizmatlar kartalari o'rniga "Loyiha Namunasi" formatiga o'ting
+Hozirgi kartalar:
+
+plaintext
+
+
+1
+2
+[Icon] Hisobot Avtomatlashtirish
+Ma'lumotlar analizi va avtomatik hisobotlar tizimi...
+→ O'rniga:
+
+plaintext
+
+
+1
+2
+3
+4
+5
+6
+[Icon] Hisobot Avtomatlashtirish
+🎯 Loyiha: "Do'konning sotuv hisobotlari"
+💡 Mazmun: Excel → Telegram → Dashboard
+✅ Natija: 50% vaqt tejash, xato kamaydi
+⏱️ Muddat: 3 hafta
+💰 Narx: 3 500 000 so'm
+Bu mijozga "men ham shunday qilishim kerak" degan hissani beradi. 
+
+🧩 3. Har bir xizmat uchun "Ko'rish" tugmasi qo'shing
+html
+
+
+1
+<a href="/services/automation" class="btn btn-outline-primary">Batafsil ko'rish</a>
+Sahifa: /services/automation → to'liq tushuntirish, misollar, narxlar
+
+🧩 4. "Xizmatlar" sahifasini "Tarkibiy" qiling
+📌 Tarkibi:
+Asosiy sarlavha: "Bizning xizmatlarimiz"
+Tavsif: "Sizning biznesingizni rivojlantirish uchun zamonaviy yechimlar"
+Xizmatlar (kartalar):
+Korporativ Sayt
+E-commerce Platform
+Hisobot Avtomatlashtirish
+"Batafsil ko'rish" tugmalari
+"Loyihani boshlash" CTA
+🛠️ Yangilangan services.html namuna
+html
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+⌄
+{% extends "base.html" %}
+{% block title %}Xizmatlar - SmartBot.uz{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold">Bizning xizmatlarimiz</h2>
+      <p class="lead text-muted">Sizning biznesingizni rivojlantirish uchun zamonaviy yechimlar</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Korporativ Sayt -->
+      <div class="col-lg-4 col-md-6">
+        <div class="service-card h-100 p-4 rounded-3 shadow-sm border">
+          <div class="text-center mb-3">
+            <i class="fas fa-globe fa-3x text-primary"></i>
+          </div>
+          <h4 class="mb-3">Korporativ Sayt</h4>
+          <p class="text-muted mb-3">
+            <strong>Nima?</strong> Zamonaviy korporativ web-sayt. Responsive dizayn, CMS, SEO optimizatsiya, analitika.
+          </p>
+          <p class="text-muted mb-3">
+            <strong>Nega kerak?</strong> Sizning kompaniyangizning onlayn imkoniyatlari rivojlanadi.
+          </p>
+          <p class="text-muted mb-3">
+            <strong>Qanday foyda?</strong> Mijozlar sizning saytingizdan ma'lumot olishi oson bo'ladi.
+          </p>
+          <a href="/services/website" class="btn btn-outline-primary w-100">Batafsil ko'rish</a>
+        </div>
+      </div>
+
+      <!-- E-commerce Platform -->
+      <div class="col-lg-4 col-md-6">
+        <div class="service-card h-100 p-4 rounded-3 shadow-sm border">
+          <div class="text-center mb-3">
+            <i class="fas fa-shopping-cart fa-3x text-success"></i>
+          </div>
+          <h4 class="mb-3">E-commerce Platform</h4>
+          <p class="text-muted mb-3">
+            <strong>Nima?</strong> To'liq funksional onlayn do'kon. Mahsulot katalogi, savat, to'lov, admin panel.
+          </p>
+          <p class="text-muted mb-3">
+            <strong>Nega kerak?</strong> Sizning mahsulotingizni butun O'zbekistonda sotishingiz mumkin.
+          </p>
+          <p class="text-muted mb-3">
+            <strong>Qanday foyda?</strong> Sotuv miqdori 2–3 marta oshadi.
+          </p>
+          <a href="/services/ecommerce" class="btn btn-outline-success w-100">Batafsil ko'rish</a>
+        </div>
+      </div>
+
+      <!-- Hisobot Avtomatlashtirish -->
+      <div class="col-lg-4 col-md-6">
+        <div class="service-card h-100 p-4 rounded-3 shadow-sm border">
+          <div class="text-center mb-3">
+            <i class="fas fa-chart-line fa-3x text-warning"></i>
+          </div>
+          <h4 class="mb-3">Hisobot Avtomatlashtirish</h4>
+          <p class="text-muted mb-3">
+            <strong>Nima?</strong> Ma'lumotlarni avtomatik to'plash, hisobotlar tuzish, real-time dashboard.
+          </p>
+          <p class="text-muted mb-3">
+            <strong>Nega kerak?</strong> Vaqt tejash, xato kamaytirish, murojaatlar sonini oshirish.
+          </p>
+          <p class="text-muted mb-3">
+            <strong>Qanday foyda?</strong> Biznesingizning har bir jarayonini tekshirishingiz mumkin bo'ladi.
+          </p>
+          <a href="/services/automation" class="btn btn-outline-warning w-100">Batafsil ko'rish</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+🚀 Keyingi qadam?

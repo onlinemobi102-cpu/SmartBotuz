@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block title %}Xizmatlar - SmartBot.uz{% endblock %}
 
 {% block content %}
@@ -8,10 +7,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4 fw-bold mb-3">Bizning xizmatlarimiz</h1>
-                <p class="lead">
-                    Telegram botlardan tortib to'liq avtomatlashtirish tizimlarigacha - barcha raqamli ehtiyojlaringiz uchun
-                </p>
+                <h2 class="display-5 fw-bold mb-3">Bizning xizmatlarimiz</h2>
+                <p class="lead">Sizning biznesingizni rivojlantirish uchun zamonaviy yechimlar</p>
             </div>
         </div>
     </div>
@@ -21,139 +18,258 @@
 <section class="py-5">
     <div class="container">
         <div class="row g-4">
-            <!-- Telegram Bots -->
-            <div class="col-lg-6">
-                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
-                    <div class="service-header mb-4">
+            <!-- Korporativ Sayt -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card h-100 p-4 rounded-3 shadow-sm border bg-white">
+                    <div class="text-center mb-4">
                         <div class="service-icon mb-3">
-                            <i class="fab fa-telegram fa-4x text-primary"></i>
+                            <i class="fas fa-globe fa-3x text-primary"></i>
                         </div>
-                        <h3 class="fw-bold">Telegram Botlar</h3>
-                        <p class="text-muted">Biznesingiz uchun professional Telegram botlar yaratamiz</p>
+                        <h4 class="fw-bold mb-3">Korporativ Sayt</h4>
                     </div>
                     
-                    <div class="service-features mb-4">
-                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>E-commerce va savdo botlari</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mijozlar bilan bog'lanish botlari</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ma'lumotlar boshqaruvi</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>To'lov tizimlari integratsiyasi</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Avtomatik javoblar</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Analitika va hisobotlar</li>
-                        </ul>
+                    <div class="service-content mb-4">
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>🎯 Nima?</strong> Zamonaviy korporativ web-sayt. Responsive dizayn, CMS, SEO optimizatsiya, analitika.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>💡 Nega kerak?</strong> Sizning kompaniyangizning onlayn imkoniyatlari rivojlanadi.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>✅ Qanday foyda?</strong> Mijozlar sizning saytingizdan ma'lumot olishi oson bo'ladi.
+                            </p>
+                        </div>
+                        
+                        <div class="project-info bg-light p-3 rounded mb-3">
+                            <p class="mb-1 small"><strong>⏱️ Muddat:</strong> 2-3 hafta</p>
+                            <p class="mb-0 small"><strong>💰 Narx:</strong> 2,500,000 so'mdan</p>
+                        </div>
                     </div>
                     
-                    <div class="pricing mb-4">
-                        <h5 class="fw-bold">Narxlash:</h5>
-                        <p class="text-muted">500,000 so'mdan boshlanadi</p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-primary w-100 mb-2">Batafsil ko'rish</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-primary w-100">Buyurtma berish</a>
                     </div>
-                    
-                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
-                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
-                    </a>
                 </div>
             </div>
-            
-            <!-- Chatbots -->
-            <div class="col-lg-6">
-                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
-                    <div class="service-header mb-4">
+
+            <!-- E-commerce Platform -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card h-100 p-4 rounded-3 shadow-sm border bg-white">
+                    <div class="text-center mb-4">
                         <div class="service-icon mb-3">
-                            <i class="fas fa-comments fa-4x text-primary"></i>
+                            <i class="fas fa-shopping-cart fa-3x text-success"></i>
                         </div>
-                        <h3 class="fw-bold">AI Chatbotlar</h3>
-                        <p class="text-muted">Sun'iy intellekt asosidagi chatbotlar</p>
+                        <h4 class="fw-bold mb-3">E-commerce Platform</h4>
                     </div>
                     
-                    <div class="service-features mb-4">
-                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Tabiiy til bilan muloqot</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ko'p tilli qo'llab-quvvatlash</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Machine Learning integratsiyasi</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>CRM tizimlar bilan integratsiya</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>24/7 mijozlar xizmati</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ovozli yordamchilar</li>
-                        </ul>
+                    <div class="service-content mb-4">
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>🎯 Nima?</strong> To'liq funksional onlayn do'kon. Mahsulot katalogi, savat, to'lov, admin panel.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>💡 Nega kerak?</strong> Sizning mahsulotingizni butun O'zbekistonda sotishingiz mumkin.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>✅ Qanday foyda?</strong> Sotuv miqdori 2–3 marta oshadi.
+                            </p>
+                        </div>
+                        
+                        <div class="project-info bg-light p-3 rounded mb-3">
+                            <p class="mb-1 small"><strong>⏱️ Muddat:</strong> 3-4 hafta</p>
+                            <p class="mb-0 small"><strong>💰 Narx:</strong> 4,500,000 so'mdan</p>
+                        </div>
                     </div>
                     
-                    <div class="pricing mb-4">
-                        <h5 class="fw-bold">Narxlash:</h5>
-                        <p class="text-muted">1,000,000 so'mdan boshlanadi</p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-success w-100 mb-2">Batafsil ko'rish</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-success w-100">Buyurtma berish</a>
                     </div>
-                    
-                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
-                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
-                    </a>
                 </div>
             </div>
-            
-            <!-- Business Automation -->
-            <div class="col-lg-6">
-                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
-                    <div class="service-header mb-4">
+
+            <!-- Hisobot Avtomatlashtirish -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card h-100 p-4 rounded-3 shadow-sm border bg-white">
+                    <div class="text-center mb-4">
                         <div class="service-icon mb-3">
-                            <i class="fas fa-cogs fa-4x text-primary"></i>
+                            <i class="fas fa-chart-line fa-3x text-warning"></i>
                         </div>
-                        <h3 class="fw-bold">Biznes Avtomatlashtirish</h3>
-                        <p class="text-muted">Biznes jarayonlarini optimizatsiya qilish</p>
+                        <h4 class="fw-bold mb-3">Hisobot Avtomatlashtirish</h4>
                     </div>
                     
-                    <div class="service-features mb-4">
-                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Workflow avtomatlashtirish</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ma'lumotlar integratsiyasi</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Avtomatik hisobotlar</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>API integratsiyalar</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Cloud yechimlar</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Real-time monitoring</li>
-                        </ul>
+                    <div class="service-content mb-4">
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>🎯 Nima?</strong> Ma'lumotlarni avtomatik to'plash, hisobotlar tuzish, real-time dashboard.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>💡 Nega kerak?</strong> Vaqt tejash, xato kamaytirish, murojaatlar sonini oshirish.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>✅ Qanday foyda?</strong> Biznesingizning har bir jarayonini tekshirishingiz mumkin bo'ladi.
+                            </p>
+                        </div>
+                        
+                        <div class="project-info bg-light p-3 rounded mb-3">
+                            <p class="mb-1 small"><strong>⏱️ Muddat:</strong> 3 hafta</p>
+                            <p class="mb-0 small"><strong>💰 Narx:</strong> 3,500,000 so'm</p>
+                        </div>
                     </div>
                     
-                    <div class="pricing mb-4">
-                        <h5 class="fw-bold">Narxlash:</h5>
-                        <p class="text-muted">2,000,000 so'mdan boshlanadi</p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-warning w-100 mb-2">Batafsil ko'rish</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-warning w-100">Buyurtma berish</a>
                     </div>
-                    
-                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
-                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
-                    </a>
                 </div>
             </div>
-            
-            <!-- Web Development -->
-            <div class="col-lg-6">
-                <div class="service-detail-card bg-white p-5 rounded-3 shadow-sm h-100">
-                    <div class="service-header mb-4">
+        </div>
+        
+        <!-- Additional Services Row -->
+        <div class="row g-4 mt-4">
+            <!-- Telegram Bot -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card h-100 p-4 rounded-3 shadow-sm border bg-white">
+                    <div class="text-center mb-4">
                         <div class="service-icon mb-3">
-                            <i class="fas fa-globe fa-4x text-primary"></i>
+                            <i class="fab fa-telegram fa-3x text-info"></i>
                         </div>
-                        <h3 class="fw-bold">Web Saytlar</h3>
-                        <p class="text-muted">Zamonaviy va responsive web saytlar</p>
+                        <h4 class="fw-bold mb-3">Telegram Bot</h4>
                     </div>
                     
-                    <div class="service-features mb-4">
-                        <h5 class="fw-bold mb-3">Imkoniyatlar:</h5>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Responsive dizayn</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>SEO optimizatsiya</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>CMS tizimlar</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>E-commerce platformalar</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Performance optimizatsiya</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Xavfsizlik</li>
-                        </ul>
+                    <div class="service-content mb-4">
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>🎯 Nima?</strong> Professional Telegram bot - mijozlar bilan aloqa, buyurtma qabul qilish, avtomatlashtirish.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>💡 Nega kerak?</strong> Mijozlar bilan 24/7 muloqot, buyurtmalarni avtomatik qabul qilish.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>✅ Qanday foyda?</strong> Operatorlar sonini kamaytirish, mijozlar mamnunligi oshishi.
+                            </p>
+                        </div>
+                        
+                        <div class="project-info bg-light p-3 rounded mb-3">
+                            <p class="mb-1 small"><strong>⏱️ Muddat:</strong> 1-2 hafta</p>
+                            <p class="mb-0 small"><strong>💰 Narx:</strong> 1,500,000 so'mdan</p>
+                        </div>
                     </div>
                     
-                    <div class="pricing mb-4">
-                        <h5 class="fw-bold">Narxlash:</h5>
-                        <p class="text-muted">1,500,000 so'mdan boshlanadi</p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-info w-100 mb-2">Batafsil ko'rish</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-info w-100">Buyurtma berish</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Chatbot -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card h-100 p-4 rounded-3 shadow-sm border bg-white">
+                    <div class="text-center mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-robot fa-3x text-purple"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">AI Chatbot</h4>
                     </div>
                     
-                    <a href="{{ url_for('contact') }}" class="btn btn-primary">
-                        <i class="fas fa-arrow-right me-2"></i>Buyurtma berish
-                    </a>
+                    <div class="service-content mb-4">
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>🎯 Nima?</strong> Sun'iy intellekt chatbot - tabiiy til bilan suhbat, aqlli javoblar.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>💡 Nega kerak?</strong> Mijozlarning murakkab savollariga tez va to'g'ri javob berish.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>✅ Qanday foyda?</strong> Mijozlar xizmati sifati oshadi, ishlatiladigan vaqt kamayadi.
+                            </p>
+                        </div>
+                        
+                        <div class="project-info bg-light p-3 rounded mb-3">
+                            <p class="mb-1 small"><strong>⏱️ Muddat:</strong> 2-3 hafta</p>
+                            <p class="mb-0 small"><strong>💰 Narx:</strong> 3,000,000 so'mdan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-auto">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-dark w-100 mb-2">Batafsil ko'rish</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-dark w-100">Buyurtma berish</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobil Ilova -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card h-100 p-4 rounded-3 shadow-sm border bg-white">
+                    <div class="text-center mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-mobile-alt fa-3x text-danger"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Mobil Ilova</h4>
+                    </div>
+                    
+                    <div class="service-content mb-4">
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>🎯 Nima?</strong> Android va iOS mobil ilovalar - biznesingiz doimo mijozlar qo'lida.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>💡 Nega kerak?</strong> Mijozlar telefonda oson foydalanishi, brend tanilishini oshirish.
+                            </p>
+                        </div>
+                        
+                        <div class="question-block mb-3">
+                            <p class="text-dark mb-2">
+                                <strong>✅ Qanday foyda?</strong> Mijozlar saytingizga tez-tez kirishlari, sodiqlik oshishi.
+                            </p>
+                        </div>
+                        
+                        <div class="project-info bg-light p-3 rounded mb-3">
+                            <p class="mb-1 small"><strong>⏱️ Muddat:</strong> 4-6 hafta</p>
+                            <p class="mb-0 small"><strong>💰 Narx:</strong> 5,500,000 so'mdan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-auto">
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-danger w-100 mb-2">Batafsil ko'rish</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-danger w-100">Buyurtma berish</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,7 +291,7 @@
         <div class="row g-4">
             <div class="col-lg-3 col-md-6">
                 <div class="process-step text-center">
-                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                         <span class="fw-bold">1</span>
                     </div>
                     <h5 class="fw-bold">Maslahat</h5>
@@ -185,7 +301,7 @@
             
             <div class="col-lg-3 col-md-6">
                 <div class="process-step text-center">
-                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                         <span class="fw-bold">2</span>
                     </div>
                     <h5 class="fw-bold">Rejalashtirish</h5>
@@ -195,7 +311,7 @@
             
             <div class="col-lg-3 col-md-6">
                 <div class="process-step text-center">
-                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                         <span class="fw-bold">3</span>
                     </div>
                     <h5 class="fw-bold">Ishlab chiqish</h5>
@@ -205,7 +321,7 @@
             
             <div class="col-lg-3 col-md-6">
                 <div class="process-step text-center">
-                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                    <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                         <span class="fw-bold">4</span>
                     </div>
                     <h5 class="fw-bold">Qo'llab-quvvatlash</h5>

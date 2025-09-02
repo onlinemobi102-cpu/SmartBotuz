@@ -1,16 +1,74 @@
 [
   {
     "id": 1,
-    "title": "Telegram Bot Yaratish",
-    "description": "Telegram botlarni noldan yaratamiz - mijozlar bilan aloqa, buyurtma qabul qilish, avtomatlashtirish",
-    "icon": "fas fa-robot",
-    "price": "500,000 so'mdan"
+    "title": "Korporativ Sayt",
+    "description": "Zamonaviy korporativ web-sayt. Responsive dizayn, CMS, SEO optimizatsiya, analitika.",
+    "icon": "fas fa-globe",
+    "price": "2,500,000 so'mdan",
+    "what": "Zamonaviy korporativ web-sayt. Responsive dizayn, CMS, SEO optimizatsiya, analitika.",
+    "why": "Sizning kompaniyangizning onlayn imkoniyatlari rivojlanadi.",
+    "benefit": "Mijozlar sizning saytingizdan ma'lumot olishi oson bo'ladi.",
+    "duration": "2-3 hafta",
+    "category": "website"
   },
   {
     "id": 2,
-    "title": "Chatbot Integratsiya",
-    "description": "Saytingizga AI chatbot qo'shamiz - 24/7 mijozlar bilan suhbat, savolga javob berish",
-    "icon": "fas fa-comments",
-    "price": "300,000 so'mdan"
+    "title": "E-commerce Platform",
+    "description": "To'liq funksional onlayn do'kon. Mahsulot katalogi, savat, to'lov, admin panel.",
+    "icon": "fas fa-shopping-cart",
+    "price": "4,500,000 so'mdan",
+    "what": "To'liq funksional onlayn do'kon. Mahsulot katalogi, savat, to'lov, admin panel.",
+    "why": "Sizning mahsulotingizni butun O'zbekistonda sotishingiz mumkin.",
+    "benefit": "Sotuv miqdori 2–3 marta oshadi.",
+    "duration": "3-4 hafta",
+    "category": "ecommerce"
+  },
+  {
+    "id": 3,
+    "title": "Hisobot Avtomatlashtirish",
+    "description": "Ma'lumotlarni avtomatik to'plash, hisobotlar tuzish, real-time dashboard.",
+    "icon": "fas fa-chart-line",
+    "price": "3,500,000 so'm",
+    "what": "Ma'lumotlarni avtomatik to'plash, hisobotlar tuzish, real-time dashboard.",
+    "why": "Vaqt tejash, xato kamaytirish, murojaatlar sonini oshirish.",
+    "benefit": "Biznesingizning har bir jarayonini tekshirishingiz mumkin bo'ladi.",
+    "duration": "3 hafta",
+    "category": "automation"
+  },
+  {
+    "id": 4,
+    "title": "Telegram Bot",
+    "description": "Professional Telegram bot - mijozlar bilan aloqa, buyurtma qabul qilish, avtomatlashtirish.",
+    "icon": "fab fa-telegram",
+    "price": "1,500,000 so'mdan",
+    "what": "Professional Telegram bot - mijozlar bilan aloqa, buyurtma qabul qilish, avtomatlashtirish.",
+    "why": "Mijozlar bilan 24/7 muloqot, buyurtmalarni avtomatik qabul qilish.",
+    "benefit": "Operatorlar sonini kamaytirish, mijozlar mamnunligi oshishi.",
+    "duration": "1-2 hafta",
+    "category": "bot"
+  },
+  {
+    "id": 5,
+    "title": "AI Chatbot",
+    "description": "Sun'iy intellekt chatbot - tabiiy til bilan suhbat, aqlli javoblar.",
+    "icon": "fas fa-robot",
+    "price": "3,000,000 so'mdan",
+    "what": "Sun'iy intellekt chatbot - tabiiy til bilan suhbat, aqlli javoblar.",
+    "why": "Mijozlarning murakkab savollariga tez va to'g'ri javob berish.",
+    "benefit": "Mijozlar xizmati sifati oshadi, ishlatiladigan vaqt kamayadi.",
+    "duration": "2-3 hafta",
+    "category": "ai"
+  },
+  {
+    "id": 6,
+    "title": "Mobil Ilova",
+    "description": "Android va iOS mobil ilovalar - biznesingiz doimo mijozlar qo'lida.",
+    "icon": "fas fa-mobile-alt",
+    "price": "5,500,000 so'mdan",
+    "what": "Android va iOS mobil ilovalar - biznesingiz doimo mijozlar qo'lida.",
+    "why": "Mijozlar telefonda oson foydalanishi, brend tanilishini oshirish.",
+    "benefit": "Mijozlar saytingizga tez-tez kirishlari, sodiqlik oshishi.",
+    "duration": "4-6 hafta",
+    "category": "mobile"
   }
 ]
