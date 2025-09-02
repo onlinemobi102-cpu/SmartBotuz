@@ -317,6 +317,92 @@
 {% endblock %}
 
 {% block extra_scripts %}
+<style>
+@media (max-width: 768px) {
+    /* Mobilda header kichikroq */
+    .page-header {
+        padding: 1.5rem 0 !important;
+        margin-top: 3.5rem !important;
+    }
+    
+    .display-4 {
+        font-size: 1.8rem !important;
+    }
+    
+    /* Portfolio kartalarini mobil uchun optimizatsiya */
+    .portfolio-image {
+        height: 120px !important;
+    }
+    
+    .portfolio-content {
+        padding: 1rem !important;
+    }
+    
+    .portfolio-content h5 {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .portfolio-content p {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.75rem !important;
+        line-height: 1.4;
+    }
+    
+    .portfolio-tags {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .portfolio-tags .badge {
+        font-size: 0.75rem !important;
+        padding: 0.25rem 0.5rem !important;
+        margin-bottom: 0.25rem;
+    }
+    
+    .portfolio-stats {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .btn-sm {
+        font-size: 0.8rem !important;
+        padding: 0.375rem 0.75rem !important;
+    }
+    
+    /* Filter tugmalarini mobilda kichikroq */
+    .portfolio-filter .btn {
+        font-size: 0.85rem !important;
+        padding: 0.5rem 1rem !important;
+        margin: 0.25rem !important;
+    }
+    
+    /* Grid spacing mobilda */
+    .row.g-4 {
+        margin: 0 -0.5rem !important;
+    }
+    
+    .row.g-4 > * {
+        padding: 0 0.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* Icon larni kichikroq qilish */
+@media (max-width: 576px) {
+    .portfolio-image i {
+        font-size: 2.5rem !important;
+    }
+    
+    .display-4 {
+        font-size: 1.6rem !important;
+    }
+    
+    .lead {
+        font-size: 1rem !important;
+    }
+}
+</style>
+
 <script>
 // Portfolio filter functionality
 document.addEventListener('DOMContentLoaded', function() {
