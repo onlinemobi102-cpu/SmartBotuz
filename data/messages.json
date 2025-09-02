@@ -10,5 +10,29 @@
     "date": "2025-09-02 04:52:54",
     "status": "ko'rilgan",
     "telegram_sent": false
+  },
+  {
+    "id": 3,
+    "name": "Akram farmonov",
+    "email": "hevoxi1722@cavoyar.com",
+    "phone": "+998 99 262 22 26",
+    "service": "chatbot",
+    "budget": "1m-3m",
+    "message": "scccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "date": "2025-09-02 06:30:41",
+    "status": "yangi",
+    "telegram_sent": false
+  },
+  {
+    "id": 4,
+    "name": "Akram farmonov",
+    "email": "hevoxi1722@cavoyar.com",
+    "phone": "+998 99 262 22 26",
+    "service": "chatbot",
+    "budget": "1m-3m",
+    "message": "scccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "date": "2025-09-02 06:30:42",
+    "status": "yangi",
+    "telegram_sent": false
   }
 ]

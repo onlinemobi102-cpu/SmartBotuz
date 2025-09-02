@@ -9,6 +9,12 @@ import re
 import requests
 import json
 import uuid
+import google.generativeai as genai
+import mimetypes
+import PyPDF2
+from datetime import datetime
+import base64
+from io import BytesIO
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -43,6 +49,14 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
 # Admin Configuration
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "smartbot123")
+
+# AI Configuration
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+    AI_MODEL = genai.GenerativeModel('gemini-1.5-flash')
+else:
+    AI_MODEL = None
 
 # Data storage files
 DATA_DIR = "data"
@@ -151,6 +165,116 @@ def save_message(name, email, phone, service, budget, message):
     
     messages.append(new_message)
     return save_data(MESSAGES_FILE, messages)
+
+# ========================
+# AI HELPER FUNCTIONS
+# ========================
+
+def get_ai_response(prompt, max_tokens=1000):
+    """Get response from Gemini AI"""
+    if not AI_MODEL:
+        return None
+    
+    try:
+        response = AI_MODEL.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                max_output_tokens=max_tokens,
+                temperature=0.7,
+            )
+        )
+        return response.text
+    except Exception as e:
+        app.logger.error(f"AI response error: {e}")
+        return None
+
+def analyze_text_with_ai(text, analysis_type="general"):
+    """Analyze text with AI for different purposes"""
+    if analysis_type == "contact":
+        prompt = f"""
+        Quyidagi mijoz murojatini tahlil qiling va eng mos xizmatni aniqlang:
+
+        Murojaat matni: "{text}"
+
+        Quyidagi xizmatlardan birini tanlang:
+        - telegram_bot: Telegram bot yaratish
+        - chatbot: AI chatbot integratsiya
+        - automation: Biznes jarayonlarini avtomatlashtirish
+        - web_development: Web sayt yaratish
+        - ai_integration: AI texnologiyalar integratsiya
+
+        Javobni faqat xizmat nomi bilan bering, boshqa hech narsa yozmang.
+        """
+    elif analysis_type == "document":
+        prompt = f"""
+        Quyidagi hujjat matnini tahlil qiling va mijoz ehtiyojlarini aniqlang:
+
+        Hujjat matni: "{text}"
+
+        Tahlil natijasini quyidagi formatda bering:
+        - Asosiy maqsad: [maqsad]
+        - Kerakli xizmatlar: [xizmatlar ro'yxati]
+        - Tavsiya: [qisqa tavsiya]
+        """
+    else:
+        prompt = f"Quyidagi matnni tahlil qiling: {text}"
+    
+    return get_ai_response(prompt, 500)
+
+def create_blog_with_ai(topic):
+    """Create SEO-optimized blog article with AI"""
+    prompt = f"""
+    "{topic}" mavzusida o'zbek tilida SEO optimallashtirilgan blog maqolasi yozing.
+
+    Quyidagi strukturani kuzating:
+    1. Jozibador sarlavha (50-60 belgi)
+    2. Qisqa kirish (150-200 so'z)
+    3. 3-4 ta asosiy bo'lim (har biri 200-300 so'z)
+    4. Xulosa va chaqiruv (100-150 so'z)
+
+    Shartlar:
+    - Telegram bot, avtomatlashtirish, AI kabi kalit so'zlarni ishlating
+    - Paragraflar qisqa va tushunarli bo'lsin
+    - SmartBot.uz xizmatlariga ishoralar qiling
+    - O'zbek tilida professional uslubda yozing
+
+    Maqolani HTML formatida qaytaring, faqat <h2>, <p>, <ul>, <li> teglaridan foydalaning.
+    """
+    
+    return get_ai_response(prompt, 2000)
+
+def create_case_study_with_ai(project_info):
+    """Create detailed case study with AI"""
+    prompt = f"""
+    Quyidagi loyiha ma'lumotlari asosida batafsil case study yarating:
+
+    {project_info}
+
+    Case study quyidagi bo'limlarni o'z ichiga olsin:
+    1. Mijoz va muammo tavsifi
+    2. Yechim strategiyasi
+    3. Amalga oshirish jarayoni
+    4. Foydalanilgan texnologiyalar
+    5. Natijalar va ta'sir
+    6. Mijoz fikri (qisqa)
+
+    O'zbek tilida professional uslubda yozing, aniq raqamlar va faktlarni ko'rsating.
+    """
+    
+    return get_ai_response(prompt, 1500)
+
+def extract_text_from_pdf(file_path):
+    """Extract text from PDF file"""
+    try:
+        with open(file_path, 'rb') as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            text = ""
+            for page in pdf_reader.pages:
+                text += page.extract_text() + "\n"
+        return text.strip()
+    except Exception as e:
+        app.logger.error(f"PDF extraction error: {e}")
+        return None
 
 # Initialize data files on startup
 initialize_data_files()
@@ -292,6 +416,31 @@ def contact():
             # Save message to database
             message_saved = save_message(name, email, phone, service, budget, message)
             
+            # AI Analysis of the message
+            ai_recommendation = None
+            if AI_MODEL:
+                try:
+                    analysis = analyze_text_with_ai(message, "contact")
+                    service_map = {
+                        'telegram_bot': 'Telegram Bot Yaratish',
+                        'chatbot': 'AI Chatbot Integratsiya', 
+                        'automation': 'Biznes Avtomatlashtirish',
+                        'web_development': 'Web Sayt Yaratish',
+                        'ai_integration': 'AI Texnologiyalar'
+                    }
+                    ai_recommendation = service_map.get(analysis.strip().lower(), 'Umumiy Konsultatsiya')
+                except Exception as e:
+                    app.logger.error(f"AI analysis error in contact form: {e}")
+            
+            # Update message with AI recommendation
+            if message_saved and ai_recommendation:
+                messages = load_data(MESSAGES_FILE)
+                for msg in messages:
+                    if msg['id'] == new_id:
+                        msg['ai_recommendation'] = ai_recommendation
+                        break
+                save_data(MESSAGES_FILE, messages)
+            
             # Send to Telegram
             telegram_sent = send_telegram_message(telegram_message)
             
@@ -331,6 +480,277 @@ def robots_txt():
         robots_content = f.read()
     response = app.response_class(robots_content, mimetype='text/plain')
     return response
+
+# ========================
+# AI ROUTES
+# ========================
+
+@app.route('/ai/chat', methods=['POST'])
+def ai_chat():
+    """AI Chatbot for website visitors"""
+    if not AI_MODEL:
+        return jsonify({'error': 'AI xizmati mavjud emas'}), 503
+    
+    try:
+        data = request.get_json()
+        message = data.get('message', '').strip()
+        
+        if not message:
+            return jsonify({'error': 'Xabar bo\'sh bo\'lishi mumkin emas'}), 400
+        
+        # Create context-aware prompt for SmartBot.uz
+        prompt = f"""
+        Siz SmartBot.uz kompaniyasining AI yordamchisisiz. Mijoz bilan do'stona va professional tarzda gaplashing.
+
+        Mijoz xabari: "{message}"
+
+        Quyidagi qoidalarga rioya qiling:
+        1. O'zbek tilida javob bering
+        2. Qisqa va aniq javob bering (maksimal 200 so'z)
+        3. Agar so'rov xizmatlar bilan bog'liq bo'lsa, tegishli sahifaga yo'naltiring
+        4. SmartBot.uz xizmatlarini taklif qiling (Telegram botlar, chatbotlar, avtomatlashtirish)
+        5. Do'stona va yordam beruvchi bo'ling
+
+        SmartBot.uz xizmatlari:
+        - Telegram bot yaratish (/services)
+        - AI chatbot integratsiya (/services)
+        - Biznes avtomatlashtirish (/services)
+        - Web sayt yaratish (/services)
+        - Portfolio: /portfolio
+        - Bog'lanish: /contact
+        """
+        
+        ai_response = get_ai_response(prompt, 300)
+        
+        if ai_response:
+            return jsonify({
+                'success': True,
+                'response': ai_response
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'response': 'Kechirasiz, hozir javob bera olmayapman. Iltimos, keyinroq urinib ko\'ring.'
+            })
+            
+    except Exception as e:
+        app.logger.error(f"AI chat error: {e}")
+        return jsonify({'error': 'Ichki xatolik yuz berdi'}), 500
+
+@app.route('/ai/blog', methods=['POST'])
+def ai_generate_blog():
+    """Generate blog article with AI"""
+    if not AI_MODEL:
+        return jsonify({'error': 'AI xizmati mavjud emas'}), 503
+    
+    try:
+        data = request.get_json()
+        topic = data.get('topic', '').strip()
+        
+        if not topic:
+            return jsonify({'error': 'Mavzu kiritilmagan'}), 400
+        
+        # Generate blog content
+        blog_content = create_blog_with_ai(topic)
+        
+        if blog_content:
+            # Save to blog data
+            blogs = load_data(BLOG_FILE)
+            new_id = max([b.get('id', 0) for b in blogs], default=0) + 1
+            
+            # Extract title from content (first h2 or first line)
+            import re
+            title_match = re.search(r'<h2>(.*?)</h2>', blog_content)
+            title = title_match.group(1) if title_match else topic
+            
+            new_blog = {
+                'id': new_id,
+                'title': title,
+                'content': blog_content,
+                'excerpt': f"{topic} haqida batafsil ma'lumot",
+                'category': 'AI Generated',
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'slug': create_slug(title),
+                'ai_generated': True
+            }
+            
+            blogs.append(new_blog)
+            save_data(BLOG_FILE, blogs)
+            
+            return jsonify({
+                'success': True,
+                'blog': new_blog,
+                'message': 'Blog maqolasi muvaffaqiyatli yaratildi!'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Blog yaratishda xatolik yuz berdi'
+            })
+            
+    except Exception as e:
+        app.logger.error(f"AI blog generation error: {e}")
+        return jsonify({'error': 'Ichki xatolik yuz berdi'}), 500
+
+@app.route('/ai/analyze', methods=['POST'])
+def ai_analyze_contact():
+    """Analyze contact form submission"""
+    if not AI_MODEL:
+        return jsonify({'error': 'AI xizmati mavjud emas'}), 503
+    
+    try:
+        data = request.get_json()
+        message = data.get('message', '').strip()
+        
+        if not message:
+            return jsonify({'error': 'Tahlil qilish uchun matn kerak'}), 400
+        
+        # Analyze message
+        analysis = analyze_text_with_ai(message, "contact")
+        
+        # Map analysis to service recommendations
+        service_map = {
+            'telegram_bot': {
+                'service': 'Telegram Bot Yaratish',
+                'description': 'Telegram bot orqali mijozlar bilan avtomatik aloqa',
+                'url': '/services#telegram-bot'
+            },
+            'chatbot': {
+                'service': 'AI Chatbot Integratsiya',
+                'description': 'Saytingizga aqlli chatbot qo\'shish',
+                'url': '/services#chatbot'
+            },
+            'automation': {
+                'service': 'Biznes Avtomatlashtirish',
+                'description': 'Biznes jarayonlarini avtomatlashtirish',
+                'url': '/services#automation'
+            },
+            'web_development': {
+                'service': 'Web Sayt Yaratish',
+                'description': 'Professional web sayt yaratish',
+                'url': '/services#web'
+            },
+            'ai_integration': {
+                'service': 'AI Texnologiyalar',
+                'description': 'AI va sun\'iy intellekt integratsiya',
+                'url': '/services#ai'
+            }
+        }
+        
+        recommended_service = service_map.get(analysis.strip().lower(), {
+            'service': 'Umumiy Konsultatsiya',
+            'description': 'Ehtiyojlaringizni batafsil muhokama qilish',
+            'url': '/contact'
+        })
+        
+        return jsonify({
+            'success': True,
+            'analysis': analysis,
+            'recommendation': recommended_service
+        })
+        
+    except Exception as e:
+        app.logger.error(f"AI analysis error: {e}")
+        return jsonify({'error': 'Tahlil qilishda xatolik yuz berdi'}), 500
+
+@app.route('/ai/case-study', methods=['POST'])
+def ai_generate_case_study():
+    """Generate portfolio case study with AI"""
+    if not AI_MODEL:
+        return jsonify({'error': 'AI xizmati mavjud emas'}), 503
+    
+    try:
+        data = request.get_json()
+        project_info = data.get('project_info', '').strip()
+        
+        if not project_info:
+            return jsonify({'error': 'Loyiha ma\'lumotlari kiritilmagan'}), 400
+        
+        # Generate case study
+        case_study = create_case_study_with_ai(project_info)
+        
+        if case_study:
+            return jsonify({
+                'success': True,
+                'case_study': case_study,
+                'message': 'Case study muvaffaqiyatli yaratildi!'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Case study yaratishda xatolik yuz berdi'
+            })
+            
+    except Exception as e:
+        app.logger.error(f"AI case study error: {e}")
+        return jsonify({'error': 'Ichki xatolik yuz berdi'}), 500
+
+@app.route('/ai/document', methods=['POST'])
+def ai_analyze_document():
+    """Analyze uploaded document (PDF/image)"""
+    if not AI_MODEL:
+        return jsonify({'error': 'AI xizmati mavjud emas'}), 503
+    
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'Fayl yuklanmagan'}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'Fayl tanlanmagan'}), 400
+        
+        # Check file type
+        file_type = mimetypes.guess_type(file.filename)[0]
+        
+        if file_type and file_type.startswith('application/pdf'):
+            # Save temporarily and extract text
+            temp_path = os.path.join(app.config['UPLOAD_FOLDER'], f"temp_{uuid.uuid4().hex}.pdf")
+            file.save(temp_path)
+            
+            try:
+                extracted_text = extract_text_from_pdf(temp_path)
+                os.remove(temp_path)  # Clean up
+                
+                if extracted_text:
+                    analysis = analyze_text_with_ai(extracted_text, "document")
+                    
+                    return jsonify({
+                        'success': True,
+                        'file_type': 'PDF',
+                        'extracted_text': extracted_text[:500] + "..." if len(extracted_text) > 500 else extracted_text,
+                        'analysis': analysis
+                    })
+                else:
+                    return jsonify({
+                        'success': False,
+                        'message': 'PDF dan matn ajratib olinmadi'
+                    })
+                    
+            except Exception as e:
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+                raise e
+                
+        elif file_type and file_type.startswith('image/'):
+            # For images, we can only provide basic info
+            return jsonify({
+                'success': True,
+                'file_type': 'Image',
+                'message': 'Rasm fayli yuklandi. Matn tahlili uchun PDF fayl yuklang.',
+                'analysis': 'Rasm fayllari uchun matn tahlili hozircha mavjud emas. PDF formatida hujjat yuklashni tavsiya qilamiz.'
+            })
+        else:
+            return jsonify({'error': 'Faqat PDF va rasm fayllari qo\'llab-quvvatlanadi'}), 400
+            
+    except Exception as e:
+        app.logger.error(f"AI document analysis error: {e}")
+        return jsonify({'error': 'Hujjat tahlilida xatolik yuz berdi'}), 500
+
+# AI Interface Page
+@app.route('/ai')
+def ai_interface():
+    """AI tools interface page"""
+    return render_template('ai.html')
 
 # ========================
 # ADMIN ROUTES

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}AI Yordamchilar - SmartBot.uz{% endblock %}
+{% block description %}SmartBot.uz AI yordamchilari: chatbot, blog yaratish, hujjat tahlili va ko'proq. Gemini AI texnologiyasi bilan.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">AI Yordamchilar</h1>
+                <p class="lead mb-4">Google Gemini AI texnologiyasi bilan ishlaydigan aqlli yordamchilar to'plami</p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="fas fa-robot fa-5x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Tools Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- AI Chatbot -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-comments me-2"></i>AI Chatbot</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Saytga kiruvchilarga yordam beruvchi aqlli chatbot</p>
+                        <div class="chat-container mb-3" id="chatContainer" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #f8f9fa;">
+                            <div class="bot-message mb-2">
+                                <small class="text-muted">SmartBot AI:</small>
+                                <div class="bg-light p-2 rounded">Salom! Men SmartBot.uz yordamchiman. Sizga qanday yordam bera olaman?</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="chatInput" placeholder="Savolingizni yozing...">
+                            <button class="btn btn-primary" type="button" onclick="sendChatMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Generator -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-pen-fancy me-2"></i>Blog Maqola Yaratish</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>AI yordamida SEO optimallashtirilgan blog maqolalari yarating</p>
+                        <div class="mb-3">
+                            <label for="blogTopic" class="form-label">Mavzu:</label>
+                            <input type="text" class="form-control" id="blogTopic" placeholder="Masalan: Telegram bot nima?">
+                        </div>
+                        <button class="btn btn-success w-100" onclick="generateBlog()">
+                            <i class="fas fa-magic me-2"></i>Maqola Yaratish
+                        </button>
+                        <div id="blogResult" class="mt-3" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Analysis -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-search me-2"></i>Xabar Tahlili</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Mijoz xabarlarini tahlil qiling va mos xizmat tavsiyasini oling</p>
+                        <div class="mb-3">
+                            <label for="messageText" class="form-label">Xabar matni:</label>
+                            <textarea class="form-control" id="messageText" rows="3" placeholder="Mijoz xabarini kiriting..."></textarea>
+                        </div>
+                        <button class="btn btn-info w-100" onclick="analyzeMessage()">
+                            <i class="fas fa-brain me-2"></i>Tahlil Qilish
+                        </button>
+                        <div id="analysisResult" class="mt-3" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study Generator -->
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Case Study Yaratish</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Loyiha ma'lumotlaridan batafsil case study yarating</p>
+                        <div class="mb-3">
+                            <label for="projectInfo" class="form-label">Loyiha ma'lumotlari:</label>
+                            <textarea class="form-control" id="projectInfo" rows="4" placeholder="Masalan: Restoran uchun buyurtma boti. Muammo: telefon qo'ng'iroqlar ko'p. Yechim: Telegram bot. Natija: 70% kamroq qo'ng'iroq"></textarea>
+                        </div>
+                        <button class="btn btn-warning w-100" onclick="generateCaseStudy()">
+                            <i class="fas fa-file-alt me-2"></i>Case Study Yaratish
+                        </button>
+                        <div id="caseStudyResult" class="mt-3" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Analysis -->
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-file-pdf me-2"></i>Hujjat Tahlili</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>PDF yoki rasm fayl yuklang va mazmunini AI bilan tahlil qiltiring</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="documentFile" class="form-label">Fayl tanlang:</label>
+                                    <input type="file" class="form-control" id="documentFile" accept=".pdf,image/*">
+                                    <small class="text-muted">PDF yoki rasm fayllari qabul qilinadi</small>
+                                </div>
+                                <button class="btn btn-danger w-100" onclick="analyzeDocument()">
+                                    <i class="fas fa-upload me-2"></i>Yuklash va Tahlil Qilish
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="documentResult" style="display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12 mb-4">
+                <h2 class="fw-bold">AI Texnologiyalari</h2>
+                <p class="text-muted">Google Gemini 1.5 Flash modeli bilan ishlaydigan ilg'or yechimlar</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-language fa-2x"></i>
+                    </div>
+                    <h5>O'zbek tili</h5>
+                    <p class="text-muted">O'zbek tilida tabiiy muloqot</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-lightning fa-2x"></i>
+                    </div>
+                    <h5>Tez javob</h5>
+                    <p class="text-muted">Soniyalar ichida natija</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                    <h5>Xavfsizlik</h5>
+                    <p class="text-muted">Ma'lumotlar himoyalangan</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="bg-warning text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-cogs fa-2x"></i>
+                    </div>
+                    <h5>Moslashuv</h5>
+                    <p class="text-muted">Har bir vazifa uchun</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Yuklanmoqda...</span>
+                </div>
+                <p class="mb-0">AI ishlamoqda...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/ai.js') }}" defer></script>
+{% endblock %}

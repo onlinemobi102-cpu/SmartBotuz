@@ -1,0 +1,40 @@
+✅ Prompt: "Gemini Flash API orqali SmartBot.uz uchun 5 ta aqlli funksiya yaratish"
+Siz — kuchli AI integratsiyasi mutaxassisi. Sizning vazifangiz Google Gemini 1.5 Flash APIni SmartBot.uz Flask loyihasiga ulash orqali quyidagi 5 ta aqlli funksiyani amalga oshirish:
+
+🎯 1. AI Chatbot (Saytga kiruvchilarga yordam beradi)
+Foydalanuvchi so'roviga javob bering
+O'zbek tilida tushunadi
+Agar so'rov xizmatlar bilan bog'liq bo'lsa, mos xizmatga havola bering
+Javoblar qisqa, tushunarli, do'stona bo'lsin
+🎯 2. Blog maqolalarini avtomatik yaratish
+Foydalanuvchi mavzuni kiritsa (masalan: "Telegram bot nima?"), Gemini maqola yaratadi
+Maqola SEO optimallashtirilgan bo'lsin (kalit so'zlar, sarlavha, paragraflar)
+blog/ papkasiga .html sifatida saqlansin yoki data/blogs.jsonga qo'shilsin
+🎯 3. Murojaatlar tahlili (Contact formasi)
+Har bir murojaat matnini tahlil qiling
+Qaysi xizmat kerakligini aniqlang (masalan: "bot" → Telegram bot)
+Admin panelda "Tavsiya: Telegram bot" ko'rsatilsin
+🎯 4. Portfolio "Case Study" avtomatik yaratish
+Foydalanuvchi: "Restoran uchun buyurtma boti. Muammo: telefon qo'ng'iroqlar, yechim: Telegram, natija: 70% kamroq qo'ng'iroq"
+Gemini: Batafsil hikoya yaratadi: muammo → yechim → natija → texnologiyalar
+data/projects.jsonga qo'shilsin
+🎯 5. Hujjat tahlili (PDF, rasm)
+Foydalanuvchi PDF yoki rasm yuklasa (masalan: taklifnoma.pdf)
+Gemini matnini o'qib, mazmunini tahlil qilsin
+Mijoz ehtiyojini aniqlasin: "Onlayn do'kon, to'lov tizimi, yetkazib berish"
+🛠️ Texnik talablar:
+google-generativeai kutubxonasidan foydalaning
+API kalit .env fayl orqali boshqarilsin: GEMINI_API_KEY=your_key_here
+Xatolarni boshqarish: try-except, timeout
+O'zbek tili uchun aniq promptlar
+Flaskda /ai/chat, /ai/blog, /ai/analyze endpointlari
+Frontendda: JavaScript orqali so'rov yuborish, javobni ko'rsatish
+Iltimos, barcha 5 ta funksiyani to'liq, ishlaydigan ko'rinishda yozing:
+
+app.py — backend
+templates/ai.html — AI interfeysi
+static/js/ai.js — frontend
+.env.example
+requirements.txt yangilangan versiyasi
+Agar kerak bo'lsa, namuna so'rovlar ham keltiring. 
+
