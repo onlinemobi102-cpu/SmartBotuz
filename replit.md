@@ -38,8 +38,9 @@ Preferred communication style: Simple, everyday language.
 ### Development Configuration
 - **Debug Mode**: Enabled for development with detailed error logging
 - **Logging**: Python logging configured at DEBUG level
-- **Hot Reload**: Flask development server with automatic reloading
-- **Host Configuration**: Configured for 0.0.0.0:5000 for container compatibility
+- **Hot Reload**: Gunicorn with reload enabled for development
+- **Host Configuration**: Configured for 0.0.0.0:5000 for Replit environment compatibility
+- **Web Server**: Gunicorn WSGI server for both development and production
 
 ## External Dependencies
 
