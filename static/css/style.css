@@ -28,6 +28,18 @@ body {
     background-color: #ffffff;
 }
 
+/* Admin sahifalar uchun navbar yashirish */
+body.admin-page .navbar {
+    display: none;
+}
+
+/* Admin sahifalar uchun body padding */
+body.admin-page {
+    padding-top: 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+}
+
 /* Ensure text visibility */
 .text-white {
     color: #ffffff !important;
