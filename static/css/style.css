@@ -30,14 +30,23 @@ body {
 
 /* Admin sahifalar uchun navbar yashirish */
 body.admin-page .navbar {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
 }
 
 /* Admin sahifalar uchun body padding */
 body.admin-page {
-    padding-top: 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding-top: 0 !important;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
     min-height: 100vh;
+}
+
+/* Admin sahifalar uchun navbar CSS override */
+.admin-page .navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.fixed-top {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 /* Ensure text visibility */

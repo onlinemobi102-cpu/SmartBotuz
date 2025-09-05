@@ -226,6 +226,14 @@ setInterval(updateUnreadCount, 30000);
 document.addEventListener('DOMContentLoaded', updateUnreadCount);
 
 // Admin sahifada navbar yashirish uchun
-document.body.classList.add('admin-page');
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('admin-page');
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        navbar.style.display = 'none';
+        navbar.style.visibility = 'hidden';
+        navbar.style.opacity = '0';
+    }
+});
 </script>
 {% endblock %}
