@@ -1,0 +1,150 @@
+# daily_job.py
+import os
+import time
+import schedule
+import threading
+from datetime import datetime
+import google.generativeai as genai
+import requests
+import json
+
+# API kalitni sozlash
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+# Telegram sozlamalari
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHANNEL_ID = os.getenv("TELEGRAM_CHANNEL_ID")
+
+# Optimal yuborish vaqtlari
+POST_SCHEDULE_TIMES = [
+    "09:00",
+    "12:30", 
+    "17:30",
+    "18:00",
+    "20:00"
+]
+
+def get_trends():
+    """Trendlarni aniqlash (soddalashtirilgan)"""
+    return [
+        "AI in education 2025",
+        "Telegram bot for business automation",
+        "How to create website in Uzbekistan",
+        "ChatGPT vs Gemini: which is better?",
+        "Best AI tools for small business"
+    ]
+
+def save_blog_post(post):
+    """Blog postni saqlash"""
+    try:
+        with open('data/blog_posts.json', 'r+', encoding='utf-8') as f:
+            posts = json.load(f)
+            posts.append(post)
+            f.seek(0)
+            json.dump(posts, f, ensure_ascii=False, indent=2)
+    except:
+        with open('data/blog_posts.json', 'w', encoding='utf-8') as f:
+            json.dump([post], f, ensure_ascii=False, indent=2)
+
+def send_to_telegram(title, content, scheduled_time):
+    """Telegram kanaliga yuborish"""
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    text = (
+        f"📢 <b>YANGI MAQOLA</b>: {title}\n\n"
+        f"{content[:300]}...\n\n"
+        f"⏰ <i>Yuborilgan vaqt: {scheduled_time}</i>\n"
+        f"👉 <a href='https://smartbot.uz/blog/{title.lower().replace(' ', '-')}'>Batafsil o'qing</a>\n\n"
+        f"#AI #IT #SmartBotUz"
+    )
+    data = {
+        'chat_id': TELEGRAM_CHANNEL_ID,
+        'text': text,
+        'parse_mode': 'HTML',
+        'disable_web_page_preview': False
+    }
+    try:
+        requests.post(url, data=data, timeout=10)
+        print(f"✅ Telegramga yuborildi: {title}")
+    except Exception as e:
+        print(f"❌ Telegram xatolik: {e}")
+
+def generate_blog_post(trend):
+    """AI orqali blog post yaratish"""
+    prompt = f"""
+    O'zbek tilida SEO optimallashtirilgan blog maqolasini yarat:
+    Mavzu: {trend}
+    Uzunlik: 600 so'z
+    Sarlavha: jo'shqin, qiziqarli
+    Paragraflar: 5-6 ta
+    Kalit so'zlar: {trend}, aqlli yechimlar, avtomatlashtirish, SmartBot.uz
+    Oxirida: "SmartBot.uz — aqlli yechimlar, zamonaviy biznes uchun"
+    """
+    
+    try:
+        response = model.generate_content(prompt)
+        content = response.text
+        title = content.split('\n')[0].strip('# ').strip() or trend
+        slug = title.lower().replace(' ', '-').replace('?', '').replace('!', '')
+        excerpt = content[:150] + "..." if len(content) > 150 else content
+        
+        return {
+            "title": title,
+            "content": content,
+            "slug": slug,
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "excerpt": excerpt
+        }
+    except Exception as e:
+        print(f"❌ AI xatolik: {e}")
+        return None
+
+def daily_marketing_job():
+    """Har kuni bajariladigan marketing vazifasi"""
+    print("🤖 AI Marketing Avtomat boshlandi...")
+    
+    trends = get_trends()
+    posts = []
+    
+    # 5 ta blog post yaratish
+    for i, trend in enumerate(trends[:5]):
+        print(f"📝 Post yaratilmoqda: {trend}")
+        post = generate_blog_post(trend)
+        if post:
+            posts.append(post)
+            save_blog_post(post)
+            print(f"✅ Saqlandi: {post['title']}")
+            
+            # Har bir postni belgilangan vaqtda yuborish
+            time_to_send = POST_SCHEDULE_TIMES[i % len(POST_SCHEDULE_TIMES)]
+            schedule.every().day.at(time_to_send).do(
+                lambda p=post, t=time_to_send: send_to_telegram(p['title'], p['content'], t)
+            )
+            print(f"⏰ Rejalashtirildi: {time_to_send}")
+    
+    print(f"🎉 Kunlik marketing tugadi. Jami postlar: {len(posts)}")
+
+def run_scheduler():
+    """Rejalashtiruvchini ishga tushirish"""
+    # Har kuni soat 9:00 da boshlash
+    schedule.every().day.at("09:00").do(daily_marketing_job)
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(60)  # Har 1 daqiqada tekshirish
+
+# Asosiy funksiya
+if __name__ == "__main__":
+    print("🚀 AI Marketing Avtomat tayyor...")
+    # Birinchi marta darhol bajarish (test uchun)
+    daily_marketing_job()
+    # Keyin har kuni avtomatik
+    scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
+    scheduler_thread.start()
+    
+    # Asosiy dastur davom etsin
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("🛑 AI Marketing Avtomat to'xtatildi")
