@@ -1103,11 +1103,19 @@ def export_messages_csv():
     return response
 
 @app.route('/api/unread-count')
+@admin_required
 def api_unread_count():
     """API endpoint for unread messages count"""
     messages = load_data(MESSAGES_FILE)
     unread_count = len([m for m in messages if m.get('status') == 'yangi'])
     return jsonify({'count': unread_count})
+
+@app.route('/api/total-messages-count')
+@admin_required
+def api_total_messages_count():
+    """API endpoint for total messages count"""
+    messages = load_data(MESSAGES_FILE)
+    return jsonify({'total': len(messages)})
 
 # ========================
 # PORTFOLIO MANAGEMENT
