@@ -133,6 +133,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: var(--transition);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
 }
 
 .navbar-brand {
